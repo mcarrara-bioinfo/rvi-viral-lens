@@ -1,0 +1,5 @@
+{
+    "sarscov2": {
+        "reference_genome": ["NC_045512.2"]
+        }
+}
