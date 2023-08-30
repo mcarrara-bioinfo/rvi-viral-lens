@@ -1,5 +1,10 @@
 {
-    "sarscov2": {
-        "reference_genome": ["NC_045512.2"]
-        }
+    "SC2": {
+        "reference_genome": ["NC_045512.2"],
+        "bwa_params": "-t -j 1010"
+    },
+    "flu": {
+        "reference_genome": ["NC_045512.2"],
+        "bwa_params": "-t -j 1010"
+    }
 }
