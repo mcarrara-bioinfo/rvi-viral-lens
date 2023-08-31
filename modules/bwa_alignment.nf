@@ -6,16 +6,15 @@ process bwa_alignment_and_post_processing {
     publishDir "${params.results_dir}/", overwrite: true, mode: "copy"
 
     input:
-        tuple val(file_id), path(fastq), path(reference_fasta)
+        tuple val(file_id), path(fastq), val(reference_fasta)
 
+    output:
+        tuple val(file_id), path("${file_id}.sam")
     script:
-        bam_file="${file_id}.bam"
-
         """
-        ls
         set -e
         set -o pipefail
-        bwa mem "${reference_fasta}" "${fastq}" > ${file_id}.sam
+        bwa mem ${reference_fasta} ${fastq} > ${file_id}.sam
         """
 }
 
