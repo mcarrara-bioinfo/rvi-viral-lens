@@ -35,25 +35,13 @@ workflow {
         | map{it -> tuple(it[0], it[0].split("_")[-1], it[1])} // tuple (sample_id, virus_code, reads)
         | set {reads_ch}
 
-    reads_ch.view() 
-
     // 1.2 - load virus settings
     //virus_resources = load_json_file(params.virus_resources_json)
     //println(virus_resources.sarscov2.reference_genome[0])
 
     json_params = PipelineParameters.readParams(params.virus_resources_json)
-    json_ch = Channel.value(json_params).view()
+    json_ch = Channel.value(json_params)
 
-    /*
-    json_ch.map{ key, dict_k -> 
-            // make a list maybe
-            for (k in it){
-                
-            }
-            //it["SC2"]["reference_genome"][0]
-        
-    }.view()
-    */
     // add meta
     reads_ch
         | combine(json_ch) // tuple (sample_id, viral_id, read_pairs, meta)
@@ -62,19 +50,22 @@ workflow {
     // ==========================
 
     // Do whole reference genome mapping
-    
+
     // generate bwa in channel
     input_ch
         |map{it -> 
             // NOTE remember we need to handle multiple references, this is a temporary fix
             def reference_gnm = "${params.virus_resources_dir}${it[3][it[1]]['reference_genome'][0]}.fasta"
-            tuple(
-                it[0], it[2], reference_gnm //"${params.virus_resources_dir}/${it[3][v_id]}"
-            )}
+                tuple(
+                    it[0], it[2], reference_gnm//"${params.virus_resources_dir}/${it[3][v_id]}"
+                )
+            }
         | set {bwa_input_ch}
-    
+    bwa_input_ch.view()
     bwa_alignment_and_post_processing (bwa_input_ch)
-    
+    bwa_alignment_and_post_processing.out.view()
+    // "${reference_gnm}.amb", "${reference_gnm}.ann",
+    //                               "${reference_gnm}.bwt", "${reference_gnm}.pac", "${reference_gnm}.sa"]
     //bwa-mem
     //samtools-sort
     //samtools mpileup
