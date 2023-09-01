@@ -92,7 +92,9 @@ export PATH=/software/bwa-0.7.17:$PATH
 export PATH=/software/miniconda/bin/:$PATH
 
 %runscript
+echo "running on container!"
 exec /bin/bash "$@"
 
 %startscript
+echo "running on container!"
 exec /bin/bash "$@"
