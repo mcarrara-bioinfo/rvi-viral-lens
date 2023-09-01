@@ -7,7 +7,8 @@
 
 ```
 cd containers/
-sudo singularity build base_container.sif baseContainer.sing 
+sudo singularity build base_container.sif baseContainer.sing
+sudo singularity build ivar.sif ivarContainer.sing 
 ```
 ### prepare reference genomes
 
