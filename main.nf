@@ -6,6 +6,7 @@ nextflow.enable.dsl = 2
 // --- import modules ---------------------------------------------------------
 include {load_json_file} from './workflow/load_json.nf'
 include {bwa_alignment_and_post_processing} from './modules/bwa_alignment.nf'
+include {run_ivar} from './modules/run_ivar.nf'
 class PipelineParameters {
     
     // Function that parses json output file 
@@ -47,6 +48,11 @@ workflow {
         | combine(json_ch) // tuple (sample_id, viral_id, read_pairs, meta)
         | set {input_ch}
 
+    // generate sample to resources channel
+    input_ch
+        | map {it -> tuple(it[0], it[3][it[1]])} // tuple (sample_id, viral_res[virus_id])
+        | set {file_id_to_resources_ch}
+
     // ==========================
 
     // Do whole reference genome mapping
@@ -56,23 +62,27 @@ workflow {
         |map{it -> 
             // NOTE remember we need to handle multiple references, this is a temporary fix
             def reference_gnm = "${params.virus_resources_dir}${it[3][it[1]]['reference_genome'][0]}.fasta"
-                tuple(
-                    it[0], it[2], reference_gnm//"${params.virus_resources_dir}/${it[3][v_id]}"
-                )
+                tuple(it[0], it[2], reference_gnm)
             }
-        | set {bwa_input_ch}
-    bwa_input_ch.view()
+        | set {bwa_input_ch} // tuple (file_id, fastq_pairs, reference_file)
+
+    //bwa_input_ch.view()
     bwa_alignment_and_post_processing (bwa_input_ch)
-    bwa_alignment_and_post_processing.out.view()
-    // "${reference_gnm}.amb", "${reference_gnm}.ann",
-    //                               "${reference_gnm}.bwt", "${reference_gnm}.pac", "${reference_gnm}.sa"]
-    //bwa-mem
-    //samtools-sort
-    //samtools mpileup
     
+    // add references to alignmed bams channel
+    bams_ch = bwa_alignment_and_post_processing.out // tuple (file_id, [sorted_bam, bai])
+    
+    bams_ch
+        | join(file_id_to_resources_ch) // tuple(file_id. [sorted_bam, bai], virus_resources)
+        | map { it ->
+            def fasta_nm = "${it[2]['reference_genome'][0]}.fasta"
+            def ref_gnm_path = "${params.virus_resources_dir}${fasta_nm}"
+            tuple( it[0], it[1], ref_gnm_path)
+        }
+        |set {ivar_in_ch}
     // Do genome consensus generation
-    //ivar - > consensus
-    
+    run_ivar(ivar_in_ch)
+
     // Do alignment of consensus to genome to ref
 
     // Do species specific
