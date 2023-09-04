@@ -1,10 +1,17 @@
 {
     "SC2": {
-        "reference_genome": ["NC_045512.2"],
-        "bwa_params": "-t -j 1010"
+        "reference_genome": ["GCF_009858895.2."]
     },
-    "flu": {
-        "reference_genome": ["NC_045512.2"],
-        "bwa_params": "-t -j 1010"
+    "H1N1A": {
+        "reference_genome": ["GCF_001343785.1"]
+    },
+    "H3N2A":{
+        "reference_genome": ["GCF_000865085.1"]
+    },
+    "fluB":{
+        "reference_genome": ["GCF_000820495.2"]
+    },
+    "RSV":{
+        "reference_genome": ["GCF_000856445.1"]
     }
 }
