@@ -17,6 +17,10 @@ process run_ivar{
     mapping_quality = 30
 
     """
+    which samtools
+    samtools --version
+    set -e
+    set -o pipefail
     # IVAR STEP 1 ----------------------------------------------------------------
     samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} | \
     ivar variants -p ${sample_id} -q ${mapping_quality} -t 0.05
@@ -32,13 +36,15 @@ process run_ivar{
     # EDIT FILE NAMES
     mv ${sample_id}.fa ${sample_id}.depth${depth}.fa
     mv ${sample_id}.ivar060.fa ${sample_id}.depth${depth}.amb.fa
-    sed -i -e 's/>.*/>${sample_id}/g' ${sample_id}.depth${depth}.fa
-    sed -i -e 's/>.*/>${sample_id}/g' ${sample_id}.depth${depth}.amb.fa
+    #sed -i -e 's/>.*/>${sample_id}/g' ${sample_id}.depth${depth}.fa
+    #sed -i -e 's/>.*/>${sample_id}/g' ${sample_id}.depth${depth}.amb.fa
     """
 }
 
 
-//samtools mpileup - The SAMtools mpileup utility provides a summary of the coverage of mapped reads on a reference sequence at a single base pair resolution
+//samtools mpileup - The SAMtools mpileup utility provides a summary of the coverage of 
+//                   mapped reads on a reference sequence at a single base pair resolution
+
 /*
 samtools mpileup: This is the main command for running the samtools mpileup tool. 
 It tells the system to execute the samtools program with the mpileup subcommand.
