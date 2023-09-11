@@ -1,17 +1,20 @@
 {
-    "SC2": {
-        "reference_genome": ["GCF_009858895.2."]
+    "SCOV2": {
+        "reference_genome": ["NC_045512.2_SARS-CoV2_Wuhan-Hu-1"]
     },
     "H1N1A": {
-        "reference_genome": ["GCF_001343785.1"]
+        "reference_genome": ["NC_026438.1_Influenza_A_H1N1_complete_genome"]
     },
     "H3N2A":{
-        "reference_genome": ["GCF_000865085.1"]
+        "reference_genome": ["NC_007373.1_Influenza_A_H3N2_complete_genome"]
     },
     "fluB":{
-        "reference_genome": ["GCF_000820495.2"]
+        "reference_genome": ["NC_002204.1_Influenza_B_complete_genome"]
     },
-    "RSV":{
-        "reference_genome": ["GCF_000856445.1"]
+    "hRSVA":{
+        "reference_genome": ["hRSV_subtypeA"]
+    },
+    "hRSVB":{
+        "reference_genome":["hRSV_subtypeB"]
     }
 }
