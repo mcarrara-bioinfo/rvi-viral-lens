@@ -7,6 +7,7 @@ nextflow.enable.dsl = 2
 include {load_json_file} from './workflow/load_json.nf'
 include {bwa_alignment_and_post_processing} from './modules/bwa_alignment.nf'
 include {run_ivar} from './modules/run_ivar.nf'
+
 class PipelineParameters {
     
     // Function that parses json output file 
@@ -24,15 +25,16 @@ class PipelineParameters {
         myFile.write(groovy.json.JsonOutput.prettyPrint(json.toString()))
     }
 }
+
 // Main entry-point workflow
 workflow {
 
     // === 1 - Process input ===
     // 1.1 - Get reads files 
-    reads_channel_fqgz = channel.fromFilePairs("${params.reads_dir}/*_R{1,2}*.fq.gz")
-    reads_channel_fagz = channel.fromFilePairs("${params.reads_dir}/*_R{1,2}*.fastq.gz")
+    reads_channel_fqgz = channel.fromFilePairs("${params.reads_dir}/*_R{1,2}*.fq.gz") // tuple (sampl_id, [fq1, fq2])
+    reads_channel_fagz = channel.fromFilePairs("${params.reads_dir}/*_R{1,2}*.fastq.gz") 
     reads_channel_fagz
-        | concat(reads_channel_fqgz) // tuple (sample_id, fq_pairs)
+        | concat(reads_channel_fqgz) // tuple (sample_id, fq_pairs) ART1_SC2, [fq1, fq2]
         | map{it -> tuple(it[0], it[0].split("_")[-1], it[1])} // tuple (sample_id, virus_code, reads)
         | set {reads_ch}
 
@@ -50,7 +52,7 @@ workflow {
 
     // generate sample to resources channel
     input_ch
-        | map {it -> tuple(it[0], it[3][it[1]])} // tuple (sample_id, viral_res[virus_id])
+        | map {it -> tuple(it[0], it[3][it[1]])} // tuple (sample_id, meta[virus_id])
         | set {file_id_to_resources_ch}
 
     // ==========================
@@ -61,8 +63,8 @@ workflow {
     input_ch
         |map{it -> 
             // NOTE remember we need to handle multiple references, this is a temporary fix
-            def reference_gnm = "${params.virus_resources_dir}${it[3][it[1]]['reference_genome'][0]}.fasta"
-                tuple(it[0], it[2], reference_gnm)
+            def reference_gnm = "${params.virus_resources_dir}${it[3][it[1]]['reference_genome'][0]}.fa"
+                tuple(it[0], it[1], it[2], reference_gnm)
             }
         | set {bwa_input_ch} // tuple (file_id, fastq_pairs, reference_file)
 
@@ -71,13 +73,13 @@ workflow {
     
     // add references to alignmed bams channel
     bams_ch = bwa_alignment_and_post_processing.out // tuple (file_id, [sorted_bam, bai])
-    
+    //bams_ch.view()
     bams_ch
         | join(file_id_to_resources_ch) // tuple(file_id. [sorted_bam, bai], virus_resources)
         | map { it ->
-            def fasta_nm = "${it[2]['reference_genome'][0]}.fasta"
+            def fasta_nm = "${it[2]['reference_genome'][0]}.fa"
             def ref_gnm_path = "${params.virus_resources_dir}${fasta_nm}"
-            tuple( it[0], it[1], ref_gnm_path)
+            tuple( it[0], it[1], ref_gnm_path) //tuple (file_id, [sorted_bam, bai], ref_gnm_path)
         }
         |set {ivar_in_ch}
     // Do genome consensus generation
