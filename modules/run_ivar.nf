@@ -1,6 +1,6 @@
 // this process was based on the one available at ViralFlow (https://github.com/dezordi/ViralFlow/blob/vfnext/vfnext/modules/runIvar.nf)
 process run_ivar{
-  publishDir "${params.results_dir}/${sample_id}_results/", mode: "copy", pattern: "*.{fa,tsv}"
+  publishDir "${params.results_dir}/${sample_id}_results/", mode: "copy", pattern: "*.{fa,tsv,txt}"
 
   label "ivar"
   
