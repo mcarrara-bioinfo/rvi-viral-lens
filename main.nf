@@ -4,9 +4,7 @@
 nextflow.enable.dsl = 2
 
 // --- import modules ---------------------------------------------------------
-include {load_json_file} from './workflow/load_json.nf'
-include {bwa_alignment_and_post_processing} from './modules/bwa_alignment.nf'
-include {run_ivar} from './modules/run_ivar.nf'
+include {GENERATE_CONSENSUS} from './workflow/GENERATE_CONSENSUS.nf'
 
 class PipelineParameters {
     
@@ -66,26 +64,11 @@ workflow {
             def reference_gnm = "${params.virus_resources_dir}${it[3][it[1]]['reference_genome'][0]}.fa"
                 tuple(it[0], it[1], it[2], reference_gnm)
             }
-        | set {bwa_input_ch} // tuple (file_id, fastq_pairs, reference_file)
-
-    //bwa_input_ch.view()
-    bwa_alignment_and_post_processing (bwa_input_ch)
-    
-    // add references to alignmed bams channel
-    bams_ch = bwa_alignment_and_post_processing.out // tuple (file_id, [sorted_bam, bai])
-    //bams_ch.view()
-    bams_ch
-        | join(file_id_to_resources_ch) // tuple(file_id. [sorted_bam, bai], virus_resources)
-        | map { it ->
-            def fasta_nm = "${it[2]['reference_genome'][0]}.fa"
-            def ref_gnm_path = "${params.virus_resources_dir}${fasta_nm}"
-            tuple( it[0], it[1], ref_gnm_path) //tuple (file_id, [sorted_bam, bai], ref_gnm_path)
-        }
-        |set {ivar_in_ch}
-    // Do genome consensus generation
-    run_ivar(ivar_in_ch)
+        | set {bwa_input_ch} // tuple (file_id, virus_id, fastq_pairs, reference_file)
 
     // Do alignment of consensus to genome to ref
+
+    GENERATE_CONSENSUS(bwa_input_ch)
 
     // Do species specific
 
