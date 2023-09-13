@@ -28,55 +28,22 @@ class PipelineParameters {
 workflow {
 
     // === 1 - Process input ===
-    // 1.1 - Get reads files 
-    reads_channel_fqgz = channel.fromFilePairs("${params.reads_dir}/*_R{1,2}*.fq.gz") // tuple (sampl_id, [fq1, fq2])
-    reads_channel_fagz = channel.fromFilePairs("${params.reads_dir}/*_R{1,2}*.fastq.gz") 
-    reads_channel_fagz
-        | concat(reads_channel_fqgz) // tuple (sample_id, fq_pairs) ART1_SC2, [fq1, fq2]
-        | map{it -> tuple(it[0], it[0].split("_")[-1], it[1])} // tuple (sample_id, virus_code, reads)
-        | set {reads_ch}
-
-    // 1.2 - load virus settings
-    //virus_resources = load_json_file(params.virus_resources_json)
-    //println(virus_resources.sarscov2.reference_genome[0])
-
+    // 1.0 - load virus settings
     json_params = PipelineParameters.readParams(params.virus_resources_json)
     json_ch = Channel.value(json_params)
 
-    // add meta
-    reads_ch
-        | combine(json_ch) // tuple (sample_id, viral_id, read_pairs, meta)
-        | set {input_ch}
-
-    // generate sample to resources channel
-    input_ch
-        | map {it -> tuple(it[0], it[3][it[1]])} // tuple (sample_id, meta[virus_id])
-        | set {file_id_to_resources_ch}
-
     // ==========================
+    // Map reads to virus
+    // MAP_READS_TO_VIRUS(reads_ch)
+    
+    // Gen consensus
+    GENERATE_CONSENSUS(params.consensus_mnf, json_ch)
+    // Do consensus sequence analysis
 
-    // Do whole reference genome mapping
-
-    // generate bwa in channel
-    input_ch
-        |map{it -> 
-            // NOTE remember we need to handle multiple references, this is a temporary fix
-            def reference_gnm = "${params.virus_resources_dir}${it[3][it[1]]['reference_genome'][0]}.fa"
-                tuple(it[0], it[1], it[2], reference_gnm)
-            }
-        | set {bwa_input_ch} // tuple (file_id, virus_id, fastq_pairs, reference_file)
-
-    // Do alignment of consensus to genome to ref
-
-    GENERATE_CONSENSUS(bwa_input_ch)
-
-    // Do species specific
-
-    // general
+    // Do virus specific analysis
 
     // SARS-CoV-2
 
     // Flu
-
 
 }
