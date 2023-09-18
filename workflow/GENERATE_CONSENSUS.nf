@@ -9,12 +9,12 @@ workflow GENERATE_CONSENSUS {
 
     main:
         mnf_ch = parse_consensus_mnf(consensus_mnf) // tuple(index, sample_id, [fastq_pair], virus_id)
-        
+
         mnf_ch
             | combine(json_ch) // tuple(index, sample_id, [fastq_pair], virus_id, meta)
-            | map {it -> tuple("${it[0]}_${it[1]}",it[2],it[1], it[3][it[2]])} // tuple(index_sample_id, virus_id, [fastq_pair], meta[virus_id])
+            | map {it -> tuple("${it[0]}_${it[1]}", it[3], it[2], it[4][it[3]])} // tuple(index_sample_id, virus_id, [fastq_pair], meta[virus_id])
             | set {input_to_virus_rsrc_ch}
-        
+
         input_to_virus_rsrc_ch 
             | map {it ->
                 ref_gnm_path = "${params.virus_resources_dir}${it[3]["reference_genome"][0]}" 
@@ -30,7 +30,7 @@ workflow GENERATE_CONSENSUS {
         // set ivar input channel
         bams_ch
         | join(bwa_input_ch) // tuple(file_id. [sorted_bam, bai], virus_id, [fastq_pairs], ref_fasta)
-        | map { it -> tuple( it[0], it[1], it[4])} //tuple (file_id, [sorted_bam, bai], ref_fasta)
+        | map { it -> tuple(it[0], it[1], it[4])} //tuple (file_id, [sorted_bam, bai], ref_fasta)
         | set {ivar_in_ch}
 
         // generate consensus
@@ -48,7 +48,7 @@ def parse_consensus_mnf(consensus_mnf) {
     def mnf_ch = Channel.fromPath(consensus_mnf, checkIfExists: true)
                         | splitCsv(header: true, sep: ',')
                         | map { row ->
-                            //validateMnf(row)
+                            // TODO: validateMnf(row)
                             tuple(
                                 row.index,
                                 row.sample_id,
@@ -56,5 +56,5 @@ def parse_consensus_mnf(consensus_mnf) {
                                 row.virus_id
                             )
                         }
-    return mnf_ch // tuple(sample_id, [fastq_pairs], virus_id)
+    return mnf_ch // tuple(index, sample_id, [fastq_pairs], virus_id)
 }
