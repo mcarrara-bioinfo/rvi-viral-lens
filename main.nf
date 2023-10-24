@@ -4,6 +4,7 @@
 nextflow.enable.dsl = 2
 
 // --- import modules ---------------------------------------------------------
+include {SORT_READS_BY_REF} from './workflows/SORT_READS_BY_REF.nf'
 include {GENERATE_CONSENSUS} from './workflow/GENERATE_CONSENSUS.nf'
 
 class PipelineParameters {
@@ -34,8 +35,10 @@ workflow {
 
     // ==========================
     // Map reads to virus
-    // MAP_READS_TO_VIRUS(reads_ch)
-    
+
+    // SORT_READS_BY_REF
+    SORT_READS_BY_REF(params.manifest)
+
     // Gen consensus
     GENERATE_CONSENSUS(params.consensus_mnf, json_ch)
     // Do consensus sequence analysis
