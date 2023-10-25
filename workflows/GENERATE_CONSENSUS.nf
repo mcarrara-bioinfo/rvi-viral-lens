@@ -50,10 +50,10 @@ def parse_consensus_mnf(consensus_mnf) {
                         | map { row ->
                             // TODO: validateMnf(row)
                             tuple(
-                                row.index,
+                                row.idx,
                                 row.sample_id,
-                                [row.fastq_file_r1, row.fastq_file_r2],
-                                row.virus_id
+                                [row.reads_1, row.reads_2],
+                                row.tax_id
                             )
                         }
     return mnf_ch // tuple(index, sample_id, [fastq_pairs], virus_id)

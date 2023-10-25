@@ -7,6 +7,10 @@ kraken_tools v1.2
 biopython v1.81
 
 %post
+#!/bin/bash
+
+set -e
+set -u
 
 ## setup
 apt-get update && apt-get install -y python3.11 python3-pip wget

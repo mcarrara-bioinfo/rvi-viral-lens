@@ -5,7 +5,7 @@ nextflow.enable.dsl = 2
 
 // --- import modules ---------------------------------------------------------
 include {SORT_READS_BY_REF} from './workflows/SORT_READS_BY_REF.nf'
-include {GENERATE_CONSENSUS} from './workflow/GENERATE_CONSENSUS.nf'
+include {GENERATE_CONSENSUS} from './workflows/GENERATE_CONSENSUS.nf'
 
 class PipelineParameters {
     
