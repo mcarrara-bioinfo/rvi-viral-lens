@@ -24,7 +24,7 @@ process sort_reads_with_krakentools {
                 extractFileBase=extract_\${taxid}
                 echo -e "\${extractFileBase}\t\${taxid}\t\${name}"
                 echo "running kraken_tools on \${taxid}"
-                python3 extract_kraken_reads.py \
+                extract_kraken_reads.py \
                 -k ${kraken_output} \
                 -s1 ${classified_fqs[0]} \
                 -s2 ${classified_fqs[1]} \
