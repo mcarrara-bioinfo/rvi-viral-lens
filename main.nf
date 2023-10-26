@@ -38,9 +38,10 @@ workflow {
 
     // SORT_READS_BY_REF
     SORT_READS_BY_REF(params.manifest)
+    consensus_mnf = SORT_READS_BY_REF.out
 
     // Gen consensus
-    GENERATE_CONSENSUS(params.consensus_mnf, json_ch)
+    GENERATE_CONSENSUS(consensus_mnf, json_ch)
     // Do consensus sequence analysis
 
     // Do virus specific analysis
