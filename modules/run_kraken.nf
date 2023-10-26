@@ -5,7 +5,7 @@ process run_kraken {
     publishDir "${params.outdir}/${sample_id}", mode: 'copy'
 
     input:
-        tuple val(run_id), val(sample_id), path(fastqs) // tuple(run_id, sample_id, [fastq_pairs])
+        tuple val(sample_id), path(fastqs) // tuple(sample_id, [fastq_pairs])
         val(db_path) // (absolute) path to kraken DB
         path(outdir) // path to outdir
 
