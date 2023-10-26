@@ -45,5 +45,9 @@ workflow SORT_READS_BY_REF {
         // output_mnf_ch.view()
 
         write_sorted_manifest(output_mnf_ch)
+        consensus_mnf = write_sorted_manifest.out
+
+    emit:
+        consensus_mnf
 
 }
