@@ -1,6 +1,8 @@
 process write_sorted_manifest {
 
-    publishDir "${params.outdir}", pattern: "*.csv", mode: 'copy', overwrite: true
+    label "kraken"
+
+    publishDir "${params.outdir}/${sample_id}", pattern: "*.csv", mode: 'copy', overwrite: true
 
     input:
         tuple val(sample_id), val(extracted_fqs_list)
