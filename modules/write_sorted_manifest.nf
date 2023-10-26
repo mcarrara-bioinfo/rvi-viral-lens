@@ -10,7 +10,8 @@ process write_sorted_manifest {
     output:
         path("sorted_manifest.csv")
 
-    script:"""
+    script:
+    """
         #!/bin/python3
 
         import os
@@ -34,11 +35,16 @@ process write_sorted_manifest {
 
         sorted_clean_fq_list = create_lines(clean_fq_list)
 
-        with open("sorted_manifest.csv", 'w', newline='') as outcsv:
-            writer = csv.writer(outcsv)
-            writer.writerow(["idx", "sample_id", "reads_1", "reads_2", "tax_id"])
-            for idx, tax_id in enumerate(sorted_clean_fq_list.keys()):
-                writer.writerow([idx, "${sample_id}", EXTRACTED_FQS_DIR+sorted_clean_fq_list[tax_id][0], EXTRACTED_FQS_DIR+sorted_clean_fq_list[tax_id][1], tax_id])
-        """
-
+        if os.path.exists(os.path.join("${params.outdir}", "sorted_manifest.csv")):
+            with open("sorted_manifest.csv", 'a+', newline='') as outcsv:
+                appender = csv.writer(outcsv)
+                for idx, tax_id in enumerate(sorted_clean_fq_list.keys()):
+                appender.writerow([idx, "${sample_id}", EXTRACTED_FQS_DIR+sorted_clean_fq_list[tax_id][0], EXTRACTED_FQS_DIR+sorted_clean_fq_list[tax_id][1], tax_id])
+        else:
+            with open("sorted_manifest.csv", 'w', newline='') as outcsv:
+                writer = csv.writer(outcsv)
+                writer.writerow(["idx", "sample_id", "reads_1", "reads_2", "tax_id"])
+                for idx, tax_id in enumerate(sorted_clean_fq_list.keys()):
+                    writer.writerow([idx, "${sample_id}", EXTRACTED_FQS_DIR+sorted_clean_fq_list[tax_id][0], EXTRACTED_FQS_DIR+sorted_clean_fq_list[tax_id][1], tax_id])
+    """
 }
