@@ -9,7 +9,6 @@ def parse_clean_mnf(consensus_mnf) {
                         | splitCsv(header: true, sep: ',')
                         | map { row ->
                             tuple(
-                                row.run_id,
                                 row.sample_id,
                                 [row.reads_1, row.reads_2]
                             )
