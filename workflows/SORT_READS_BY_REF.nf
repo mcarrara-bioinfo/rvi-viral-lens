@@ -40,11 +40,13 @@ workflow SORT_READS_BY_REF {
 
         sort_reads_with_krakentools(sort_reads_in_ch)
 
-        output_mnf_ch = sort_reads_with_krakentools.out
+        output_mnf_ch = sort_reads_with_krakentools.out.collect()
         // output_mnf_ch.view()
 
         write_sorted_manifest(output_mnf_ch)
         consensus_mnf = write_sorted_manifest.out
+
+        // consensus_mnf.view()
 
     emit:
         consensus_mnf
