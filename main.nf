@@ -36,12 +36,13 @@ workflow {
     // ==========================
     // Map reads to virus
 
-    // SORT_READS_BY_REF
+    // sort reads by taxon
+    // input = per-sample fastq manifest; output = per-sample, per-taxon fastq manifest
     SORT_READS_BY_REF(params.manifest)
     consensus_mnf = SORT_READS_BY_REF.out
 
-    // Gen consensus
-    // GENERATE_CONSENSUS(consensus_mnf, json_ch)
+    // generate consensus
+    GENERATE_CONSENSUS(consensus_mnf, json_ch)
     // Do consensus sequence analysis
 
     // Do virus specific analysis

@@ -45,7 +45,8 @@ workflow GENERATE_CONSENSUS {
 
 def parse_consensus_mnf(consensus_mnf) {
 
-    def mnf_ch = Channel.fromPath(consensus_mnf, checkIfExists: true)
+    // def mnf_ch = Channel.fromPath(consensus_mnf, checkIfExists: true)
+    def mnf_ch = consensus_mnf
                         | splitCsv(header: true, sep: ',')
                         | map { row ->
                             // TODO: validateMnf(row)

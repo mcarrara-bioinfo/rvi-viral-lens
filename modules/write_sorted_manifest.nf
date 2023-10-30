@@ -17,6 +17,11 @@ process write_sorted_manifest {
         import csv
         from collections import defaultdict
 
+
+        ## get input list and output a defaultdict(list)
+        ## input list = [sample_1, [sample_1.taxid_1.{1,2}.fq], sample_2, [sample_2.taxid_2.{1,2}.fq]...]
+        ## output dict = {"sample_id, tax_id": [sample_id.tax_id.{1,2}.fq]}
+
         def create_lines(input_list):
             lines = defaultdict(list)
             for data_set in input_list:
@@ -34,9 +39,12 @@ process write_sorted_manifest {
                         lines[k] =  [EXTRACTED_FQS_DIR+basename]
             return lines
 
+        ## get a tractable python list from input channel
         clean_fq_list = "${extracted_fqs_list}".split("],")
 
         fq_lines = create_lines(clean_fq_list)
+
+        ## write to file
         with open("sorted_manifest.csv", 'w', newline='') as outcsv:
             writer = csv.writer(outcsv)
             writer.writerow(["idx", "sample_id", "reads_1", "reads_2", "tax_id"])

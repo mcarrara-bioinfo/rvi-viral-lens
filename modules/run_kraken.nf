@@ -11,6 +11,7 @@ process run_kraken {
 
     output:
         tuple val(sample_id), path("*.kraken.output"), path("*.class_seqs*"), path("*.unclass_seqs*"), path("*.report.txt")
+
     script:
         """
         #!/bin/bash

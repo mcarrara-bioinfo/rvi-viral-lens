@@ -22,33 +22,27 @@ workflow SORT_READS_BY_REF {
         clean_mnf // path to clean manifest
 
     main:
-
+        // create channel from input per-sample manifest
         mnf_ch = parse_clean_mnf(params.manifest)
-        mnf_ch.view()
 
-
+        // run kraken and get outputs
         run_kraken(mnf_ch, params.db_path, params.outdir)
-        kraken_out_ch = run_kraken.out
+        kraken_out_ch = run_kraken.out // tuple (sample_id, kraken_output, [classified_fq_filepair], [unclassified_fq_filepair], kraken_report)
 
-        // kraken_out_ch.view()
-
+        // drop unclassified fq filepair
         kraken_out_ch
-        | map {it -> tuple(it[0], it[1], it[2], it[4])} //tuple (sample_id, kraken_output, [classified_fq_filepair], kraken_report)
+        | map {it -> tuple(it[0], it[1], it[2], it[4])} // tuple (sample_id, kraken_output, [classified_fq_filepair], kraken_report)
         | set {sort_reads_in_ch}
 
-        // sort_reads_in_ch.view()
-
+        // run krakentools and collect all per-sample per-taxon fq filepairs
         sort_reads_with_krakentools(sort_reads_in_ch)
-
         output_mnf_ch = sort_reads_with_krakentools.out.collect()
-        // output_mnf_ch.view()
 
+        // write a per-sample per-taxon manifest
         write_sorted_manifest(output_mnf_ch)
         consensus_mnf = write_sorted_manifest.out
 
-        // consensus_mnf.view()
-
     emit:
-        consensus_mnf
+        consensus_mnf // path to /work dir copy of output manifest
 
 }
