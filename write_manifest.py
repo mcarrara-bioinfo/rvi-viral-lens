@@ -61,7 +61,7 @@ else:
         exit(1)
 
     # Write the data to a CSV file
-    col_names = ["sample_id","reads_1","reads_2","taxid"]
+    col_names = ["index","sample_id","reads_1","reads_2","taxid"]
 
     if get_taxid == False:
         col_names.remove("taxid")
