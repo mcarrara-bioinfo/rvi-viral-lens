@@ -28,7 +28,7 @@ else:
     # Loop through files in the directory
     idx = 0
     for filename in os.listdir(directory):
-        if filename.endswith(ext_1) or filename.endswith(ext_2):
+        if filename.endswith(ext_1): #if ext1 exist, ext2 must exist
             # Extract sample_id and virus_id from the file name
             parts = filename.split('_')
             sample_id = parts[0]
@@ -44,7 +44,6 @@ else:
                 r1_file = os.path.join(directory, filename.replace(ext_2, ext_1))
 
             # Append the data to the list
-
             if get_taxid == False:
                 rows_values = [idx, sample_id, r1_file, r2_file]
             if get_taxid == True:
@@ -61,7 +60,7 @@ else:
         exit(1)
 
     # Write the data to a CSV file
-    col_names = ["sample_id","reads_1","reads_2","taxid"]
+    col_names = ["index","sample_id","reads_1","reads_2","taxid"]
 
     if get_taxid == False:
         col_names.remove("taxid")
