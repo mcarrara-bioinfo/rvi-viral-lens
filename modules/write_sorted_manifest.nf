@@ -26,7 +26,7 @@ process write_sorted_manifest {
             lines = defaultdict(list)
             for data_set in input_list:
                 split_data = data_set.strip("[]").replace(" [", "").split(",")
-                sample_id = split_data[0]
+                sample_id = split_data[0].strip(" ")
                 EXTRACTED_FQS_DIR = os.path.join("${params.outdir}", f"{sample_id}/reads_by_taxon/")
                 fq_list = split_data[1:]
                 for fq_file in fq_list:
