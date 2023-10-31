@@ -8,7 +8,7 @@ process sort_reads_with_krakentools {
         tuple val(sample_id), path(kraken_output), path(classified_fqs), path(kraken_report)
 
     output:
-        tuple val(sample_id), path("*.*.extracted_{1,2}.fq") // tuple(sample_id, [sample_id.tax_id.extracted_{1,2}.fq])
+        tuple val(sample_id), path("*.*.extracted_{1,2}.fq"), optional: true // tuple(sample_id, [sample_id.tax_id.extracted_{1,2}.fq])
 
     script:
         """
