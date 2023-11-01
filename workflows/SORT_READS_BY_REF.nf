@@ -23,7 +23,7 @@ workflow SORT_READS_BY_REF {
 
     main:
         // create channel from input per-sample manifest
-        mnf_ch = parse_clean_mnf(params.manifest)
+        mnf_ch = parse_clean_mnf(clean_mnf)
 
         // run kraken and get outputs
         run_kraken(mnf_ch, params.db_path, params.outdir)
@@ -45,4 +45,26 @@ workflow SORT_READS_BY_REF {
     emit:
         consensus_mnf // path to /work dir copy of output manifest
 
+}
+
+def check_sort_reads_params(){
+    def errors = 0
+    // was the manifest provided?
+    if (params.manifest == null){
+        log.error("No manifest provided")
+        errors +=1
+    }
+    // if yes, is it a file which exists? 
+    if (params.manifest){
+        manifest_file = file(params.manifest)
+        if (!manifest_file.exists()){
+            log.error("The manifest provided (${params.irods_manifest}) does not exist.")
+            errors += 1
+        }
+        //TODO
+        //else {
+        //    validate_manifest(params.manifest)
+        //}
+    }
+    return errors
 }

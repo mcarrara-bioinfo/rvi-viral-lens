@@ -12,11 +12,14 @@ workflow GENERATE_CONSENSUS {
 
         mnf_ch
             | combine(json_ch) // tuple(index, sample_id, [fastq_pair], virus_id, meta)
-            | map {it -> tuple("${it[0]}_${it[1]}", it[3], it[2], it[4][it[3]])} // tuple(index_sample_id, virus_id, [fastq_pair], meta[virus_id])
+            //| map {it -> tuple("${it[0]}_${it[1]}", it[3], it[2], it[4][it[3]])} // tuple(index_sample_id, virus_id, [fastq_pair], meta[virus_id])
+            | map {it -> tuple("${it[0]}_${it[1]}", it[3], it[2], it[4])} // tuple(index_sample_id, virus_id, [fastq_pair], meta[virus_id])
             | set {input_to_virus_rsrc_ch}
-
+        input_to_virus_rsrc_ch.view()
+        
         input_to_virus_rsrc_ch 
             | map {it ->
+                println(it)
                 ref_gnm_path = "${params.virus_resources_dir}${it[3]["reference_genome"][0]}" 
                 tuple(it[0], it[1],it[2],ref_gnm_path)
                 }
@@ -44,8 +47,7 @@ workflow GENERATE_CONSENSUS {
 //     only whatever is used by the pipeline should be output by the process. 
 
 def parse_consensus_mnf(consensus_mnf) {
-
-    // def mnf_ch = Channel.fromPath(consensus_mnf, checkIfExists: true)
+    // consensus_mnf <Channel.fromPath()>
     def mnf_ch = consensus_mnf
                         | splitCsv(header: true, sep: ',')
                         | map { row ->
@@ -58,4 +60,27 @@ def parse_consensus_mnf(consensus_mnf) {
                             )
                         }
     return mnf_ch // tuple(index, sample_id, [fastq_pairs], virus_id)
+}
+
+def check_generate_consensus_params(){
+
+    def errors = 0
+    // Is virus resource param set to something?
+    if (param.virus_resources_json == null){
+        log.error("No virus resource json file set")
+        errors +=1
+    }
+    // if yes, is it a file which exists? 
+    if (params.virus_resources_json){
+        virus_res_json = file(params.virus_resources_dir)
+        if (!virus_res_json.exists()){
+            log.error("The virus resource json provided (${params.irods_manifest}) does not exist.")
+            errors += 1
+        }
+        //TODO
+        //else {
+        //    validate_virus_resource(params.irods_manifest, params.panels_settings)
+        //}
+    }
+    return errors
 }
