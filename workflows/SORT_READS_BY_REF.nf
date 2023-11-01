@@ -58,7 +58,7 @@ def check_sort_reads_params(){
     if (params.manifest){
         manifest_file = file(params.manifest)
         if (!manifest_file.exists()){
-            log.error("The manifest provided (${params.irods_manifest}) does not exist.")
+            log.error("The manifest provided (${params.manifest}) does not exist.")
             errors += 1
         }
         //TODO
