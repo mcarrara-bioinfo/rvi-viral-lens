@@ -32,7 +32,7 @@ process write_sorted_manifest {
                 for fq_file in fq_list:
                     basename = fq_file.split("/")[-1]
                     split_base = basename.split(".")
-                    k = f"{sample_id}, {split_base[1]}"
+                    k = f"{sample_id},{split_base[1]}"
                     if k in lines.keys():
                         lines[k].append(EXTRACTED_FQS_DIR+basename)
                     else:
