@@ -30,7 +30,6 @@ class PipelineParameters {
 
 // Main entry-point workflow
 workflow {
-
     // === 1 - Process input ===
     check_main_params()
     // ==========================
@@ -40,6 +39,7 @@ workflow {
     // input = per-sample fastq manifest; output = per-sample, per-taxon fastq manifest
     
     if (params.entry_point == "sort_reads"){
+
         SORT_READS_BY_REF(params.manifest)
         consensus_mnf = SORT_READS_BY_REF.out
     }
@@ -98,7 +98,7 @@ def check_main_params(){
         errors += check_sort_reads_params()
     }
 
-    if (params.entry_point="consensus_gen"){
+    if (params.entry_point=="consensus_gen"){
         // check if manifest was provided
         errors += __check_if_params_file_exist("consensus_mnf", params.consensus_mnf)
     }
