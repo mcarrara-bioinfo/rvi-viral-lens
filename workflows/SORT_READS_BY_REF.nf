@@ -26,7 +26,7 @@ workflow SORT_READS_BY_REF {
         mnf_ch = parse_clean_mnf(clean_mnf)
 
         // run kraken and get outputs
-        run_kraken(mnf_ch, params.db_path, params.outdir)
+        run_kraken(mnf_ch, params.db_path, params.results_dir)
         kraken_out_ch = run_kraken.out // tuple (sample_id, kraken_output, [classified_fq_filepair], [unclassified_fq_filepair], kraken_report)
 
         // drop unclassified fq filepair

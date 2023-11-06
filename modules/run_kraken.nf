@@ -2,12 +2,12 @@ process run_kraken {
 
     label "kraken"
 
-    publishDir "${params.outdir}/${sample_id}", mode: 'copy'
+    publishDir "${params.results_dir}/${sample_id}", mode: 'copy'
 
     input:
         tuple val(sample_id), path(fastqs) // tuple(sample_id, [fastq_pairs])
         val(db_path) // (absolute) path to kraken DB
-        path(outdir) // path to outdir
+        path(results_dir) // path to results_dir
 
     output:
         tuple val(sample_id), path("*.kraken.output"), path("*.class_seqs*"), path("*.unclass_seqs*"), path("*.report.txt")
