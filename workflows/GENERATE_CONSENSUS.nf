@@ -12,20 +12,21 @@ workflow GENERATE_CONSENSUS {
 
         mnf_ch
             | combine(json_ch) // tuple(index, sample_id, [fastq_pair], virus_id, meta)
-            //| map {it -> tuple("${it[0]}_${it[1]}", it[3], it[2], it[4][it[3]])} // tuple(index_sample_id, virus_id, [fastq_pair], meta[virus_id])
-            | map {it -> tuple("${it[0]}_${it[1]}", it[3], it[2], it[4])} // tuple(index_sample_id, virus_id, [fastq_pair], meta[virus_id])
+            | map {it -> tuple("${it[0]}_${it[1]}_${it[3]}", it[3], it[2], it[4][it[3]])} // tuple(index_sample_id, virus_id, [fastq_pair], meta[virus_id])
+            | branch {
+                missing_taxids: it[3] == null
+                valid_taxids: it[3] != null
+            }
             | set {input_to_virus_rsrc_ch}
-        input_to_virus_rsrc_ch.view()
-        
-        input_to_virus_rsrc_ch 
+
+
+        input_to_virus_rsrc_ch.valid_taxids
             | map {it ->
-                println(it)
                 ref_gnm_path = "${params.virus_resources_dir}${it[3]["reference_genome"][0]}" 
                 tuple(it[0], it[1],it[2],ref_gnm_path)
                 }
             | set {bwa_input_ch} // tuple(index_sample_id, virus_id, [fastq_pair], ref_fasta_path)
         
-        //bwa_input_ch.first().view()
         // align reads to reference
         bwa_alignment_and_post_processing (bwa_input_ch)
         bams_ch = bwa_alignment_and_post_processing.out // tuple (file_id, [sorted_bam, bai])
