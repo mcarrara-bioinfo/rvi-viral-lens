@@ -1,0 +1,52 @@
+Bootstrap: docker
+From: ubuntu:22.04
+
+%labels
+kraken2 v2.1.3
+kraken_tools v1.2
+biopython v1.81
+
+%post
+#!/bin/bash
+
+set -e
+set -u
+
+## setup
+apt update
+apt upgrade -y
+apt install -y python-is-python3 python3-pip wget
+
+python --version
+
+pip3 install biopython==1.81
+
+mkdir /app/
+cd /app/
+
+## kraken install
+wget -O kraken2_2.1.3.tar.gz "https://github.com/DerrickWood/kraken2/archive/refs/tags/v2.1.3.tar.gz"
+
+tar -xzf kraken2_2.1.3.tar.gz
+cd kraken2-2.1.3 && mkdir kraken_bin
+./install_kraken2.sh ./kraken_bin
+cd kraken_bin
+echo PATH="`pwd`:$PATH"
+cd /app/
+
+## pull kraken_tools
+wget -O kraken_tools1.2.tar.gz "https://github.com/jenniferlu717/KrakenTools/archive/refs/tags/v1.2.tar.gz"
+
+cd /app/
+tar -xzf kraken_tools1.2.tar.gz
+cd KrakenTools-1.2
+echo PATH="`pwd`:$PATH"
+cd /app/
+
+%environment
+    export PATH=$PATH:/app/kraken2-2.1.3/kraken_bin/
+    export PATH=$PATH:/app/KrakenTools-1.2/
+
+%test
+    kraken2 --version
+    extract_kraken_reads.py -h
