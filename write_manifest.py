@@ -31,7 +31,11 @@ else:
         if filename.endswith(ext_1): #if ext1 exist, ext2 must exist
             # Extract sample_id and virus_id from the file name
             parts = filename.split('_')
-            sample_id = parts[0]
+
+            sample_id = f"{parts[0]}{parts[1]}"
+
+            if "#" in sample_id:
+                sample_id = sample_id.replace("#","-")
             if get_taxid == False:
                 virus_id = parts[1]
 
