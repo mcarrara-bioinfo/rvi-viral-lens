@@ -51,7 +51,7 @@
         "virus_code": "fluB-7"
     },
     "9000007":{
-        "reference_genome":["NC_002205.1.fasta"],
+        "reference_genome":["NC_002211.1.fasta"],
         "virus_name": "Influenza B segment 8",
         "virus_code": "fluB-8"
     },
