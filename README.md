@@ -8,7 +8,8 @@
 ```
 cd containers/
 sudo singularity build base_container.sif baseContainer.sing
-sudo singularity build ivar.sif ivarContainer.sing 
+sudo singularity build ivar.sif ivarContainer.sing
+# sudo singularity build kraken.sif kraken_container.singularity
 ```
 ### prepare reference genomes
 
@@ -18,8 +19,25 @@ bwa index NC_045512.2.fasta
 ```
 ## Usage
 
+#### Generate manifest
+
+For convenience, a script to generate the manifest is provided on this repo
+
 ```
-nextflow run main.nf --virus_resources_json ./virus_resources.json --reads_dir ./test_data
+python write_manifest.py ./path/to/my/fastqs_dir/ -fq1_ext my_r1_ext -fq2_ext my_r2_ext
+```
+
+
+[TODO] add manifest description
+
+```
+
+nextflow run /path/to/rvi_consensus_gen/main.nf --manifest /path/to/my/manifest.csv \
+        --db_path /path/to/my/kraken_db \
+        --outdir outputs/ \
+        --containers_dir /path/to/my/containers_dir/ \
+        --virus_resources_json /path/to/my/virus_resources.json \
+        -profile sanger_local -resume
 ```
 
 ## Input
