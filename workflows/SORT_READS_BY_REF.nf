@@ -16,8 +16,19 @@ def parse_clean_mnf(consensus_mnf) {
     return mnf_ch // tuple(run_id, sample_id, [fastq_pairs])
 }
 
-def mysolution(sort_reads_with_krakentools_out){
-    // your solution goes here
+def parse_clean_mnf_meta(consensus_mnf) {
+
+    def mnf_ch = Channel.fromPath(consensus_mnf)
+                    | splitCsv(header: true, sep: ',')
+                    | map {row -> 
+                        // set meta
+                        meta = [id: row.sample_id]
+                        // set files
+                        reads = [row.reads_1, row.reads_2]
+                        // declare channel shape
+                        [meta, reads]
+                    }
+    return mnf_ch // tuple(sample_id, [fastq_pairs])
 }
 
 workflow SORT_READS_BY_REF {
@@ -27,59 +38,47 @@ workflow SORT_READS_BY_REF {
 
     main:
         // create channel from input per-sample manifest
+        mnf_ch = parse_clean_mnf_meta(clean_mnf)
 
-
-
-        // 1 ) create meta
-        // --- META MUST BE INSERTED HERE --- //
-        mnf_ch = parse_clean_mnf(clean_mnf)
-        mnf_ch.view()
-        //-----------------------------------//
-
-
-
-        // 2 ) adapt process inputs and outputs
         // run kraken and get outputs
-        //run_kraken(mnf_ch, params.db_path, params.results_dir)
+        run_kraken(mnf_ch, params.db_path, params.results_dir)
 
-        //kraken_out_ch = run_kraken.out // tuple (sample_id, kraken_output, [classified_fq_filepair], [unclassified_fq_filepair], kraken_report)
-        //-----------------------------------//
-
-        // 3) adapt channels gymnastics
         // drop unclassified fq filepair
+        run_kraken.out // tuple (meta, kraken_output, [classified_fq_filepair], [unclassified_fq_filepair], kraken_report)
+            | map {it -> tuple(it[0], it[1], it[2], it[4])} // tuple (meta, kraken_output, [classified_fq_filepair], kraken_report)
+            | set {sort_reads_in_ch}
 
-        //kraken_out_ch
-        //| map {it -> tuple(it[0], it[1], it[2], it[4])} // tuple (sample_id, kraken_output, [classified_fq_filepair], kraken_report)
-        //| set {sort_reads_in_ch}
-        //-----------------------------------//
-
-        // 4) you know the drill by now
         // run krakentools and collect all per-sample per-taxon fq filepairs
-        
-        //sort_reads_with_krakentools(sort_reads_in_ch)
-        //-----------------------------------//
+        sort_reads_with_krakentools(sort_reads_in_ch)
 
-        // 5) The true hands on
-        //-- HERE WE NEED TO ADD A NEW ITEM TO META --// 
-        // At this point we have a new information which should be added to meta
-        // the taxid is reported on file names (this is not ideal, but for now it is okay)
-        // this information will be used to create a new channel which should feed the GENERATE CONSENSUS 
-        
-        //sample_taxid_ch = mysolution(sort_reads_with_krakentools.out)
+        sort_reads_with_krakentools.out // tuple (meta, [id.tax_id.extracted{1,2}.fq])
+            | map {meta, reads ->
+                // group pairs of fastqs based on file names, and add new info to meta
+                reads
+                    .groupBy { filePath -> filePath.getName().tokenize(".")[0..1].join(".")}
+                    .collect { identifier, paths ->
+                        meta.sample_id = identifier.tokenize(".")[0]
+                        meta.taxid = identifier.tokenize(".")[1]
+                        meta.id = "${meta.sample_id}.${meta.taxid}"
+                        [meta, paths]
+                    }
+            }
+            | set {sample_taxid_ch}
+            
         // ---------------------------- //
 
 
         // this should still be used, but should not be go downstream
-        //output_mnf_ch = sort_reads_with_krakentools.out.collect()
+        //sort_reads_with_krakentools.out.collect().view()
+        //output_mnf_ch = sort_reads_with_krakentools.out.map{it -> it[1]}.collect()
+        
+        //output_mnf_ch.view()
         // write a per-sample per-taxon manifest
         //write_sorted_manifest(output_mnf_ch)
         //consensus_mnf = write_sorted_manifest.out
 
     emit:
         sample_taxid_ch // tuple (meta, reads) 
-                        // * kraken_report files are not currently used on downstream workflows
-        //consensus_mnf // path to /work dir copy of output manifest
-
 }
 
 def check_sort_reads_params(){
