@@ -41,20 +41,22 @@ workflow {
     if (params.entry_point == "sort_reads"){
 
         SORT_READS_BY_REF(params.manifest)
-        consensus_mnf = SORT_READS_BY_REF.out
+        sample_taxid_ch = SORT_READS_BY_REF.out // tuple (meta, reads)
+        //consensus_mnf = SORT_READS_BY_REF.out
     }
     
     // generate consensus
     if (params.entry_point == "consensus_gen"){
+        // TODO if mnf, process mnf
         // process manifest
-        consensus_mnf = Channel.fromPath(params.consensus_mnf, checkIfExists: true)
+        //consensus_mnf = Channel.fromPath(params.consensus_mnf, checkIfExists: true)
     }
     // 1.0 - load virus settings
     json_params = PipelineParameters.readParams(params.virus_resources_json)
     json_ch = Channel.value(json_params)
 
-    GENERATE_CONSENSUS(consensus_mnf, json_ch)
-    
+    //GENERATE_CONSENSUS(consensus_mnf, json_ch)
+    GENERATE_CONSENSUS(sample_taxid_ch, json_ch)
     // Do consensus sequence analysis
     // Do virus specific analysis
 
