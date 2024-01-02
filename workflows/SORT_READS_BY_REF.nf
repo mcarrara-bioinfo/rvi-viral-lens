@@ -51,20 +51,30 @@ workflow SORT_READS_BY_REF {
         // run krakentools and collect all per-sample per-taxon fq filepairs
         sort_reads_with_krakentools(sort_reads_in_ch)
 
+        //sort_reads_with_krakentools.out.set {sample_taxid_ch}
+
+
         sort_reads_with_krakentools.out // tuple (meta, [id.tax_id.extracted{1,2}.fq])
             | map {meta, reads ->
                 // group pairs of fastqs based on file names, and add new info to meta
                 reads
                     .groupBy { filePath -> filePath.getName().tokenize(".")[0..1].join(".")}
-                    .collect { identifier, paths ->
-                        meta.sample_id = identifier.tokenize(".")[0]
-                        meta.taxid = identifier.tokenize(".")[1]
-                        meta.id = "${meta.sample_id}.${meta.taxid}"
-                        [meta, paths]
-                    }
+                    .collect { identifier, paths ->[[identifier, paths]]}
+            // this map returns a channel with a single value,
+            // which is a list with all the files.
+            }
+            | flatten() // flat the list [id_a, fqa1, fqa2, idb, fqb1, fqb2, ...]
+            | collate(3) // tuple (id.taxid, fq_1, fq_2)
+            | map { it ->
+                // rebuild meta and reads structure
+                meta = [sample_id:it[0].tokenize(".")[0],
+                        taxid:it[0].tokenize(".")[1]]
+                meta.id = "${meta.sample_id}.${meta.taxid}"
+                reads = [it[1], it[2]]
+                [meta, reads]
             }
             | set {sample_taxid_ch}
-            
+
         // ---------------------------- //
 
 
@@ -76,7 +86,7 @@ workflow SORT_READS_BY_REF {
         // write a per-sample per-taxon manifest
         //write_sorted_manifest(output_mnf_ch)
         //consensus_mnf = write_sorted_manifest.out
-
+    
     emit:
         sample_taxid_ch // tuple (meta, reads) 
 }
