@@ -1,14 +1,14 @@
 process sort_reads_with_krakentools {
-
+    tag "${meta.id}"
     label "kraken"
 
-    publishDir "${params.results_dir}/${sample_id}/reads_by_taxon/", mode: 'copy'
+    publishDir "${params.results_dir}/${meta.id}/reads_by_taxon/"//, mode: 'copy'
 
     input:
-        tuple val(sample_id), path(kraken_output), path(classified_fqs), path(kraken_report)
+        tuple val(meta), path(kraken_output), path(classified_fqs), path(kraken_report)
 
     output:
-        tuple val(sample_id), path("*.*.extracted_{1,2}.fq"), optional: true // tuple(sample_id, [sample_id.tax_id.extracted_{1,2}.fq])
+        tuple val(meta), path("*.*.extracted_{1,2}.fq"), optional: true // tuple(meta, [id.tax_id.extracted_{1,2}.fq])
 
     script:
         """
@@ -28,8 +28,8 @@ process sort_reads_with_krakentools {
                 -k ${kraken_output} \
                 -s1 ${classified_fqs[0]} \
                 -s2 ${classified_fqs[1]} \
-                -o ${sample_id}.\${taxid}.extracted_1.fq \
-                -o2 ${sample_id}.\${taxid}.extracted_2.fq \
+                -o ${meta.id}.\${taxid}.extracted_1.fq \
+                -o2 ${meta.id}.\${taxid}.extracted_2.fq \
                 -t \${taxid} \
                 --report ${kraken_report} \
                 --fastq-output
