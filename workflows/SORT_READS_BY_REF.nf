@@ -1,6 +1,5 @@
 include {run_kraken} from '../modules/run_kraken.nf'
 include {sort_reads_with_krakentools} from '../modules/sort_reads.nf'
-include {write_sorted_manifest} from '../modules/write_sorted_manifest.nf'
 
 def parse_clean_mnf_meta(consensus_mnf) {
 
