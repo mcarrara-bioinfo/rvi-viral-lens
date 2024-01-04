@@ -2,7 +2,7 @@ process sort_reads_with_krakentools {
     tag "${meta.id}"
     label "kraken"
 
-    publishDir "${params.results_dir}/${meta.id}/reads_by_taxon/"//, mode: 'copy'
+    publishDir "${params.results_dir}/${meta.id}/reads_by_taxon/", mode: 'copy'
 
     input:
         tuple val(meta), path(kraken_output), path(classified_fqs), path(kraken_report)
