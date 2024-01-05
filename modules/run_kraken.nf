@@ -1,16 +1,16 @@
 process run_kraken {
-
+    tag "${meta.id}"
     label "kraken"
 
-    publishDir "${params.results_dir}/${sample_id}", mode: 'copy'
+    publishDir "${params.results_dir}/${meta.id}", mode: 'copy'
 
     input:
-        tuple val(sample_id), path(fastqs) // tuple(sample_id, [fastq_pairs])
+        tuple val(meta), path(fastqs) // tuple(sample_id, [fastq_pairs])
         val(db_path) // (absolute) path to kraken DB
         path(results_dir) // path to results_dir
 
     output:
-        tuple val(sample_id), path("*.kraken.output"), path("*.class_seqs*"), path("*.unclass_seqs*"), path("*.report.txt")
+        tuple val(meta), path("*.kraken.output"), path("*.class_seqs*"), path("*.unclass_seqs*"), path("*.report.txt")
 
     script:
         """
@@ -21,11 +21,11 @@ process run_kraken {
 
         kraken2 \
         --db ${db_path} \
-        --output ${sample_id}.kraken.output \
+        --output ${meta.id}.kraken.output \
         --paired \
-        --classified-out ${sample_id}.class_seqs#.fq \
-        --unclassified-out ${sample_id}.unclass_seqs#.fq \
-        --report ${sample_id}.report.txt \
+        --classified-out ${meta.id}.class_seqs#.fq \
+        --unclassified-out ${meta.id}.unclass_seqs#.fq \
+        --report ${meta.id}.report.txt \
         ${fastqs}
         """
 }

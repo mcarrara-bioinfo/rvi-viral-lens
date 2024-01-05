@@ -1,19 +1,19 @@
 // this process was based on the one available at ViralFlow (https://github.com/dezordi/ViralFlow/blob/vfnext/vfnext/modules/runIvar.nf)
 process run_ivar{
-  publishDir "${params.results_dir}/${sample_id}_results/", mode: "copy", pattern: "*.{fa,tsv,txt}"
+  tag "${meta.id}"
+  publishDir "${params.results_dir}/${meta.sample_id}/${meta.taxid}/", mode: "copy", pattern: "*.{fa,tsv,txt}"
 
   label "ivar"
   
   input:
-    tuple val(sample_id), path(bams), path(ref_fa)
-    //path(ref_fa)
+    tuple val(meta), path(bams), path(ref_fa)
 
   output:
-    tuple val(sample_id), path("*.depth*.fa"), path("*.txt"), path("${sample_id}.tsv")
+    tuple val(meta), path("*.depth*.fa"), path("*.txt"), path("${meta.id}.tsv")
 
   script:
-    sorted_bam = "${bams[0].getSimpleName()}.sorted.bam"
-    depth = 5 
+    sorted_bam = "${meta.id}.sorted.bam"
+    depth = 5
     mapping_quality = 30
 
     """
@@ -23,21 +23,19 @@ process run_ivar{
     set -o pipefail
     # IVAR STEP 1 ----------------------------------------------------------------
     samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} | \
-    ivar variants -p ${sample_id} -q ${mapping_quality} -t 0.05
+    ivar variants -p ${meta.id} -q ${mapping_quality} -t 0.05
 
     # IVAR STEP 2 ----------------------------------------------------------------
     samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} | \
-    ivar consensus -p ${sample_id} -q ${mapping_quality} -t 0 -m ${depth} -n N
+    ivar consensus -p ${meta.id} -q ${mapping_quality} -t 0 -m ${depth} -n N
 
     # IVAR STEP 3 ----------------------------------------------------------------
     samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} | \
-    ivar consensus -p ${sample_id}.ivar060 -q ${mapping_quality} -t 0.60 -n N -m ${depth}
+    ivar consensus -p ${meta.id}.ivar060 -q ${mapping_quality} -t 0.60 -n N -m ${depth}
 
     # EDIT FILE NAMES
-    mv ${sample_id}.fa ${sample_id}.depth${depth}.fa
-    mv ${sample_id}.ivar060.fa ${sample_id}.depth${depth}.amb.fa
-    #sed -i -e 's/>.*/>${sample_id}/g' ${sample_id}.depth${depth}.fa
-    #sed -i -e 's/>.*/>${sample_id}/g' ${sample_id}.depth${depth}.amb.fa
+    mv ${meta.id}.fa ${meta.id}.depth${depth}.fa
+    mv ${meta.id}.ivar060.fa ${meta.id}.depth${depth}.amb.fa
     """
 }
 
