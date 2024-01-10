@@ -7,7 +7,6 @@ process run_kraken {
     input:
         tuple val(meta), path(fastqs) // tuple(sample_id, [fastq_pairs])
         val(db_path) // (absolute) path to kraken DB
-        path(results_dir) // path to results_dir
 
     output:
         tuple val(meta), path("*.kraken.output"), path("*.class_seqs*"), path("*.unclass_seqs*"), path("*.report.txt")

@@ -54,7 +54,10 @@ It tells the system to execute the samtools program with the mpileup subcommand.
 
 -d 50000:
     This option sets the maximum read depth to 50,000.
-    It limits the number of reads considered at a single genomic position. This can be useful for preventing excessive memory usage when dealing with very deep sequencing data, but it may also result in reduced sensitivity for variant calling if the depth is too low for your specific analysis.
+    It limits the number of reads considered at a single genomic position. 
+    This can be useful for preventing excessive memory usage when dealing 
+    with very deep sequencing data, but it may also result in reduced sensitivity 
+    for variant calling if the depth is too low for your specific analysis.
 
 --reference : This option specifies the reference genome or reference sequence file that will be used for alignment and variant calling.
 

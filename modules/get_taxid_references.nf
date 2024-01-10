@@ -1,25 +1,36 @@
 process get_taxid_reference_files{
 
-    tag "${meta.taxid}"
-    publishDir "${params.results_dir}/reference_files/", mode: 'copy'
+    tag "${taxid}"
+    publishDir "${params.results_dir}/reference_files/${taxid}/", mode: 'copy'
 
 
     input:
-        tuple val(meta), val(kraken_db_library_path),
-
+        val(taxid)
+        val(kraken_db_library_path)
     output:
-        tuple val(meta), path("${meta.taxid}.fa*")
+        tuple val(taxid), path("${taxid}.fa*"), optional : true
 
-    script:
-    """
+    shell:
+    '''
 
-    # get fasta sequence from kraken db library
-    awk -v \
-        taxid="${meta.taxid}" -v \
-        RS=">" -v \
-        ORS="" '$0 ~ taxid {print ">" $0}' "${kraken_db_library_path}" \
-        > "${meta.taxid}.fa"
+    awk -v taxid="!{taxid}" '/^>/ {
+        split($1, header, "|");
+        if (header[2] == taxid) {
+            flag=1;
+            print $0 > output_file;
+        } else {
+            flag=0;
+        }
+    }
+    flag' output_file="!{taxid}.fa" "!{kraken_db_library_path}" 
 
-    bwa index ${meta.taxid}
-    """
+    # Check if the output file is not empty
+    if [ -s "!{taxid}.fa" ]; then
+        bwa index "!{taxid}.fa"
+        echo "bwa index was run on !{taxid}.fa"
+    else
+        echo "Output file !{taxid}.fa does not exist."
+    fi
+
+    '''
 }
