@@ -62,22 +62,5 @@ def parse_consensus_mnf_meta(consensus_mnf) {
 def check_generate_consensus_params(){
 
     def errors = 0
-    // Is virus resource param set to something?
-    if (param.virus_resources_json == null){
-        log.error("No virus resource json file set")
-        errors +=1
-    }
-    // if yes, is it a file which exists?
-    if (params.virus_resources_json){
-        virus_res_json = file(params.virus_resources_dir)
-        if (!virus_res_json.exists()){
-            log.error("The virus resource json provided (${params.irods_manifest}) does not exist.")
-            errors += 1
-        }
-        //TODO
-        //else {
-        //    validate_virus_resource(params.irods_manifest, params.panels_settings)
-        //}
-    }
     return errors
 }

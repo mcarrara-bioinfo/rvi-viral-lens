@@ -10,24 +10,6 @@ include {check_sort_reads_params} from './workflows/SORT_READS_BY_REF.nf'
 include {SORT_READS_BY_REF} from './workflows/SORT_READS_BY_REF.nf'
 include {GENERATE_CONSENSUS} from './workflows/GENERATE_CONSENSUS.nf'
 
-class PipelineParameters {
-    
-    // Function that parses json output file 
-    public static Map readParams(json_file) {
-        def jsonSlurper = new groovy.json.JsonSlurper()
-        String pipelineparameter = new File(json_file).text
-        def Map configparam = (Map) jsonSlurper.parseText(pipelineparameter)
-        return configparam
-    }
-
-    // Function that writes a map to a json file
-    public static void writeParams(params, filename) {
-        def json = new groovy.json.JsonBuilder(params)
-        def myFile = new File(filename)
-        myFile.write(groovy.json.JsonOutput.prettyPrint(json.toString()))
-    }
-}
-
 // Main entry-point workflow
 workflow {
     // === 1 - Process input ===
@@ -39,7 +21,7 @@ workflow {
     // input = per-sample fastq manifest; output = per-sample, per-taxon fastq manifest
     
     if (params.entry_point == "sort_reads"){
-
+        // check if 
         SORT_READS_BY_REF(params.manifest)
         sample_taxid_ch = SORT_READS_BY_REF.out // tuple (meta, reads)
     }
@@ -50,11 +32,9 @@ workflow {
         sample_taxid_ch = parse_consensus_mnf_meta(params.consensus_mnf)
     }
 
-    // load virus settings
-    json_params = PipelineParameters.readParams(params.virus_resources_json)
-    json_ch = Channel.value(json_params)
 
-    GENERATE_CONSENSUS(sample_taxid_ch, json_ch)
+    GENERATE_CONSENSUS(sample_taxid_ch)
+    
     // TO DO: //
     // Do consensus sequence analysis
     // Do virus specific analysis
@@ -101,7 +81,6 @@ def check_main_params(){
         // check if manifest was provided
         errors += __check_if_params_file_exist("consensus_mnf", params.consensus_mnf)
     }
-    errors += __check_if_params_file_exist("virus_resources", params.virus_resources_json)
 
     //errors += check_generate_consensus_params()
 
