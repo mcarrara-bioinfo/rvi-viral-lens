@@ -4,55 +4,35 @@ include {run_ivar} from '../modules/run_ivar.nf'
 
 workflow GENERATE_CONSENSUS {
     take:
+        /*
+        meta must have the following keys:
+            - id
+            - taxid
+            - sample_id
+            - ref_files
+        */
         sample_taxid_ch // tuple (meta, reads)
-        json_ch // virus_resources dict
-
+        
     main:
-        // add virus resources info to meta
-        sample_taxid_ch // tuple(meta, fastq_pair)
-            | map {meta, reads ->
-                // add the vresources to meta
-                if (json_ch[meta.taxid].value!= null){
-                    ref_gnm_path = "${params.virus_resources_dir}${json_ch[meta.taxid].reference_genome.value[0]}"
-                    meta.reference_genome_path = ref_gnm_path
-                }
-                else {
-                    meta.reference_genome_path = null
-                }
-
-                // NOTE: adding the whole dct would be great when we need to add
-                //       stuff, however, this breaks the resume function. =/
-                //meta.virus_resources_dct = json_ch[meta.taxid]
-                [meta, reads]
-            }
-            | branch { meta, reads ->
-                missing_taxids: meta.reference_genome_path == null
-                valid_taxids: meta.reference_genome_path != null
-            }
-            | set {input_to_virus_rsrc_ch}
-
         // prepare bwa input channel
-        input_to_virus_rsrc_ch.valid_taxids // tuple (meta, reads)
-            | map {meta, reads ->
-                [meta,reads,meta.reference_genome_path]
-                }
-            | set {bwa_input_ch} // tuple(meta, reads, ref_genome_path)
+        sample_taxid_ch
+            | map {meta, reads -> [meta,reads,meta.ref_files]}
+            | set {bwa_input_ch} // tuple(meta, reads, ref_genome_paths)
 
         // align reads to reference
         bwa_alignment_and_post_processing (bwa_input_ch)
         bams_ch = bwa_alignment_and_post_processing.out // tuple (meta, [sorted_bam, bai])
 
-
         // set ivar input channel
-        // prep for join on meta.id
         bams_ch
-            | map {meta, bams -> tuple(meta, bams, meta.reference_genome_path)}
+            | map {meta, bams -> tuple(meta, bams, meta.ref_files)}
             | set {ivar_in_ch}
 
         // generate consensus
         run_ivar(ivar_in_ch)
+
         // NOTE for now everything out of ivar is emitted by the process, as the pipeline evolves
-        //     we need to review to only whatever is used by the pipeline should be on the output channel.
+        //     we need to review to publish only whatever is used by the pipeline should be on the output channel.
 
 
     emit:
@@ -72,6 +52,7 @@ def parse_consensus_mnf_meta(consensus_mnf) {
 
                             // set files
                             reads = [row.reads_1, row.reads_2]
+
                             // declare channel shape
                             [meta, reads]
                         }
