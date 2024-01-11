@@ -6,7 +6,7 @@ process run_ivar{
   label "ivar"
   
   input:
-    tuple val(meta), path(bams), path(ref_fa)
+    tuple val(meta), path(bams), path(ref_fa_fls)
 
   output:
     tuple val(meta), path("*.depth*.fa"), path("*.txt"), path("${meta.id}.tsv")
@@ -16,6 +16,8 @@ process run_ivar{
     depth = 5
     mapping_quality = 30
 
+    ref_fa="${meta.taxid}.fa"
+  
     """
     which samtools
     samtools --version
