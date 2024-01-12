@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- **[added]**: new parameter (`min_reads_for_taxid`)to set a treshold for minimum number of reads assigned for a taxid to be considered
+
 ### Changed
 
 - **[improvement]**: Taxid reference fasta files for consensus sequence are obtained from kraken database
