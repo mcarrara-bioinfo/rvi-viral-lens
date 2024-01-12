@@ -61,8 +61,10 @@ if ref_files_glob != None:
     ref_files_dct = {}
     for f in ref_files_found:
         # assume filenames are taxids (ex: 182728.fa)
+        aux_ref_files = [os.path.abspath(fl) for fl in glob.glob(f+"*")]
         taxid = f.split("/")[-1].split(".")[0]
-        ref_files_dct[taxid] = f
+        # get string for csv
+        ref_files_dct[taxid] = ";".join(aux_ref_files)
 
 # Initialize an empty list to store the data
 data = []
@@ -123,8 +125,6 @@ for fl in files_found:
             idx +=1
 
 print(f" > {idx} samples on the manifest")
-
-
 
 # Define the CSV output file
 if mnf_out_path == None:

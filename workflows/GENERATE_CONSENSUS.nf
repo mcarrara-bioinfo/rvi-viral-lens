@@ -1,4 +1,3 @@
-
 include {bwa_alignment_and_post_processing} from '../modules/bwa_alignment.nf'
 include {run_ivar} from '../modules/run_ivar.nf'
 
@@ -39,7 +38,6 @@ workflow GENERATE_CONSENSUS {
         run_ivar.out // tuple (meta, [fasta_files], [quality_txt_files], variant_tsv)
 }
 
-
 def parse_consensus_mnf_meta(consensus_mnf) {
     // consensus_mnf <Channel.fromPath()>
     def mnf_ch =  Channel.fromPath(consensus_mnf)
@@ -47,9 +45,12 @@ def parse_consensus_mnf_meta(consensus_mnf) {
                         | map {row -> 
                             // set meta
                             meta = [sample_id: row.sample_id,
-                                    taxid: row.taxid]
-                            meta.id = "${meta.sample_id}.${meta.taxid}"
+                                    taxid: row.taxid,
+                                    ref_files: row.ref_files.split(";").collect()]
 
+                            meta.id = "${row.sample_id}.${row.taxid}"
+                            
+                            
                             // set files
                             reads = [row.reads_1, row.reads_2]
 
