@@ -4,8 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## UNRELEASED
 
+### Added
+
 ### Changed
 
+- **[improvement]**: Taxid reference fasta files for consensus sequence are obtained from kraken database
 - **[improvement]**: Channels now rely on Meta Mapping
 - **[improvement]**: Output folder now have the following structure `output/<sample_id>/<taxid>`
 - **[improvement]**: `write_manifest.py` relies on glob expression
@@ -13,8 +16,7 @@ All notable changes to this project will be documented in this file.
 ### Removed
 
 - **[Removed]**: writing manifest process removed from `SORT_READS_BY_REF.nf` 
-
-### Added
+- **[Removed]**: json resource files and fasta files provided on the repo
 
 ### Fixed
 
