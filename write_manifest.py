@@ -13,6 +13,7 @@ parser.add_argument("-get_taxid", help="don't look for taxid on file names", act
 parser.add_argument("-filename_sep", default='.',
     help="separator char used to grab metadata from filenames (default='.')")
 parser.add_argument("-manifest_out", help="path for the manifest csv", default=None)
+parser.add_argument("-ref_files_glob", default=None, help="dir containing ref files per taxid")
 
 # Parse the command-line arguments
 args = parser.parse_args()
@@ -22,6 +23,7 @@ ext_2 = args.fq2_ext
 get_taxid = args.get_taxid
 mtdt_sep = args.filename_sep
 mnf_out_path = args.manifest_out
+ref_files_glob = args.ref_files_glob
 
 # SANITY CHECK
 if files_found == None:
@@ -51,6 +53,18 @@ for fl in files_found:
 
 else:
 '''
+
+# get ref files for a given taxid
+if ref_files_glob != None:
+    ref_files_found = [os.path.abspath(fl) for fl in glob.glob(ref_files_glob)]
+    assert(len(ref_files_found) > 0)
+    ref_files_dct = {}
+    for f in ref_files_found:
+        # assume filenames are taxids (ex: 182728.fa)
+        aux_ref_files = [os.path.abspath(fl) for fl in glob.glob(f+"*")]
+        taxid = f.split("/")[-1].split(".")[0]
+        # get string for csv
+        ref_files_dct[taxid] = ";".join(aux_ref_files)
 
 # Initialize an empty list to store the data
 data = []
@@ -100,12 +114,18 @@ for fl in files_found:
             if get_taxid == False:
                 rows_values = [idx, sample_id, fq1_flpath, fq2_flpath]
             if get_taxid == True:
-                rows_values = [idx, sample_id, fq1_flpath, fq2_flpath, taxid]
+                try:
+                    taxid_ref_file = ref_files_dct[taxid]
+                except(KeyError):
+                    print(f"WARN: no ref file for taxid, skipping {sample_id}.{taxid}")
+                    continue
+                rows_values = [idx, sample_id, fq1_flpath, fq2_flpath, taxid, taxid_ref_file]
 
             data.append(rows_values)
             idx +=1
 
-print(f" > {idx+1} samples on the manifest")
+print(f" > {idx} samples on the manifest")
+
 # Define the CSV output file
 if mnf_out_path == None:
         output_file = os.path.join(os.getcwd(), 'manifest.csv')
@@ -119,10 +139,11 @@ if len(data) == 0:
         exit(1)
 
 # Write the data to a CSV file
-col_names = ["index","sample_id","reads_1","reads_2","taxid"]
+col_names = ["index","sample_id","reads_1","reads_2","taxid", "ref_files"]
 
 if get_taxid == False:
         col_names.remove("taxid")
+        col_names.remove( "ref_files")
 
 with open(output_file, 'w', newline='') as csvfile:
         csv_writer = csv.writer(csvfile)

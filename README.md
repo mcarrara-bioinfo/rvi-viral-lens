@@ -33,7 +33,6 @@ nextflow run /path/to/rvi_consensus_gen/main.nf --manifest /path/to/my/manifest.
         --db_path /path/to/my/kraken_db \
         --outdir outputs/ \
         --containers_dir /path/to/my/containers_dir/ \
-        --virus_resources_json /path/to/my/virus_resources.json \
         -profile sanger_local -resume -with-trace -with-report
 ```
 
@@ -45,7 +44,6 @@ nextflow run ${CHECKOUT}/main.nf --entry_point consensus_gen \
         --consensus_mnf sorted_manifest.csv     
         --outdir $LAUNCHDIR/outputs/ \
         --containers_dir /path/to/containers_dir/ \
-        --virus_resources_json ${CHECKOUT}/virus_resources.json \
         -profile sanger_local -resume -with-trace -with-report
 ```
 
@@ -62,22 +60,3 @@ nextflow run ${CHECKOUT}/main.nf --entry_point consensus_gen \
 - Pair ended Reads
 - virus resources json file
 - manifest (required if starting from this entry point) 
-```{json}
-{
-    "SC2": {
-        "reference_genome": ["GCF_009858895.2."] // https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_009858895.2/
-    },
-    "H1N1A": {
-        "reference_genome": ["GCF_001343785.1"] // https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_001343785.1/
-    },
-    "H3N2A":{
-        "reference_genome": ["GCF_000865085.1"] // https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000865085.1/
-    },
-    "fluB":{
-        "reference_genome": ["GCF_000820495.2"] //https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000820495.2/
-    },
-    "RSV":{
-        "reference_genome":["GCF_000856445.1"] // https://www.ncbi.nlm.nih.gov/datasets/taxonomy/12814/
-    }
-}
-```
