@@ -83,7 +83,7 @@ workflow SORT_READS_BY_REF {
             }
             .map { meta, taxid_lvl_name_lst -> 
                 // fill meta 
-                meta.remove("id") // we don't care about which sample it came from
+                //meta.remove("id") // we don't care about which sample it came from
                 taxid_lvl_name_lst.each { tln ->  
                     meta["${tln[0]}_lvl"] = tln[1]
                     // Remove leading spaces from name
