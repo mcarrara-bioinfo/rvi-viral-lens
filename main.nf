@@ -10,6 +10,50 @@ include {check_sort_reads_params} from './workflows/SORT_READS_BY_REF.nf'
 include {SORT_READS_BY_REF} from './workflows/SORT_READS_BY_REF.nf'
 include {GENERATE_CONSENSUS} from './workflows/GENERATE_CONSENSUS.nf'
 
+/*
+* ANSI escape codes to color output messages
+*/
+ANSI_GREEN = "\033[1;32m"
+ANSI_RED = "\033[1;31m"
+ANSI_RESET = "\033[0m"
+ANSI_BOLD = "\033[1m"
+  
+log.info """${ANSI_RESET}
+  ===========================================
+  Viral Pipeline [Dev - Prototype]
+  Used parameters:
+  -------------------------------------------
+  --> general pipeline parameters:
+
+    --entry_point              : ${params.entry_point}
+    --containers_dir           : ${params.containers_dir}
+    --results_dir              : ${params.results_dir}
+
+  --> SORT_READS_BY_REF workflow parameters:
+
+    --db_path                  : ${params.db_path}
+    --db_library_fa_path       : ${params.db_library_fa_path}
+    --min_reads_for_taxid      : ${params.min_reads_for_taxid}
+
+  --> GENERATE_CONSENSUS workflow parameters:
+    --consensus_mnf            : ${params.consensus_mnf}
+    --depth_treshold           : ${params.depth_treshold}
+    --mapping_quality_treshold : ${params.mapping_quality_treshold}
+
+  --> viral subtyping branching parameters:
+    --scv2_keyword             : ${params.scv2_keyword}
+    --flu_keyword              : ${params.flu_keyword}
+
+  ------------------------------------------
+  Runtime data:
+  -------------------------------------------
+  Running with profile:   ${ANSI_GREEN}${workflow.profile}${ANSI_RESET}
+  Running as user:        ${ANSI_GREEN}${workflow.userName}${ANSI_RESET}
+  Launch dir:             ${ANSI_GREEN}${workflow.launchDir}${ANSI_RESET}
+  Base dir:               ${ANSI_GREEN}${baseDir}${ANSI_RESET}
+  ------------------------------------------
+""".stripIndent()
+
 // Main entry-point workflow
 workflow {
     // === 1 - Process input ===
@@ -107,20 +151,17 @@ def check_main_params(){
  */
 workflow.onComplete {
   // Log colors ANSI codes
-  c_reset = params.monochrome_logs ? '' : "\033[0m";
-  c_bold = params.monochrome_logs ? '' : "\033[1m";
-  c_red = params.monochrome_logs ? '' : "\033[0;31m";
-  c_green = params.monochrome_logs ? '' : "\033[0;32m";
+  
   println """
   Pipeline execution summary
   ---------------------------
-  Completed at : ${workflow.complete}
-  Duration     : ${workflow.duration}
-  Success      : ${c_bold}${workflow.success ? c_green : c_red}${workflow.success}${c_reset}
-  Results Dir  : ${file(params.outdir)}
-  Work Dir     : ${workflow.workDir}
-  Exit status  : ${workflow.exitStatus}
-  Error report : ${workflow.errorReport ?: '-'}
+  Completed at : ${ANSI_GREEN}${workflow.complete}${ANSI_RESET}
+  Duration     : ${ANSI_GREEN}${workflow.duration}${ANSI_RESET}
+  Success      : ${workflow.success ? ANSI_GREEN : ANSI_REF}${workflow.success}${ANSI_RESET}
+  Results Dir  : ${ANSI_GREEN}${file(params.results_dir)}${ANSI_RESET}
+  Work Dir     : ${ANSI_GREEN}${workflow.workDir}${ANSI_RESET}
+  Exit status  : ${ANSI_GREEN}${workflow.exitStatus}${ANSI_RESET}
+  Error report : ${ANSI_GREEN}${workflow.errorReport ?: '-'}${ANSI_RESET}
   """.stripIndent()
 }
 /*
