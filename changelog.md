@@ -5,11 +5,11 @@ All notable changes to this project will be documented in this file.
 ## UNRELEASED
 
 ### Added
-
+- **[added]**: branching `GENERATE_CONSENSUS` workflow output for viral subtyping routines
 - **[added]**: new parameter (`min_reads_for_taxid`)to set a treshold for minimum number of reads assigned for a taxid to be considered
 
 ### Changed
-
+- **[improvement]**: `taxid` respective `rank` and `name` are available on meta
 - **[improvement]**: Taxid reference fasta files for consensus sequence are obtained from kraken database
 - **[improvement]**: Channels now rely on Meta Mapping
 - **[improvement]**: Output folder now have the following structure `output/<sample_id>/<taxid>`
