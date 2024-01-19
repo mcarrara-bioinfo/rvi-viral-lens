@@ -21,7 +21,7 @@ workflow SCOV2_SUBTYPING {
                 [meta, consensus_seq]
             }
             .set {scov2_subtype_out_ch}
-        scov2_subtype_out_ch.view()
+
     emit:
         scov2_subtype_out_ch // tuple (meta, consensus)
 }
