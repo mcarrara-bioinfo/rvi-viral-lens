@@ -20,6 +20,8 @@ ISA_RELEASE="v2.30.0"
 ONETBB_RELEASE="2019_U9"
 GOFASTA_RELEASE="v1.2.1"
 MINIMAP_RELEASE="v2.26"
+PULP_VERSION="2.7.0"
+SNAKEMAKE_VERSION="7.32.4"
 PANGOLIN_RELEASE="v4.3.1"
 
 # enables the "exit on error" mode
@@ -101,7 +103,8 @@ export PATH=$PATH:/app/bin/
 # |------------------|
 
 # //---> install pangolin python dependencies
-pip install snakemake
+pip install pulp==${PULP_VERSION}
+pip install snakemake==${SNAKEMAKE_VERSION}
 # |------------------|
 
 # //---> INSTALL Pangolin
