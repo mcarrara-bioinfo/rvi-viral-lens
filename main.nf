@@ -9,6 +9,7 @@ include {check_sort_reads_params} from './workflows/SORT_READS_BY_REF.nf'
 
 include {SORT_READS_BY_REF} from './workflows/SORT_READS_BY_REF.nf'
 include {GENERATE_CONSENSUS} from './workflows/GENERATE_CONSENSUS.nf'
+include {SCOV2_SUBTYPING} from './workflows/SCOV2_SUBTYPING.nf'
 
 /*
 * ANSI escape codes to color output messages
@@ -92,6 +93,15 @@ workflow {
     //consensus_seq_out_ch.scv2_subtyping_workflow_in_ch.view()
     //consensus_seq_out_ch.no_subtyping_ch.view()
 
+
+    if (params.do_scov2_subtyping == true){
+      consensus_seq_out_ch.scv2_subtyping_workflow_in_ch
+        .map {meta, consensus_fasta_lst, quality_files, variant_tsv -> 
+            [meta, consensus_fasta_lst]
+          }
+        .set {scov_2_subt_In_ch}
+      SCOV2_SUBTYPING(scov_2_subt_In_ch)
+    }
     // TO DO:
     // Do virus specific analysis
     // SARS-CoV-2
