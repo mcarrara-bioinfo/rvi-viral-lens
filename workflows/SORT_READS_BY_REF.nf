@@ -42,15 +42,9 @@ workflow SORT_READS_BY_REF {
 
         filter_taxids(kraken_reports_ch)
 
-        filter_taxids.out // [meta, taxid_string]
-            .map {meta, taxid_str -> taxid_str.tokenize(" ")}
-            .collect()
-            .flatten()
-            .unique()
-            .set {unq_taxid_ch}
         // -------------------------------------------------//
 
-        // 3 - obtain unique taxid reference fasta file from kraken db 
+        // 3 - obtain unique taxid reference fasta file and metadata from kraken db 
 
         // check if library fasta was set, 
         // if not, assume is at library/library.fna on the kraken db dir 
@@ -61,25 +55,62 @@ workflow SORT_READS_BY_REF {
             library_fa_path = params.db_library_fa_path
         }
 
+        filter_taxids.out // [meta, taxid_string, taxid_lvl_str, taxid_name_str]
+            .map {meta, taxid_str, taxid_lvl_str, taxid_name_str -> taxid_str.tokenize(" ")}
+            .collect()
+            .flatten()
+            .unique()
+            .set {unq_taxid_ch}
+
         get_taxid_reference_files(unq_taxid_ch, library_fa_path)
 
         get_taxid_reference_files.out// tuple (taxid, [ref_files])
             .set{taxid_ref_files_map_ch}
+
+        // obtain lvl and annotation of a given taxid
+        unq_taxid_metadata_map = [:]
+        filter_taxids.out // [meta, taxid_string, taxid_lvl_str, taxid_name_str]
+            .map {meta, taxid_str, taxid_lvl_str, taxid_name_str -> 
+                [meta, taxid_str.tokenize(" "), taxid_lvl_str.tokenize(" "), taxid_name_str.tokenize("|")]
+            }
+            .map { meta, taxid_lst, taxid_lvl_lst, taxid_name_lst ->
+                // zip lists
+                def taxid_lvl_name_i = []
+                taxid_lst.eachWithIndex { taxid_i, i ->
+                    taxid_lvl_name_i.add([taxid_i, taxid_lvl_lst[i], taxid_name_lst[i]])
+                }
+                [meta, taxid_lvl_name_i.unique()]
+            }
+            .map { meta, taxid_lvl_name_lst -> 
+                // fill meta 
+                //meta.remove("id") // we don't care about which sample it came from
+                taxid_lvl_name_lst.each { tln ->  
+                    meta["${tln[0]}_lvl"] = tln[1]
+                    // Remove leading spaces from name
+                    meta["${tln[0]}_name"] = tln[2].replaceAll(/^ +/, '')
+                }
+                meta
+            }
+            .collect() // [meta_1, meta_2, ..., meta_N]
+            .map{ meta_lst -> // flat the list so only unq keys are present
+                def mergedMap = meta_lst.inject([:]) { result, map -> result += map }
+            }
+            .set {unq_taxid_metadata_ch}
+
         // -------------------------------------------------//
 
-        // 4 - reads per taxid on fastq file 
-        
+        // 4 - reads per taxid on fastq file
+
         // drop unclassified fq filepair
         run_kraken.out // tuple (meta, kraken_output, [classified_fq_filepair], [unclassified_fq_filepair], kraken_report)
             | map {it -> tuple(it[0], it[1], it[2], it[4])} // tuple (meta, kraken_output, [classified_fq_filepair], kraken_report)
             | set {sort_reads_in_ch}
-        
+
         // run krakentools and collect all per-sample per-taxon fq filepairs
         sort_reads_with_krakentools(sort_reads_in_ch)
 
         sort_reads_with_krakentools.out.set {sample_taxid_ch}
         // -------------------------------------------------//
-
 
         // 5 - prepare channel to be emitted
         sort_reads_with_krakentools.out // tuple (meta, [id.tax_id.extracted{1,2}.fq])
@@ -106,8 +137,16 @@ workflow SORT_READS_BY_REF {
                 [meta.taxid, meta, reads]
             }
             | combine(taxid_ref_files_map_ch, by:0) // [taxid, meta, reads, ref_files]
-            | map {taxid, meta, reads, ref_files -> 
+            | map {taxid, meta, reads, ref_files ->
                 meta.ref_files = ref_files
+                [meta, reads]
+            }
+            // add taxid metadata to meta
+            | map { meta, reads ->
+                unq_taxid_metadata_ch.map {
+                    meta.taxid_rank = it["${meta.taxid}_lvl"]
+                    meta.taxid_name = it["${meta.taxid}_name"]
+                }
                 [meta, reads]
             }
             | set {sample_taxid_ch}

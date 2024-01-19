@@ -1,3 +1,6 @@
+params.depth_treshold = 5
+params.mapping_quality_treshold = 30
+
 // this process was based on the one available at ViralFlow (https://github.com/dezordi/ViralFlow/blob/vfnext/vfnext/modules/runIvar.nf)
 process run_ivar{
   tag "${meta.id}"
@@ -13,8 +16,8 @@ process run_ivar{
 
   script:
     sorted_bam = "${meta.id}.sorted.bam"
-    depth = 5
-    mapping_quality = 30
+    depth = params.depth_treshold
+    mapping_quality = params.mapping_quality_treshold
 
     ref_fa="${meta.taxid}.fa"
   
