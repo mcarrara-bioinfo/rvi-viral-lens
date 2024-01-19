@@ -12,7 +12,7 @@ process run_ivar{
     tuple val(meta), path(bams), path(ref_fa_fls)
 
   output:
-    tuple val(meta), path("*.depth*.fa"), path("*.txt"), path("${meta.id}.tsv")
+    tuple val(meta), path("*.fa"), path("*.txt"), path("${meta.id}.tsv")
 
   script:
     sorted_bam = "${meta.id}.sorted.bam"
@@ -38,17 +38,14 @@ process run_ivar{
     samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} | \
     ivar consensus -p ${meta.id}.ivar060 -q ${mapping_quality} -t 0.60 -n N -m ${depth}
 
-    # EDIT FILE NAMES
-    mv ${meta.id}.fa ${meta.id}.depth${depth}.fa
-    mv ${meta.id}.ivar060.fa ${meta.id}.depth${depth}.amb.fa
     """
 }
 
 
-//samtools mpileup - The SAMtools mpileup utility provides a summary of the coverage of 
-//                   mapped reads on a reference sequence at a single base pair resolution
-
 /*
+samtools mpileup - The SAMtools mpileup utility provides a summary of the coverage of 
+                   mapped reads on a reference sequence at a single base pair resolution
+
 samtools mpileup: This is the main command for running the samtools mpileup tool. 
 It tells the system to execute the samtools program with the mpileup subcommand.
 
