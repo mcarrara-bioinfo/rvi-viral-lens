@@ -55,7 +55,20 @@ workflow SORT_READS_BY_REF {
             library_fa_path = params.db_library_fa_path
         }
 
-        filter_taxids.out // [meta, taxid_string, taxid_lvl_str, taxid_name_str]
+        filter_taxids.out
+            .map{ it -> // raise warning for samples with no taxid to process 
+                if (it[1]=="null"){
+                    log.warn("${it[0].id} had no taxid with more than ${params.min_reads_for_taxid} reads assigned ")
+                }
+                it
+            }
+            .branch { it ->
+                no_taxid_to_proc: it[1] == "null"
+                valid_taxid_to_proc: true
+            }
+            .set {taxid_ch}
+
+        taxid_ch.valid_taxid_to_proc // [meta, taxid_string, taxid_lvl_str, taxid_name_str]
             .map {meta, taxid_str, taxid_lvl_str, taxid_name_str -> taxid_str.tokenize(" ")}
             .collect()
             .flatten()
