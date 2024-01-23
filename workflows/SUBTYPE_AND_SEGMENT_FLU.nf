@@ -15,12 +15,12 @@ workflow SUBTYPE_AND_SEGMENT_FLU {
 
         // Add the flu type and segment to the metadata map
         subtyped_sample_kraken_report_channel = retrieve_flu_subtype_and_segment.out
-        | map{meta, kraken_report, flu_type, flu_segment -> 
-            meta.flu_type = flu_type
+        | map{meta, kraken_report, type, flu_segment -> 
+            meta.type = type
             meta.flu_segment = flu_segment
             tuple (meta, kraken_report)
         }
-subtyped_sample_kraken_report_channel.view()
+
     emit:
         subtyped_sample_kraken_report_channel // tuple (meta, kraken_report)
 }   

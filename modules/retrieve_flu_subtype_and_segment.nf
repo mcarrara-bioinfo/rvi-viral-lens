@@ -18,9 +18,12 @@ process retrieve_flu_subtype_and_segment {
         flu_type=$(echo $line | sed -n 's/.*(\\(.*\\)).*).*\$/\\1/p')
         flu_segment=$(echo $line | grep -oP '(?<=segment ).*?(?=,)')
 
-        # Set flu_type and flu_segment to 'Null' if the above commands return nothing
-        if [[ $flu_type == "" || $flu_segment == "" ]]; then
+        # Set flu_type to 'Null' if the above commands return nothing
+        if [[ $flu_type == "" ]]; then
             flu_type=Null
+        fi
+        # Set flu_segment to 'Null' if the above commands return nothing
+        if [[ $flu_segment == "" ]]; then
             flu_segment=Null
         fi
         '''
