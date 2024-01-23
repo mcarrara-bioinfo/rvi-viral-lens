@@ -26,6 +26,11 @@ process filter_taxids {
         fi
     done < !{kraken_report}
 
+    # Check if arrays are empty and set them to null if so
+    [[ ${#taxids_lst[@]} -eq 0 ]] && taxids_lst=null
+    [[ ${#taxids_lst_lvl[@]} -eq 0 ]] && taxids_lst_lvl=null
+    [[ ${#taxids_lst_names[@]} -eq 0 ]] && taxids_lst_names=null
+
     echo "${taxids_lst[@]}"  # Print the list of taxids that met the threshold
     echo "${taxids_lst_lvl[@]}"
     echo "${taxids_lst_names[@]}"
