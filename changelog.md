@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - **[added]**: SARS-CoV-2 sequences subtyping via pangolin
 - **[added]**: branching `GENERATE_CONSENSUS` workflow output for viral subtyping routines
 - **[added]**: new parameter (`min_reads_for_taxid`)to set a treshold for minimum number of reads assigned for a taxid to be considered
+- **[added]**: new workflow and modules (`GENERATE_REPORT, generate_report_line and write_report`) to generate a classifcation report file 
 
 ### Changed
 
