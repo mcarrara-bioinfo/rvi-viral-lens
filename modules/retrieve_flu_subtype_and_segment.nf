@@ -1,22 +1,21 @@
 process retrieve_flu_subtype_and_segment {
     input:
-        tuple val(meta), path(kraken_report_file) // tuple(meta, kraken_report_file)
+        val(meta)
 
     output:
-        tuple val(meta), path(kraken_report_file), env(flu_type), env(flu_segment) // tuple(meta, updated_kraken_report_file, flu_type, flu_segment)
+        tuple val(meta), env(flu_type), env(flu_segment) // tuple(meta, flu_type, flu_segment)
 
     shell:
-        taxid = meta.taxid
+        taxid_name = meta.taxid_name
         '''
         #!/bin/bash
 
-        # Attempt to get a line from the kraken report file with this particular taxon id
-        line=$(awk '\$5 == !{taxid}  { print \$0 }' !{kraken_report_file})
+        set -u
+        set -o pipefail
 
         # Attempt to parse out the flu type and flu segment from this line
-        # Assumes that the parsing is flu specific
-        flu_type=$(echo $line | sed -n 's/.*(\\(.*\\)).*).*\$/\\1/p')
-        flu_segment=$(echo $line | grep -oP '(?<=segment ).*?(?=,)')
+        flu_type=$(echo "!{taxid_name}" | sed -n 's/.*(\\(.*\\)).*).*\$/\\1/p')
+        flu_segment=$(echo "!{taxid_name}" | grep -oP '(?<=segment ).*?(?=,)')
 
         # Set flu_type to 'Null' if the above commands return nothing
         if [[ $flu_type == "" ]]; then
