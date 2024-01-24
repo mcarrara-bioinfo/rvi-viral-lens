@@ -9,6 +9,7 @@
 cd containers/
 sudo singularity build base_container.sif baseContainer.sing
 sudo singularity build ivar.sif ivarContainer.sing
+sudo singularity build pangolin.sif pangolinContainer.sing
 # sudo singularity build kraken.sif kraken_container.singularity
 ```
 ### prepare reference genomes
@@ -31,7 +32,7 @@ python write_manifest.py ./path/to/my/fastqs_dir/ -fq1_ext my_r1_ext -fq2_ext my
 ```
 nextflow run /path/to/rvi_consensus_gen/main.nf --manifest /path/to/my/manifest.csv \
         --db_path /path/to/my/kraken_db \
-        --outdir outputs/ \
+        --results_dir outputs/ \
         --containers_dir /path/to/my/containers_dir/ \
         -profile sanger_local -resume -with-trace -with-report
 ```
@@ -42,7 +43,7 @@ nextflow run /path/to/rvi_consensus_gen/main.nf --manifest /path/to/my/manifest.
 ```
 nextflow run ${CHECKOUT}/main.nf --entry_point consensus_gen \
         --consensus_mnf sorted_manifest.csv     
-        --outdir $LAUNCHDIR/outputs/ \
+        --results_dir $LAUNCHDIR/outputs/ \
         --containers_dir /path/to/containers_dir/ \
         -profile sanger_local -resume -with-trace -with-report
 ```

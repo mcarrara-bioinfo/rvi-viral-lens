@@ -1,3 +1,6 @@
+params.depth_treshold = 5
+params.mapping_quality_treshold = 30
+
 // this process was based on the one available at ViralFlow (https://github.com/dezordi/ViralFlow/blob/vfnext/vfnext/modules/runIvar.nf)
 process run_ivar{
   tag "${meta.id}"
@@ -9,12 +12,12 @@ process run_ivar{
     tuple val(meta), path(bams), path(ref_fa_fls)
 
   output:
-    tuple val(meta), path("*.depth*.fa"), path("*.txt"), path("${meta.id}.tsv")
+    tuple val(meta), path("*.fa"), path("*.txt"), path("${meta.id}.tsv")
 
   script:
     sorted_bam = "${meta.id}.sorted.bam"
-    depth = 5
-    mapping_quality = 30
+    depth = params.depth_treshold
+    mapping_quality = params.mapping_quality_treshold
 
     ref_fa="${meta.taxid}.fa"
   
@@ -35,17 +38,14 @@ process run_ivar{
     samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} | \
     ivar consensus -p ${meta.id}.ivar060 -q ${mapping_quality} -t 0.60 -n N -m ${depth}
 
-    # EDIT FILE NAMES
-    mv ${meta.id}.fa ${meta.id}.depth${depth}.fa
-    mv ${meta.id}.ivar060.fa ${meta.id}.depth${depth}.amb.fa
     """
 }
 
 
-//samtools mpileup - The SAMtools mpileup utility provides a summary of the coverage of 
-//                   mapped reads on a reference sequence at a single base pair resolution
-
 /*
+samtools mpileup - The SAMtools mpileup utility provides a summary of the coverage of 
+                   mapped reads on a reference sequence at a single base pair resolution
+
 samtools mpileup: This is the main command for running the samtools mpileup tool. 
 It tells the system to execute the samtools program with the mpileup subcommand.
 
