@@ -10,6 +10,7 @@ include {check_sort_reads_params} from './workflows/SORT_READS_BY_REF.nf'
 include {SORT_READS_BY_REF} from './workflows/SORT_READS_BY_REF.nf'
 include {GENERATE_CONSENSUS} from './workflows/GENERATE_CONSENSUS.nf'
 include {SCOV2_SUBTYPING} from './workflows/SCOV2_SUBTYPING.nf'
+include {COMPUTE_QC_METRICS} from './workflows/COMPUTE_QC_METRICS.nf'
 
 /*
 * ANSI escape codes to color output messages
@@ -77,10 +78,16 @@ workflow {
         sample_taxid_ch = parse_consensus_mnf_meta(params.consensus_mnf)
     }
 
-
     GENERATE_CONSENSUS(sample_taxid_ch)
 
     // branching output from consensus for subtyping
+
+    COMPUTE_QC_METRICS(GENERATE_CONSENSUS.out)
+    COMPUTE_QC_METRICS.out
+    //consensus_seq_out_ch.flu_subtyping_workflow_in_ch.view()
+    //consensus_seq_out_ch.scv2_subtyping_workflow_in_ch.view()
+    //consensus_seq_out_ch.no_subtyping_ch.view()
+
     GENERATE_CONSENSUS.out // [meta, [fasta_files], [quality_txt_files], variant_tsv]
       .branch { meta, fasta_files, quality_files, variant_tsv ->
         flu_subtyping_workflow_in_ch: meta.taxid_name.contains("${params.flu_keyword}")
@@ -88,11 +95,6 @@ workflow {
         no_subtyping_ch: true
       }
       .set {consensus_seq_out_ch}
-
-    //consensus_seq_out_ch.flu_subtyping_workflow_in_ch.view()
-    //consensus_seq_out_ch.scv2_subtyping_workflow_in_ch.view()
-    //consensus_seq_out_ch.no_subtyping_ch.view()
-
 
     if (params.do_scov2_subtyping == true){
       consensus_seq_out_ch.scv2_subtyping_workflow_in_ch
