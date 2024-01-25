@@ -24,7 +24,9 @@ workflow GENERATE_CONSENSUS {
 
         // set ivar input channel
         bams_ch
-            | map {meta, bams -> tuple(meta, bams, meta.ref_files)}
+            | map {meta, bams -> 
+                meta.bam_file = bams[0]
+                tuple(meta, bams, meta.ref_files)}
             | set {ivar_in_ch}
 
         // generate consensus

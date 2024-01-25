@@ -12,7 +12,7 @@ process run_ivar{
     tuple val(meta), path(bams), path(ref_fa_fls)
 
   output:
-    tuple val(meta), path("*.fa"), path("*.txt"), path("${meta.id}.tsv")
+    tuple val(meta), path("${meta.id}.fa"), path("*.txt"), path("${meta.id}.tsv")
 
   script:
     sorted_bam = "${meta.id}.sorted.bam"
