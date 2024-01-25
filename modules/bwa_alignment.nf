@@ -9,7 +9,7 @@ process bwa_alignment_and_post_processing {
         tuple val(meta), path(fastq), path(ref_files)
 
     output:
-        tuple val(meta), path("*.bam*")
+        tuple val(meta), path("*.sorted.bam*")
 
     script:
         ref_fa = "${meta.taxid}.fa"
