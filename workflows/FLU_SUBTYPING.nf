@@ -28,7 +28,7 @@ workflow SUBTYPE_AND_SEGMENT_FLU {
 workflow {
     manifest_channel = Channel.fromPath(params.manifest_file)
     | splitCsv(header: true, sep: '\t')
-    | map { row -> 
+    | map { row ->
     meta = [taxid_name:row.taxid_name]
     }
 
