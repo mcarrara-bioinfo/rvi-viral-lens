@@ -1,0 +1,149 @@
+{
+    "H1N1A": {
+        "reference_genome": ["NC_026438.1_Influenza_A_H1N1_complete_genome.fa"]
+    },
+    "H3N2A":{
+        "reference_genome": ["NC_007373.1_Influenza_A_H3N2_complete_genome.fa"]
+    },
+    "fluB":{
+        "reference_genome": ["NC_002204.1_Influenza_B_complete_genome.fa"]
+    },
+    "hRSVA":{
+        "reference_genome": ["hRSV_subtypeA.fa"]
+    },
+    "hRSVB":{
+        "reference_genome":["hRSV_subtypeB.fa"]
+    },
+
+    "9000000":{
+        "reference_genome":["NC_002204.1.fasta"],
+        "virus_name": "Influenza B segment 1",
+        "virus_code": "fluB-1"
+    },
+    "9000001":{
+        "reference_genome":["NC_002205.1.fasta"],
+        "virus_name": "Influenza B segment 2",
+        "virus_code": "fluB-2"
+    },
+    "9000002":{
+        "reference_genome":["NC_002206.1.fasta"],
+        "virus_name": "Influenza B segment 3",
+        "virus_code": "fluB-3"
+    },
+    "9000003":{
+        "reference_genome":["NC_002207.1.fasta"],
+        "virus_name": "Influenza B segment 4",
+        "virus_code": "fluB-4"
+    },
+    "9000004":{
+        "reference_genome":["NC_002208.1.fasta"],
+        "virus_name": "Influenza B segment 5",
+        "virus_code": "fluB-5"
+    },
+    "9000005":{
+        "reference_genome":["NC_002209.1.fasta"],
+        "virus_name": "Influenza B segment 6",
+        "virus_code": "fluB-6"
+    },
+    "9000006":{
+        "reference_genome":["NC_002210.1.fasta"],
+        "virus_name": "Influenza B segment 7",
+        "virus_code": "fluB-7"
+    },
+    "9000007":{
+        "reference_genome":["NC_002211.1.fasta"],
+        "virus_name": "Influenza B segment 8",
+        "virus_code": "fluB-8"
+    },
+    
+    "9000008":{
+        "reference_genome":["NC_007373.1.fasta"],
+        "virus_name": "Influenza A/H3N2 segment 1",
+        "virus_code": "H3N2-1"
+    },
+    "9000009":{
+        "reference_genome":["NC_007372.1.fasta"],
+        "virus_name": "Influenza A/H3N2 segment 2",
+        "virus_code": "H3N2-2"
+    },
+    "9000010":{
+        "reference_genome":["NC_007371.1.fasta"],
+        "virus_name": "Influenza A/H3N2 segment 3",
+        "virus_code": "H3N2-3"
+    },
+    "9000011":{
+        "reference_genome":["NC_007366.1.fasta"],
+        "virus_name": "Influenza A/H3N2 segment 4",
+        "virus_code": "H3N2-4"
+    },
+    "9000012":{
+        "reference_genome":["NC_007369.1.fasta"],
+        "virus_name": "Influenza A/H3N2 segment 5",
+        "virus_code": "H3N2-5"
+    },
+    "9000013":{
+        "reference_genome":["NC_007368.1.fasta"],
+        "virus_name": "Influenza A/H3N2 segment 6",
+        "virus_code": "H3N2-6"
+    },
+    "9000014":{
+        "reference_genome":["NC_007367.1.fasta"],
+        "virus_name": "Influenza A/H3N2 segment 7",
+        "virus_code": "H3N2-7"
+    },
+    "9000015":{
+        "reference_genome":["NC_007370.1.fasta"],
+        "virus_name": "Influenza A/H3N2 segment 8",
+        "virus_code": "H3N2-8"
+    },
+    "9000016":{
+        "reference_genome":["NC_026438.1.fasta"],
+        "virus_name": "Influenza A/H1N1 segment 1",
+        "virus_code": "H1N1-1"
+    },
+    "9000017":{
+        "reference_genome":["NC_026435.1.fasta"],
+        "virus_name": "Influenza A/H1N1 segment 2",
+        "virus_code": "H1N1-2"
+    },
+    "9000018":{
+        "reference_genome":["NC_026437.1.fasta"],
+        "virus_name": "Influenza A/H1N1 segment 3",
+        "virus_code": "H1N1-3"
+    },
+    "9000019":{
+        "reference_genome":["NC_026433.1.fasta"],
+        "virus_name": "Influenza A/H1N1 segment 4",
+        "virus_code": "H1N1-4"
+    },
+    "9000020":{
+        "reference_genome":["NC_026436.1.fasta"],
+        "virus_name": "Influenza A/H1N1 segment 5",
+        "virus_code": "H1N1-5"
+    },
+    "9000021":{
+        "reference_genome":["NC_026434.1.fasta"],
+        "virus_name": "Influenza A/H1N1 segment 6",
+        "virus_code": "H1N1-6"
+    },
+    "9000022":{
+        "reference_genome":["NC_026431.1.fasta"],
+        "virus_name": "Influenza A/H1N1 segment 7",
+        "virus_code": "H1N1-7"
+    },
+    "9000023":{
+        "reference_genome":["NC_026432.1.fasta"],
+        "virus_name": "Influenza A/H1N1 segment 8",
+        "virus_code": "H1N1-8"
+    },
+    "12814":{
+        "reference_genome":["hRSV_subtypeA.fa"],
+        "virus_name": "Respiratory syncytial virus",
+        "virus_code": "hRSVA"
+    },
+    "2697049": {
+        "reference_genome": ["NC_045512.2_SARS-CoV2_Wuhan-Hu-1.fa"],
+        "virus_name": "Severe acute respiratory syndrome coronavirus 2",
+        "virus_code": "SCOV2"
+    }
+}
