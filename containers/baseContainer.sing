@@ -38,7 +38,7 @@ BWA 0.7.17
 
     apt update
     apt install -y wget autoconf gcc zlib1g zlib1g-dev libbz2-dev \
-                   liblzma-dev make libncurses5-dev
+                   liblzma-dev make libncurses5-dev python3
 
     mkdir /app/
     cd /app/
