@@ -18,8 +18,7 @@ process compute_depth_and_coverage {
     if [[ ${genome_size} -eq 0 ]]; then 
              percentage_genome_coverage=null
     else
-        percentage_genome_coverage=$(((($mapped
-        _read_count * $read_length) / $genome_size) * 100))
+        percentage_genome_coverage=$(((($mapped_read_count * $read_length) / $genome_size) * 100))
     fi
     '''
 }
