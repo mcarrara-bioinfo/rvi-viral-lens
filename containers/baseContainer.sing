@@ -38,7 +38,10 @@ BWA 0.7.17
 
     apt update
     apt install -y wget autoconf gcc zlib1g zlib1g-dev libbz2-dev \
-                   liblzma-dev make libncurses5-dev python3
+                   liblzma-dev make libncurses5-dev python3 python3-pip
+
+    # metrics libraries
+    pip3 install biopython==1.79
 
     mkdir /app/
     cd /app/
