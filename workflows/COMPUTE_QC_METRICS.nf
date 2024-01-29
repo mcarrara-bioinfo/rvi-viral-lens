@@ -1,4 +1,3 @@
-include {compute_depth_and_coverage} from '../modules/compute_depth_and_coverage.nf'
 include {compute_percentage_covered_bases} from '../modules/compute_percentage_covered_bases.nf'
 include {compute_number_of_aligned_reads} from '../modules/compute_number_of_aligned_reads.nf'
 workflow COMPUTE_QC_METRICS {
