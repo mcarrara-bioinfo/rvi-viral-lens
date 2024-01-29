@@ -34,7 +34,7 @@ num_non_n = consensus_length_sequence - num_n
 pct_covered_bases = (num_non_n/ reference_length_sequence)*100
 
 # stdout
-print(f"{pct_covered_bases}|{consensus_length_sequence}|{num_n}")
+print(f"{pct_covered_bases}|{consensus_length_sequence}|{num_n}|")
 /$
 }
 
