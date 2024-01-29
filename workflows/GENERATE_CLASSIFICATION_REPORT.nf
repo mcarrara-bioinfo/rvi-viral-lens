@@ -1,4 +1,3 @@
-//include {generate_classification_report_line} from '../modules/generate_classification_report_line.nf'
 include {write_classification_report} from '../modules/write_classification_report.nf'
 
 workflow GENERATE_CLASSIFICATION_REPORT {
@@ -16,17 +15,14 @@ workflow GENERATE_CLASSIFICATION_REPORT {
         meta_ch // meta
 
     main:
-
         // Create a report line for every sample and then aggregate them
         report_lines_ch = meta_ch.map{meta -> 
-        "${meta.id},${meta.virus_species},${meta.type},${meta.flu_segment},${meta.percentage_genome_coverage},${meta.read_depth}\n"
+        "${meta[0].id},${meta[0].virus_species},${meta[0].virus_type},${meta[0].flu_segment},${meta[0].percentage_genome_coverage},${meta[0].read_depth},${meta[0].taxid_name}\n"
         }.collect()
 
         // Write all of the per-sample report lines to a report file
         write_classification_report(report_lines_ch)
 
-    emit:
-        write_classification_report.out
 }
 
 workflow {
