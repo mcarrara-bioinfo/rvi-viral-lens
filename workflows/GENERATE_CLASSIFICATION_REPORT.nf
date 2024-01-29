@@ -15,9 +15,10 @@ workflow GENERATE_CLASSIFICATION_REPORT {
         meta_ch // meta
 
     main:
+
         // Create a report line for every sample and then aggregate them
-        report_lines_ch = meta_ch.map{meta -> 
-        "${meta[0].id},${meta[0].virus_species},${meta[0].virus_type},${meta[0].flu_segment},${meta[0].percentage_genome_coverage},${meta[0].read_depth},${meta[0].taxid_name}\n"
+        report_lines_ch = meta_ch.map{meta ->
+        "${meta[0].id},${meta[0].taxid_name.replace(",","|")},${meta[0].virus_subtype},${meta[0].flu_segment},${meta[0].percentage_genome_coverage},${meta[0].total_mapped_reads}\n"
         }.collect()
 
         // Write all of the per-sample report lines to a report file
