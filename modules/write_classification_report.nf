@@ -13,7 +13,7 @@ process write_classification_report {
         report_files = list_of_report_files.join("")
         """
         # Write header to output report file
-        echo "Sample_ID,Virus_Species,Virus_Subtype,Flu_Segment,Percentage_of_genome_coverage,total_mapped_reads" > ${output_report_file}
+        echo "Sample_ID,Taxon_ID,Virus,Type,Flu_Segment,Percentage_of_Genome_Covered,Total_Mapped_Reads" > ${output_report_file}
 
         # Write data lines to report file
         echo '${report_files}' >> ${output_report_file}
