@@ -19,6 +19,9 @@ workflow FLU_SUBTYPING {
         subtyped_sample_meta_channel = retrieve_flu_subtype_and_segment.out
         | map{meta, type, flu_segment -> 
             meta.virus_subtype = type
+            if (flu_segment == "Null"){
+                flu_segment = null
+            }
             meta.flu_segment = flu_segment
             tuple(meta)
         }
