@@ -1,87 +1,69 @@
-
 include {bwa_alignment_and_post_processing} from '../modules/bwa_alignment.nf'
 include {run_ivar} from '../modules/run_ivar.nf'
 
 workflow GENERATE_CONSENSUS {
     take:
-        consensus_mnf // manifest path
-        json_ch // virus_resources dict
-
-    main:
-        mnf_ch = parse_consensus_mnf(consensus_mnf) // tuple(index, sample_id, [fastq_pair], virus_id)
-
-        mnf_ch
-            | combine(json_ch) // tuple(index, sample_id, [fastq_pair], virus_id, meta)
-            | map {it -> tuple("${it[0]}_${it[1]}_${it[3]}", it[3], it[2], it[4][it[3]])} // tuple(index_sample_id, virus_id, [fastq_pair], meta[virus_id])
-            | branch {
-                missing_taxids: it[3] == null
-                valid_taxids: it[3] != null
-            }
-            | set {input_to_virus_rsrc_ch}
-
-
-        input_to_virus_rsrc_ch.valid_taxids
-            | map {it ->
-                ref_gnm_path = "${params.virus_resources_dir}${it[3]["reference_genome"][0]}" 
-                tuple(it[0], it[1],it[2],ref_gnm_path)
-                }
-            | set {bwa_input_ch} // tuple(index_sample_id, virus_id, [fastq_pair], ref_fasta_path)
+        /*
+        meta must have the following keys:
+            - id
+            - taxid
+            - sample_id
+            - ref_files
+        */
+        sample_taxid_ch // tuple (meta, reads)
         
+    main:
+        // prepare bwa input channel
+        sample_taxid_ch
+            | map {meta, reads -> [meta,reads,meta.ref_files]}
+            | set {bwa_input_ch} // tuple(meta, reads, ref_genome_paths)
+
         // align reads to reference
         bwa_alignment_and_post_processing (bwa_input_ch)
-        bams_ch = bwa_alignment_and_post_processing.out // tuple (file_id, [sorted_bam, bai])
+        bams_ch = bwa_alignment_and_post_processing.out // tuple (meta, [sorted_bam, bai])
 
         // set ivar input channel
         bams_ch
-        | join(bwa_input_ch) // tuple(file_id. [sorted_bam, bai], virus_id, [fastq_pairs], ref_fasta)
-        | map { it -> tuple(it[0], it[1], it[4])} //tuple (file_id, [sorted_bam, bai], ref_fasta)
-        | set {ivar_in_ch}
+            | map {meta, bams -> 
+                meta.bam_file = bams[0]
+                tuple(meta, bams, meta.ref_files)}
+            | set {ivar_in_ch}
 
         // generate consensus
         run_ivar(ivar_in_ch)
 
+        // NOTE for now everything out of ivar is emitted by the process, as the pipeline evolves
+        //     we need to review to publish only whatever is used by the pipeline should be on the output channel.
+
+
     emit:
-        run_ivar.out // tuple (file_id, [fasta_files], [quality_txt_files], variant_tsv)
+        run_ivar.out // tuple (meta, [fasta_files], [quality_txt_files], variant_tsv)
 }
 
-// NOTE for now everything out of ivar is emitted, after the pipeline mature a bit
-//     only whatever is used by the pipeline should be output by the process. 
-
-def parse_consensus_mnf(consensus_mnf) {
+def parse_consensus_mnf_meta(consensus_mnf) {
     // consensus_mnf <Channel.fromPath()>
-    def mnf_ch = consensus_mnf
+    def mnf_ch =  Channel.fromPath(consensus_mnf)
                         | splitCsv(header: true, sep: ',')
-                        | map { row ->
-                            // TODO: validateMnf(row)
-                            tuple(
-                                row.idx,
-                                row.sample_id,
-                                [row.reads_1, row.reads_2],
-                                row.tax_id
-                            )
+                        | map {row -> 
+                            // set meta
+                            meta = [sample_id: row.sample_id,
+                                    taxid: row.taxid,
+                                    ref_files: row.ref_files.split(";").collect()]
+
+                            meta.id = "${row.sample_id}.${row.taxid}"
+                            
+                            
+                            // set files
+                            reads = [row.reads_1, row.reads_2]
+
+                            // declare channel shape
+                            [meta, reads]
                         }
-    return mnf_ch // tuple(index, sample_id, [fastq_pairs], virus_id)
+    return mnf_ch // tuple(index, [fastq_pairs])
 }
 
 def check_generate_consensus_params(){
 
     def errors = 0
-    // Is virus resource param set to something?
-    if (param.virus_resources_json == null){
-        log.error("No virus resource json file set")
-        errors +=1
-    }
-    // if yes, is it a file which exists? 
-    if (params.virus_resources_json){
-        virus_res_json = file(params.virus_resources_dir)
-        if (!virus_res_json.exists()){
-            log.error("The virus resource json provided (${params.irods_manifest}) does not exist.")
-            errors += 1
-        }
-        //TODO
-        //else {
-        //    validate_virus_resource(params.irods_manifest, params.panels_settings)
-        //}
-    }
     return errors
 }

@@ -1,21 +1,26 @@
+params.depth_treshold = 5
+params.mapping_quality_treshold = 30
+
 // this process was based on the one available at ViralFlow (https://github.com/dezordi/ViralFlow/blob/vfnext/vfnext/modules/runIvar.nf)
 process run_ivar{
-  publishDir "${params.results_dir}/${sample_id}_results/", mode: "copy", pattern: "*.{fa,tsv,txt}"
+  tag "${meta.id}"
+  publishDir "${params.results_dir}/${meta.sample_id}/${meta.taxid}/", mode: "copy", pattern: "*.{fa,tsv,txt}"
 
   label "ivar"
   
   input:
-    tuple val(sample_id), path(bams), path(ref_fa)
-    //path(ref_fa)
+    tuple val(meta), path(bams), path(ref_fa_fls)
 
   output:
-    tuple val(sample_id), path("*.depth*.fa"), path("*.txt"), path("${sample_id}.tsv")
+    tuple val(meta), path("${meta.id}.fa"), path("*.txt"), path("${meta.id}.tsv")
 
   script:
-    sorted_bam = "${bams[0].getSimpleName()}.sorted.bam"
-    depth = 5 
-    mapping_quality = 30
+    sorted_bam = "${meta.id}.sorted.bam"
+    depth = params.depth_treshold
+    mapping_quality = params.mapping_quality_treshold
 
+    ref_fa="${meta.taxid}.fa"
+  
     """
     which samtools
     samtools --version
@@ -23,29 +28,24 @@ process run_ivar{
     set -o pipefail
     # IVAR STEP 1 ----------------------------------------------------------------
     samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} | \
-    ivar variants -p ${sample_id} -q ${mapping_quality} -t 0.05
+    ivar variants -p ${meta.id} -q ${mapping_quality} -t 0.05
 
     # IVAR STEP 2 ----------------------------------------------------------------
     samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} | \
-    ivar consensus -p ${sample_id} -q ${mapping_quality} -t 0 -m ${depth} -n N
+    ivar consensus -p ${meta.id} -q ${mapping_quality} -t 0 -m ${depth} -n N
 
     # IVAR STEP 3 ----------------------------------------------------------------
     samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} | \
-    ivar consensus -p ${sample_id}.ivar060 -q ${mapping_quality} -t 0.60 -n N -m ${depth}
+    ivar consensus -p ${meta.id}.ivar060 -q ${mapping_quality} -t 0.60 -n N -m ${depth}
 
-    # EDIT FILE NAMES
-    mv ${sample_id}.fa ${sample_id}.depth${depth}.fa
-    mv ${sample_id}.ivar060.fa ${sample_id}.depth${depth}.amb.fa
-    #sed -i -e 's/>.*/>${sample_id}/g' ${sample_id}.depth${depth}.fa
-    #sed -i -e 's/>.*/>${sample_id}/g' ${sample_id}.depth${depth}.amb.fa
     """
 }
 
 
-//samtools mpileup - The SAMtools mpileup utility provides a summary of the coverage of 
-//                   mapped reads on a reference sequence at a single base pair resolution
-
 /*
+samtools mpileup - The SAMtools mpileup utility provides a summary of the coverage of 
+                   mapped reads on a reference sequence at a single base pair resolution
+
 samtools mpileup: This is the main command for running the samtools mpileup tool. 
 It tells the system to execute the samtools program with the mpileup subcommand.
 
@@ -56,7 +56,10 @@ It tells the system to execute the samtools program with the mpileup subcommand.
 
 -d 50000:
     This option sets the maximum read depth to 50,000.
-    It limits the number of reads considered at a single genomic position. This can be useful for preventing excessive memory usage when dealing with very deep sequencing data, but it may also result in reduced sensitivity for variant calling if the depth is too low for your specific analysis.
+    It limits the number of reads considered at a single genomic position. 
+    This can be useful for preventing excessive memory usage when dealing 
+    with very deep sequencing data, but it may also result in reduced sensitivity 
+    for variant calling if the depth is too low for your specific analysis.
 
 --reference : This option specifies the reference genome or reference sequence file that will be used for alignment and variant calling.
 
