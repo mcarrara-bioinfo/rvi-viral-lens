@@ -4,14 +4,15 @@
 nextflow.enable.dsl = 2
 
 // --- import modules ---------------------------------------------------------
-include {check_generate_consensus_params; parse_consensus_mnf_meta} from './workflows/GENERATE_CONSENSUS.nf'
+include {check_generate_consensus_params} from './workflows/GENERATE_CONSENSUS.nf'
 include {check_sort_reads_params} from './workflows/SORT_READS_BY_REF.nf'
 
 include {SORT_READS_BY_REF} from './workflows/SORT_READS_BY_REF.nf'
 include {GENERATE_CONSENSUS} from './workflows/GENERATE_CONSENSUS.nf'
 include {SCOV2_SUBTYPING} from './workflows/SCOV2_SUBTYPING.nf'
 include {COMPUTE_QC_METRICS} from './workflows/COMPUTE_QC_METRICS.nf'
-
+include {FLU_SUBTYPING} from './workflows/FLU_SUBTYPING.nf'
+include {GENERATE_CLASSIFICATION_REPORT} from './workflows/GENERATE_CLASSIFICATION_REPORT.nf'
 /*
 * ANSI escape codes to color output messages
 */
@@ -67,49 +68,65 @@ workflow {
     // input = per-sample fastq manifest; output = per-sample, per-taxon fastq manifest
     
     if (params.entry_point == "sort_reads"){
-        // check if 
+
         SORT_READS_BY_REF(params.manifest)
-        sample_taxid_ch = SORT_READS_BY_REF.out // tuple (meta, reads)
+        consensus_mnf = SORT_READS_BY_REF.out
     }
     
     // generate consensus
     if (params.entry_point == "consensus_gen"){
         // process manifest
-        sample_taxid_ch = parse_consensus_mnf_meta(params.consensus_mnf)
+        consensus_mnf = Channel.fromPath(params.consensus_mnf, checkIfExists: true)
     }
+    // 1.0 - load virus settings
+    json_params = PipelineParameters.readParams(params.virus_resources_json)
+    json_ch = Channel.value(json_params)
 
     GENERATE_CONSENSUS(sample_taxid_ch)
 
     // branching output from consensus for subtyping
 
     COMPUTE_QC_METRICS(GENERATE_CONSENSUS.out)
-    COMPUTE_QC_METRICS.out
-    //consensus_seq_out_ch.flu_subtyping_workflow_in_ch.view()
-    //consensus_seq_out_ch.scv2_subtyping_workflow_in_ch.view()
-    //consensus_seq_out_ch.no_subtyping_ch.view()
 
-    GENERATE_CONSENSUS.out // [meta, [fasta_files], [quality_txt_files], variant_tsv]
-      .branch { meta, fasta_files, quality_files, variant_tsv ->
-        flu_subtyping_workflow_in_ch: meta.taxid_name.contains("${params.flu_keyword}")
-        scv2_subtyping_workflow_in_ch: meta.taxid_name.contains("${params.scv2_keyword}")
+    COMPUTE_QC_METRICS.out
+      .branch{ it -> 
+        flu_subtyping_workflow_in_ch: it[0].taxid_name.contains("${params.flu_keyword}")
+        scv2_subtyping_workflow_in_ch: it[0].taxid_name.contains("${params.scv2_keyword}")
         no_subtyping_ch: true
       }
-      .set {consensus_seq_out_ch}
+      .set {qc_metrics_out_ch}
+    
 
     if (params.do_scov2_subtyping == true){
-      consensus_seq_out_ch.scv2_subtyping_workflow_in_ch
-        .map {meta, consensus_fasta_lst, quality_files, variant_tsv -> 
-            [meta, consensus_fasta_lst]
-          }
+      qc_metrics_out_ch.scv2_subtyping_workflow_in_ch
+        .map {it -> [it[0], it[0].consensus_fa]}
         .set {scov_2_subt_In_ch}
       SCOV2_SUBTYPING(scov_2_subt_In_ch)
+      //report_in_ch.concat(SCOV2_SUBTYPING.out)
+      SCOV2_SUBTYPING.out.set{scov2_subtyped_ch}
     }
-    // TO DO:
-    // Do virus specific analysis
-    // SARS-CoV-2
-    // Flu
+
+    if (params.do_flu_subtyping == true){
+      FLU_SUBTYPING(qc_metrics_out_ch.flu_subtyping_workflow_in_ch)
+      FLU_SUBTYPING.out.set{flu_subtyped_ch}
+    }
+  
+  // TODO handle with no subtypinh is requested
+  if (!params.do_flu_subtyping == true){
+    flu_subtyped_ch = Channel.empty()
+  }
+
+  if (!params.do_scov2_subtyping == true){
+    scov2_subtyped_ch = Channel.empty()
+  }
+  qc_metrics_out_ch.no_subtyping_ch.concat(scov2_subtyped_ch, flu_subtyped_ch)
+    .set{report_in_ch}
+
+  report_in_ch
+  GENERATE_CLASSIFICATION_REPORT(report_in_ch)
 }
 
+}
 def __check_if_params_file_exist(param_name, param_value){
 
   def error = 0
@@ -149,6 +166,7 @@ def check_main_params(){
         // check if manifest was provided
         errors += __check_if_params_file_exist("consensus_mnf", params.consensus_mnf)
     }
+    errors += __check_if_params_file_exist("virus_resources", params.virus_resources_json)
 
     //errors += check_generate_consensus_params()
 
@@ -157,27 +175,3 @@ def check_main_params(){
         exit 1
     }
 }
-/* Introspection
- *
- * https://www.nextflow.io/docs/latest/metadata.html
- */
-workflow.onComplete {
-  // Log colors ANSI codes
-  
-  println """
-  Pipeline execution summary
-  ---------------------------
-  Completed at : ${ANSI_GREEN}${workflow.complete}${ANSI_RESET}
-  Duration     : ${ANSI_GREEN}${workflow.duration}${ANSI_RESET}
-  Success      : ${workflow.success ? ANSI_GREEN : ANSI_REF}${workflow.success}${ANSI_RESET}
-  Results Dir  : ${ANSI_GREEN}${file(params.results_dir)}${ANSI_RESET}
-  Work Dir     : ${ANSI_GREEN}${workflow.workDir}${ANSI_RESET}
-  Exit status  : ${ANSI_GREEN}${workflow.exitStatus}${ANSI_RESET}
-  Error report : ${ANSI_GREEN}${workflow.errorReport ?: '-'}${ANSI_RESET}
-  """.stripIndent()
-}
-/*
-workflow.onError {
-    println "Oops... Pipeline execution stopped with the following message: \n ${workflow.errorMessage}"
-}
-*/
