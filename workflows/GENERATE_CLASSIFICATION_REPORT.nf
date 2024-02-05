@@ -1,3 +1,4 @@
+//include {generate_classification_report_line} from '../modules/generate_classification_report_line.nf'
 include {write_classification_report} from '../modules/write_classification_report.nf'
 
 workflow GENERATE_CLASSIFICATION_REPORT {
@@ -17,27 +18,15 @@ workflow GENERATE_CLASSIFICATION_REPORT {
     main:
 
         // Create a report line for every sample and then aggregate them
-        report_lines_ch = meta_ch.map{meta ->
-        // convert null values for type and segments to empty strings
-        if (meta[0].virus_subtype == null){
-            
-            virus_subtype=''
-        } else {
-            virus_subtype = meta[0].virus_subtype
-        }
-        
-        if (meta[0].flu_segment==null){
-            flu_segment=''
-        } else {
-            flu_segment = meta[0].flu_segment
-        }
-
-        "${meta[0].sample_id},${meta[0].taxid},${meta[0].taxid_name.replace(",","|")},${virus_subtype},${flu_segment},${meta[0].percentage_genome_coverage},${meta[0].total_mapped_reads}\n"
+        report_lines_ch = meta_ch.map{meta -> 
+        "${meta.id},${meta.virus_species},${meta.type},${meta.flu_segment},${meta.percentage_genome_coverage},${meta.read_depth}\n"
         }.collect()
 
         // Write all of the per-sample report lines to a report file
         write_classification_report(report_lines_ch)
 
+    emit:
+        write_classification_report.out
 }
 
 workflow {
