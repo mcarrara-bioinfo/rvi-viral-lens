@@ -11,7 +11,8 @@ include {SORT_READS_BY_REF} from './workflows/SORT_READS_BY_REF.nf'
 include {GENERATE_CONSENSUS} from './workflows/GENERATE_CONSENSUS.nf'
 include {SCOV2_SUBTYPING} from './workflows/SCOV2_SUBTYPING.nf'
 include {COMPUTE_QC_METRICS} from './workflows/COMPUTE_QC_METRICS.nf'
-
+include {FLU_SUBTYPING} from './workflows/FLU_SUBTYPING.nf'
+include {GENERATE_CLASSIFICATION_REPORT} from './workflows/GENERATE_CLASSIFICATION_REPORT.nf'
 /*
 * ANSI escape codes to color output messages
 */
@@ -86,31 +87,43 @@ workflow {
     // branching output from consensus for subtyping
 
     COMPUTE_QC_METRICS(GENERATE_CONSENSUS.out)
-    COMPUTE_QC_METRICS.out
-    //consensus_seq_out_ch.flu_subtyping_workflow_in_ch.view()
-    //consensus_seq_out_ch.scv2_subtyping_workflow_in_ch.view()
-    //consensus_seq_out_ch.no_subtyping_ch.view()
 
-    GENERATE_CONSENSUS.out // [meta, [fasta_files], [quality_txt_files], variant_tsv]
-      .branch { meta, fasta_files, quality_files, variant_tsv ->
-        flu_subtyping_workflow_in_ch: meta.taxid_name.contains("${params.flu_keyword}")
-        scv2_subtyping_workflow_in_ch: meta.taxid_name.contains("${params.scv2_keyword}")
+    COMPUTE_QC_METRICS.out
+      .branch{ it -> 
+        flu_subtyping_workflow_in_ch: it[0].taxid_name.contains("${params.flu_keyword}")
+        scv2_subtyping_workflow_in_ch: it[0].taxid_name.contains("${params.scv2_keyword}")
         no_subtyping_ch: true
       }
-      .set {consensus_seq_out_ch}
+      .set {qc_metrics_out_ch}
+    
 
     if (params.do_scov2_subtyping == true){
-      consensus_seq_out_ch.scv2_subtyping_workflow_in_ch
-        .map {meta, consensus_fasta_lst, quality_files, variant_tsv -> 
-            [meta, consensus_fasta_lst]
-          }
+      qc_metrics_out_ch.scv2_subtyping_workflow_in_ch
+        .map {it -> [it[0], it[0].consensus_fa]}
         .set {scov_2_subt_In_ch}
       SCOV2_SUBTYPING(scov_2_subt_In_ch)
+      //report_in_ch.concat(SCOV2_SUBTYPING.out)
+      SCOV2_SUBTYPING.out.set{scov2_subtyped_ch}
     }
-    // TO DO:
-    // Do virus specific analysis
-    // SARS-CoV-2
-    // Flu
+
+    if (params.do_flu_subtyping == true){
+      FLU_SUBTYPING(qc_metrics_out_ch.flu_subtyping_workflow_in_ch)
+      FLU_SUBTYPING.out.set{flu_subtyped_ch}
+    }
+  
+  // TODO handle with no subtypinh is requested
+  if (!params.do_flu_subtyping == true){
+    flu_subtyped_ch = Channel.empty()
+  }
+
+  if (!params.do_scov2_subtyping == true){
+    scov2_subtyped_ch = Channel.empty()
+  }
+  qc_metrics_out_ch.no_subtyping_ch.concat(scov2_subtyped_ch, flu_subtyped_ch)
+    .set{report_in_ch}
+
+  report_in_ch
+  GENERATE_CLASSIFICATION_REPORT(report_in_ch)
 }
 
 }
