@@ -4,7 +4,7 @@
 nextflow.enable.dsl = 2
 
 // --- import modules ---------------------------------------------------------
-include {check_generate_consensus_params} from './workflows/GENERATE_CONSENSUS.nf'
+include {check_generate_consensus_params; parse_consensus_mnf_meta} from './workflows/GENERATE_CONSENSUS.nf'
 include {check_sort_reads_params} from './workflows/SORT_READS_BY_REF.nf'
 
 include {SORT_READS_BY_REF} from './workflows/SORT_READS_BY_REF.nf'
@@ -67,19 +67,16 @@ workflow {
     // input = per-sample fastq manifest; output = per-sample, per-taxon fastq manifest
     
     if (params.entry_point == "sort_reads"){
-
+        // check if 
         SORT_READS_BY_REF(params.manifest)
-        consensus_mnf = SORT_READS_BY_REF.out
+        sample_taxid_ch = SORT_READS_BY_REF.out // tuple (meta, reads)
     }
     
     // generate consensus
     if (params.entry_point == "consensus_gen"){
         // process manifest
-        consensus_mnf = Channel.fromPath(params.consensus_mnf, checkIfExists: true)
+        sample_taxid_ch = parse_consensus_mnf_meta(params.consensus_mnf)
     }
-    // 1.0 - load virus settings
-    json_params = PipelineParameters.readParams(params.virus_resources_json)
-    json_ch = Channel.value(json_params)
 
     GENERATE_CONSENSUS(sample_taxid_ch)
 
@@ -113,7 +110,6 @@ workflow {
     // Flu
 }
 
-}
 def __check_if_params_file_exist(param_name, param_value){
 
   def error = 0
@@ -153,7 +149,6 @@ def check_main_params(){
         // check if manifest was provided
         errors += __check_if_params_file_exist("consensus_mnf", params.consensus_mnf)
     }
-    errors += __check_if_params_file_exist("virus_resources", params.virus_resources_json)
 
     //errors += check_generate_consensus_params()
 
@@ -162,3 +157,27 @@ def check_main_params(){
         exit 1
     }
 }
+/* Introspection
+ *
+ * https://www.nextflow.io/docs/latest/metadata.html
+ */
+workflow.onComplete {
+  // Log colors ANSI codes
+  
+  println """
+  Pipeline execution summary
+  ---------------------------
+  Completed at : ${ANSI_GREEN}${workflow.complete}${ANSI_RESET}
+  Duration     : ${ANSI_GREEN}${workflow.duration}${ANSI_RESET}
+  Success      : ${workflow.success ? ANSI_GREEN : ANSI_REF}${workflow.success}${ANSI_RESET}
+  Results Dir  : ${ANSI_GREEN}${file(params.results_dir)}${ANSI_RESET}
+  Work Dir     : ${ANSI_GREEN}${workflow.workDir}${ANSI_RESET}
+  Exit status  : ${ANSI_GREEN}${workflow.exitStatus}${ANSI_RESET}
+  Error report : ${ANSI_GREEN}${workflow.errorReport ?: '-'}${ANSI_RESET}
+  """.stripIndent()
+}
+/*
+workflow.onError {
+    println "Oops... Pipeline execution stopped with the following message: \n ${workflow.errorMessage}"
+}
+*/
