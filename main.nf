@@ -126,7 +126,6 @@ workflow {
   GENERATE_CLASSIFICATION_REPORT(report_in_ch)
 }
 
-}
 def __check_if_params_file_exist(param_name, param_value){
 
   def error = 0
