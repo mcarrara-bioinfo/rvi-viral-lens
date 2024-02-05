@@ -18,7 +18,7 @@ workflow SCOV2_SUBTYPING {
         run_pangolin.out
             .map { meta, consensus_seq, lineage -> 
                 meta.virus_subtype = lineage
-                tuple(meta)
+                [meta, consensus_seq]
             }
             .set {scov2_subtype_out_ch}
 

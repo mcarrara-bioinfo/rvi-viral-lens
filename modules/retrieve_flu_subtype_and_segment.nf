@@ -1,13 +1,12 @@
 process retrieve_flu_subtype_and_segment {
-    tag "${meta.id}"
     input:
-        tuple val(meta), val(taxid_name)
+        val(meta)
 
     output:
         tuple val(meta), env(flu_type), env(flu_segment) // tuple(meta, flu_type, flu_segment)
 
     shell:
-
+        taxid_name = meta.taxid_name
         '''
         #!/bin/bash
 
