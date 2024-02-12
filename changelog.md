@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## UNRELEASED
 
+
+## [0.1.0] - 2024-02-05
+
 ### Added
 
 - **[added]**: Viral subtyping and classification reports routines integrated to pipeline
