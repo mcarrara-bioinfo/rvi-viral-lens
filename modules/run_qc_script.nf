@@ -1,4 +1,4 @@
-process makeQCCSV {
+process run_qc_script {
     tag {meta.id}
 
     publishDir "${params.results_dir}/qc_plots", pattern: "${meta.id}.depth.png", mode: 'copy'
