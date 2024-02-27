@@ -1,0 +1,30 @@
+{
+    "Should run without failures": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.kraken.output:md5,2aa58b378359d98568407dda371ea60b",
+                        [
+                            "test.class_seqs_1.fq:md5,54558937e0ddd9aa3fedab9025050518",
+                            "test.class_seqs_2.fq:md5,831d5601d5b964c2482327e6860be3fa"
+                        ],
+                        [
+                            "test.unclass_seqs_1.fq:md5,d8c82cc39046db60237e01edabfcddd6",
+                            "test.unclass_seqs_2.fq:md5,8149ffc6c83395c20de3b23823f80295"
+                        ],
+                        "test.report.txt:md5,4cee02e460ea9ab3ea84c8d9ef32dbbd"
+                    ]
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "22.04.5"
+        },
+        "timestamp": "2024-02-27T08:56:35.662243"
+    }
+}
