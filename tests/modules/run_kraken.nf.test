@@ -9,14 +9,20 @@ nextflow_process {
         when {
             params {
                 // define parameters here. Example:
-                // outdir = "tests/results"
+                test_loc="${projectDir}/tests/test_data"
             }
             process {
                 
                 """
                 // define inputs of the process here. Example:
-                input[0] = tuple(params.meta, [file("${projectDir}/tests/test_data/test_1.fastq.gz"),file("${projectDir}/tests/test_data/test_2.fastq.gz")])
-                input[1] = file("${projectDir}/tests/test_data/minimal")
+                input[0] = tuple(
+                    params.meta, 
+                    [
+                        file("${params.test_loc}/test_input_fastqs/test_1.fastq.gz"),
+                        file("${params.test_loc}/test_input_fastqs/test_2.fastq.gz")
+                    ]
+                    )
+                input[1] = file("${params.test_loc}/test_kraken_databases/minimal")
                 """
             }
         }
