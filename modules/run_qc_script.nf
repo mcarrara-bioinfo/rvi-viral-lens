@@ -1,18 +1,16 @@
 process run_qc_script {
     tag {meta.id}
 
-    publishDir "${params.results_dir}/qc_plots", pattern: "${meta.id}.depth.png", mode: 'copy'
+    publishDir "${params.results_dir}/${meta.sample_id}/${meta.taxid}/", mode: 'copy', pattern: "*.{csv,png}"
 
     input:
     tuple val(meta), path(bam), path(fasta), path(ref)
 
     output:
-    path "${meta.id}.qc.csv", emit: csv
-    path "${meta.id}.depth.png"
+    tuple val(meta), path("${meta.id}.qc.csv"), path("${meta.id}.depth.png"), stdout
 
     script:
     qcSetting = "--illumina"
-    //def additional_consensus = fasta_amd.name != 'NO_FILE' ? "--fasta_amd ${fasta_amd} --ivar_amd ${params.ivarAlternativeMinDepth}" : ''
     """
     qc.py ${qcSetting}\
         --outfile ${meta.id}.qc.csv \
@@ -20,7 +18,9 @@ process run_qc_script {
         --ref ${ref} \
         --bam ${bam} \
         --fasta ${fasta} \
-        --ivar_md ${params.ivarMinDepth}
-        #$additional_consensus
+        --ivar_md ${params.depth_treshold}
+
+    # print first row
+    sed -n "2p" ${meta.id}.qc.csv
     """
 }
