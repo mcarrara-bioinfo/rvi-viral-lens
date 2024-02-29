@@ -8,6 +8,10 @@ import matplotlib.pyplot as plt
 import shlex
 import argparse
 
+from io import StringIO
+import pysam
+
+
 """
 This script can incorporate as many QC checks as required
 as long as it outputs a csv file containing a final column
@@ -151,7 +155,23 @@ def assess(fasta_file, bam_file=None, ref_length=None, depth=None):
        pairs = [ (pair[0]+'_amd', pair[1]) for pair in pairs]
         
     return (dict(pairs), N_density, depth_pos) 
-    
+
+def read_tsv_as_dict_from_stringio(stringio_object):
+    data_dict = {'chromosome': [], 'length': [], 'mapped': [], 'unmapped': []}
+
+    for line in stringio_object.getvalue().splitlines():
+        # Split each line into fields using tab as the delimiter
+        fields = line.strip().split('\t')[0:4]
+        # skip line with chr as "*"
+        if fields[0] == "*":
+            continue
+
+        # Update the dictionary with values from each column
+        for key, value in zip(data_dict.keys(), fields):
+            data_dict[key] = value #.append(value.replace(',','.'))
+
+    return data_dict
+
 def go(args):
     if args.illumina:
         depth = 10
@@ -160,10 +180,18 @@ def go(args):
 
     ## Depth calcs
     ref_length = get_ref_length(args.ref)
-    
+
     ## Get QC values for a pair of bam-fasta files
     (qc_values, N_density, depth_pos) = assess(
         args.fasta, args.bam, ref_length, depth);
+
+    # run pysam idxstats
+    idx = StringIO(pysam.idxstats(args.bam))
+    tsv_data_dict = read_tsv_as_dict_from_stringio(idx) 
+    qc_values["total_mapped_reads"] = tsv_data_dict['mapped']
+    qc_values["total_unmapped_reads"] = tsv_data_dict['unmapped']
+
+
     ## Get the keys in the order they were inserted
     column_names = list(qc_values)
     if args.ivar_md != None:
@@ -172,6 +200,7 @@ def go(args):
     ## Prepend sample name column
     column_names.insert(0, 'sample_name')
     qc_values['sample_name'] = args.sample
+
     qc_line = qc_values
 
     ## If appropriate, get QC values for another pair of bam-fasta files
@@ -187,6 +216,13 @@ def go(args):
         ## Reinstall qc pass columns as the last column
         column_names.append(qc_pass_column)
 
+    # get mapped and unmapped reads
+    #run pysam idxstats
+    idx = StringIO(pysam.idxstats(args.bam))
+    tsv_data_dict = read_tsv_as_dict_from_stringio(idx)
+    #print(f"{tsv_data_dict['mapped']}|{tsv_data_dict['unmapped']}|")
+
+
     ## Write all QC values to a CSV file
     with open(args.outfile, 'w') as csvfile:
         header = column_names
@@ -195,6 +231,8 @@ def go(args):
         writer.writerow(qc_line)
 
     make_qc_plot(depth_pos, N_density, args.sample)
+
+
 
 def main():
 
