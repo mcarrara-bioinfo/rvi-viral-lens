@@ -1,2 +1,3 @@
 .nextflow*
 .nf-test*
+test_input_manifest_located.csv
