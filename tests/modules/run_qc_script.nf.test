@@ -16,7 +16,7 @@ nextflow_process {
                 ]
                 containers_dir="/lustre/scratch126/gsu/team112/personal/ad45/rvi_box/dev_containers/"
                 depth_treshold=5
-                test_loc="${projectDir}/tests/test_data"
+                test_loc="./tests/test_data"
             }
 
             process {
@@ -25,8 +25,8 @@ nextflow_process {
                 input[0]=tuple(
                     params.meta,
                     file("${params.test_loc}/test_alignments/test.9000000.sorted.bam"),
-                    file("${params.test_loc}/test_alignments/test.9000000.fa"),
-                    file("${params.test_loc}/test_alignments/9000000.fa")
+                    file("${params.test_loc}/test_consensuses/test.9000000.fa"),
+                    file("${params.test_loc}/test_references/9000000.fa")
                     )
                 """
             }
