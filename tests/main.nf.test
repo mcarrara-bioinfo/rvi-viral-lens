@@ -1,0 +1,52 @@
+def modifyPathsAndWriteCsv(String inputFile) {
+    def projectDir = System.getProperty("user.dir") + "/tests/test_data" // Current working directory
+
+    // Read CSV file
+    def lines = new File(inputFile).readLines()
+
+    // Modify paths and write to a new file
+    def outputFile = new File(inputFile.replaceAll("\\.csv", "_located.csv"))
+    def writer = new FileWriter(outputFile)
+
+    lines.each { line ->
+        def columns = line.split(',')
+        if (columns.size() == 3) {
+            // Modify reads_1 and reads_2 paths
+            if (columns[1]!="reads_1") {
+                columns[1] = "${projectDir}/${columns[1]}"
+                columns[2] = "${projectDir}/${columns[2]}"
+            }
+        }
+        writer.write(columns.join(',')+"\n")
+    }
+
+    writer.close()
+
+    println("CSV file with located paths written to: ${outputFile}")
+}
+
+modifyPathsAndWriteCsv("tests/test_data/test_manifests/test_input_manifest.csv")
+
+nextflow_pipeline {
+
+    name "Test Workflow main.nf"
+    script "main.nf"
+
+    test("Should run without failures") {
+
+        when {
+            params {
+                // define parameters here. Example: 
+                // outdir = "tests/results"
+                db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
+                manifest="${projectDir}/tests/test_data/test_manifests/test_input_manifest_located.csv"
+            }
+        }
+
+        then {
+            assert workflow.success
+        }
+
+    }
+
+}
