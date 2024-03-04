@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## UNRELEASED
 
+### Changed
+
+- **[improvement]**: Qc metrics using the same method of the Artic pipeline
 
 ## [0.1.0] - 2024-02-05
 
