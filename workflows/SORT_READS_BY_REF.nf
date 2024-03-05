@@ -1,7 +1,7 @@
 include {run_kraken} from '../modules/run_kraken.nf'
-include {sort_reads_with_krakentools} from '../modules/sort_reads.nf'
 include {get_taxid_reference_files} from '../modules/get_taxid_references.nf'
 include {filter_taxids} from '../modules/filter_taxid.nf'
+include {run_kraken2ref} from '../modules/run_kraken2ref.nf'
 
 def parse_clean_mnf_meta(consensus_mnf) {
 
@@ -119,18 +119,17 @@ workflow SORT_READS_BY_REF {
             | map {it -> tuple(it[0], it[1], it[2], it[4])} // tuple (meta, kraken_output, [classified_fq_filepair], kraken_report)
             | set {sort_reads_in_ch}
 
-        // run krakentools and collect all per-sample per-taxon fq filepairs
-        sort_reads_with_krakentools(sort_reads_in_ch)
-
-        sort_reads_with_krakentools.out.set {sample_taxid_ch}
         // -------------------------------------------------//
 
-        // 5 - prepare channel to be emitted
-        sort_reads_with_krakentools.out // tuple (meta, [id.tax_id.extracted{1,2}.fq])
+        // 5 - run kraken2ref and collect all per-sample per-taxon fq filepairs
+        run_kraken2ref(sort_reads_in_ch)
+
+        // prepare channel to be emitted
+        run_kraken2ref.out // tuple (meta, [id_taxid_R{1,2}.fq])
             | map {meta, reads ->
                 // group pairs of fastqs based on file names, and add new info to meta
                 reads
-                    .groupBy { filePath -> filePath.getName().tokenize(".")[0..1].join(".")}
+                    .groupBy { filePath -> filePath.getName().tokenize("_")[0..1].join(".")}
                     .collect { identifier, paths ->[[identifier, paths]]}
             // this map returns a channel with a single value,
             // which is a list with all the ids and files.

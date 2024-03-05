@@ -17,9 +17,9 @@ process run_kraken2ref {
     fq2_file = classified_fqs[1]
 
     """
-    kraken2r -s ${meta.sample_id} parse_report -i ${kraken_report} -o ./ -t ${params.min_reads_for_taxid}
+    kraken2r -s ${meta.id} parse_report -i ${kraken_report} -o ./ -t ${params.min_reads_for_taxid}
 
     ## sort reads by reference (requires parse_report to have been run before)
-    kraken2r -s ${meta.sample_id} sort_reads -fq1 ${fq1_file} -fq2 ${fq2_file} -k ${kraken_output} -r ./kraken2ref.json -u
+    kraken2r -s ${meta.id} sort_reads -fq1 ${fq1_file} -fq2 ${fq2_file} -k ${kraken_output} -r ./${meta.id}_decomposed.json -u
     """
 }
