@@ -26,6 +26,8 @@ BIOPYTHON_VER="1.83"
 KRAKEN2REF_RELEASE="v1.0.0"
 # enables the "exit on error" mode
 set -e
+set -u
+
 DEBIAN_FRONTEND=noninteractive 
 
 # /-----------------/
