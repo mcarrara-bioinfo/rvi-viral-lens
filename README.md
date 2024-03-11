@@ -20,7 +20,7 @@ bwa index NC_045512.2.fasta
 ```
 
 ## Unit Tests
-The workflow & process unit tests for this pipeline are written in the [nf-test](https://www.nf-test.com/) Nextflow testing framework. [nf-test](https://www.nf-test.com/) will need to be installed to run the tests.
+The workflow & process unit tests for this pipeline are written in the [nf-test](https://www.nf-test.com/) (v0.8.4) Nextflow testing framework. [nf-test](https://www.nf-test.com/) will need to be installed to run the tests.
 
 ### Running Tests
 The following command if entered from the repository top-level directory can be used to execute all of the per-process & per-workflow unit tests:
