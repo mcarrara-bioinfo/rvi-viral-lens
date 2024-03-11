@@ -24,8 +24,30 @@ The workflow & process unit tests for this pipeline are written in the [nf-test]
 
 ### Running Tests
 The following command if entered from the repository top-level directory can be used to execute all of the per-process & per-workflow unit tests:
+
+#### Run all tests
 ```
-nf-test test tests/*/*.nf.test
+nf-test test
+```
+
+#### Run all module tests
+```
+nf-test test tests/modules/*.nf.test
+```
+
+#### Run all workflows tests
+```
+nf-test test tests/workflows/*.nf.test
+```
+
+#### Run whole pipeline test 
+```
+nf-test test tests/main.nf.test
+```
+
+#### Run individual module/workflow test
+```
+nf-test test tests/<modules or workflows>/<module_to_test>.nf.test
 ```
 
 ## Usage
