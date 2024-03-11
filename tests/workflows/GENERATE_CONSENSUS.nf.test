@@ -8,7 +8,6 @@ nextflow_workflow {
 
         when {
             params {
-                // define parameters here. Example:
                 meta = [
                     sample_id: "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1",
                     taxid: "2697049",

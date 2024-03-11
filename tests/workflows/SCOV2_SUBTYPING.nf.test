@@ -8,7 +8,6 @@ nextflow_workflow {
 
         when {
             params {
-                // define parameters here. Example:
                 meta = [
                     id:"test.2222222",
                     sample_id:"test",

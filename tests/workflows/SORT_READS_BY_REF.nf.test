@@ -37,8 +37,6 @@ nextflow_workflow {
 
         when {
             params {
-                // define parameters here. Example:
-                // outdir = "tests/results"
                 test_loc="${projectDir}/tests/test_data"
                 db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
             }

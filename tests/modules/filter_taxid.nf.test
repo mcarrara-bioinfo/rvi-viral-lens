@@ -8,8 +8,7 @@ nextflow_process {
 
         when {
             params {
-                // define parameters here. Example:
-                // outdir = "tests/results"
+
                 kraken_report="${projectDir}/tests/test_data/test_kraken_databases/test.report.txt"
             }
             process {
