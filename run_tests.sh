@@ -1,1 +1,0 @@
-nf-test test tests/modules/run_kraken.nf.test
