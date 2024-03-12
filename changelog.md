@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## UNRELEASED
 
+- **[improvement]**: add kraken2ref as the new reference selection tool
+## [0.1.0] - 2024-02-05
+
 ### Added
 
 - **[added]**: Viral subtyping and classification reports routines integrated to pipeline
