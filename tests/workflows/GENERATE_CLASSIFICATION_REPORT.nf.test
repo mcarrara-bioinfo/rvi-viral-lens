@@ -1,0 +1,36 @@
+nextflow_workflow {
+
+    name "Test Workflow GENERATE_CLASSIFICATION_REPORT"
+    script "workflows/GENERATE_CLASSIFICATION_REPORT.nf"
+    workflow "GENERATE_CLASSIFICATION_REPORT"
+
+    test("Should run without failures") {
+
+        when {
+            params {
+                meta = [
+                    sample_id:"test",
+                    taxid:2222222,
+                    taxid_name:"test_taxid_name",
+                    virus_species:"SARSCov2",
+                    virus_subtype:"BA.2",
+                    flu_segment:"",
+                    percentage_genome_coverage:90,
+                    total_mapped_reads:200
+                ]
+            }
+            workflow {
+                """
+                // define inputs of the workflow here. Example:
+                input[0] = Channel.of(tuple(params.meta))
+                """
+            }
+        }
+
+        then {
+            assert workflow.success
+        }
+
+    }
+
+}

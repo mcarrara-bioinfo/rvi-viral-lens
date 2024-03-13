@@ -11,7 +11,7 @@ process run_pangolin {
 
     shell:
         lineage_report = "${meta.id}_lineage.csv"
-        consensus_fasta = "${meta.id}.fa"
+        consensus_fasta = mapped_fasta
         '''
         # run pangolin
         pangolin !{consensus_fasta} --outfile !{lineage_report}

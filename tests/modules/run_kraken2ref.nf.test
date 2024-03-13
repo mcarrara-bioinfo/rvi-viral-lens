@@ -14,9 +14,8 @@ nextflow_process {
                     sample_id:"test",
                     taxid:9000000
                 ]
-                containers_dir="/lustre/scratch126/gsu/team112/personal/ad45/rvi_box/dev_containers/"
                 depth_treshold=5
-                test_loc="tests/test_data/"
+                test_loc="${projectDir}/tests/test_data/"
             }
 
             process {

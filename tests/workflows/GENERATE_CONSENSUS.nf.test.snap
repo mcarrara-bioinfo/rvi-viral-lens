@@ -1,0 +1,37 @@
+{
+    "Should run without failures": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049",
+                            "ref_files": [
+                                "2697049.fa:md5,7ca8f77fb20a6bcb1eb0ce45d2504268",
+                                "2697049.fa.amb:md5,80f653e5d4e35ada77d0a10eb91e4d2d",
+                                "2697049.fa.ann:md5,60df9428892d946d9723a235b7e9346b",
+                                "2697049.fa.bwt:md5,88f3909bc7c2f9196bd5b1f1dd5d54a6",
+                                "2697049.fa.pac:md5,f631387e31f59214b85a8a80f63155f6",
+                                "2697049.fa.sa:md5,5bf62e5242a3b6889cb64a38049c6586"
+                            ],
+                            "taxid": "2697049",
+                            "sample_id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1",
+                            "bam_file": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.sorted.bam:md5,d89eb0b1974e11136558a1ba9533649f"
+                        },
+                        "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.fa:md5,c5fd7a43fe4ba0a66e53795dbf6fa2b7",
+                        [
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.ivar060.qual.txt:md5,cede485beb95e6c934a4d63e5ef034b6",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.qual.txt:md5,cede485beb95e6c934a4d63e5ef034b6"
+                        ],
+                        "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.tsv:md5,ad9b1b07c78add17cd23f7636336fa4a"
+                    ]
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "22.04.5"
+        },
+        "timestamp": "2024-03-05T14:30:39.52503"
+    }
+}

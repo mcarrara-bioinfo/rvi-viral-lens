@@ -1,0 +1,58 @@
+def modifyPathsAndWriteCsv(String inputFile) {
+    def projectDir = System.getProperty("user.dir") + "/tests/test_data" // Current working directory
+
+    // Read CSV file
+    def lines = new File(inputFile).readLines()
+
+    // Modify paths and write to a new file
+    def outputFile = new File(inputFile.replaceAll("\\.csv", "_located.csv"))
+    def writer = new FileWriter(outputFile)
+
+    lines.each { line ->
+        def columns = line.split(',')
+        if (columns.size() == 3) {
+            // Modify reads_1 and reads_2 paths
+            if (columns[1]!="reads_1") {
+                columns[1] = "${projectDir}/${columns[1]}"
+                columns[2] = "${projectDir}/${columns[2]}"
+            }
+        }
+        writer.write(columns.join(',')+"\n")
+    }
+
+    writer.close()
+
+    println("CSV file with located paths written to: ${outputFile}")
+}
+
+modifyPathsAndWriteCsv("tests/test_data/test_manifests/test_input_manifest.csv")
+
+nextflow_workflow {
+
+    name "Test Workflow SORT_READS_BY_REF"
+    script "workflows/SORT_READS_BY_REF.nf"
+    workflow "SORT_READS_BY_REF"
+
+    test("Should run without failures") {
+
+        when {
+            params {
+                test_loc="${projectDir}/tests/test_data"
+                db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
+            }
+            workflow {
+                """
+                // define inputs of the workflow here. Example:
+                input[0] = file("${params.test_loc}/test_manifests/test_input_manifest_located.csv")
+                """
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert snapshot(workflow.out).match()
+        }
+
+    }
+
+}

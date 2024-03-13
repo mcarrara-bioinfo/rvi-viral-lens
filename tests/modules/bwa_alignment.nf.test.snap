@@ -1,0 +1,26 @@
+{
+    "Should run without failures": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test.9000000",
+                            "taxid": 9000000,
+                            "sample_id": "test"
+                        },
+                        [
+                            "test.9000000.sorted.bam:md5,2f6b034826ae40672acd8059e084e788",
+                            "test.9000000.sorted.bam.bai:md5,536c3a693cabd649465bf8bd1fcd5aed"
+                        ]
+                    ]
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "22.04.5"
+        },
+        "timestamp": "2024-02-29T08:21:36.438776"
+    }
+}

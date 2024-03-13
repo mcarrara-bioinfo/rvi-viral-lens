@@ -1,0 +1,33 @@
+{
+    "Should run without failures": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test.2222222",
+                            "taxid": 2222222,
+                            "sample_id": "test",
+                            "virus_subtype": "EG.5.1.1"
+                        }
+                    ]
+                ],
+                "scov2_subtype_out_ch": [
+                    [
+                        {
+                            "id": "test.2222222",
+                            "taxid": 2222222,
+                            "sample_id": "test",
+                            "virus_subtype": "EG.5.1.1"
+                        }
+                    ]
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "22.04.5"
+        },
+        "timestamp": "2024-03-04T16:54:58.252456"
+    }
+}
