@@ -18,6 +18,38 @@ sudo singularity build pangolin.sif pangolinContainer.sing
 cd virus_resources/
 bwa index NC_045512.2.fasta
 ```
+
+## Unit Tests
+The workflow & process unit tests for this pipeline are written in the [nf-test](https://www.nf-test.com/) (v0.8.4) Nextflow testing framework. [nf-test](https://www.nf-test.com/) will need to be installed to run the tests.
+
+### Running Tests
+The following command if entered from the repository top-level directory can be used to execute all of the per-process & per-workflow unit tests:
+
+#### Run all tests
+```
+nf-test test
+```
+
+#### Run all module tests
+```
+nf-test test tests/modules/*.nf.test
+```
+
+#### Run all workflows tests
+```
+nf-test test tests/workflows/*.nf.test
+```
+
+#### Run whole pipeline test 
+```
+nf-test test tests/main.nf.test
+```
+
+#### Run individual module/workflow test
+```
+nf-test test tests/<modules or workflows>/<module_to_test>.nf.test
+```
+
 ## Usage
 
 #### Generate manifest
