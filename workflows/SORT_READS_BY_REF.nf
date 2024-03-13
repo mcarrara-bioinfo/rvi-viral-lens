@@ -129,7 +129,7 @@ workflow SORT_READS_BY_REF {
             | map {meta, reads ->
                 // group pairs of fastqs based on file names, and add new info to meta
                 reads
-                    .groupBy { filePath -> filePath.getName().tokenize("_")[0..1].join(".")}
+                    .groupBy { filePath -> filePath.getName().tokenize("_")[0..-2].join(".")}
                     .collect { identifier, paths ->[[identifier, paths]]}
             // this map returns a channel with a single value,
             // which is a list with all the ids and files.
@@ -138,8 +138,8 @@ workflow SORT_READS_BY_REF {
             | collate(3) // tuple (id.taxid, fq_1, fq_2)
             | map { it ->
                 // rebuild meta and reads structure
-                meta = [sample_id:it[0].tokenize(".")[0],
-                        taxid:it[0].tokenize(".")[1]]
+                meta = [sample_id:it[0].tokenize(".")[0..-2].join("_"), //run.lane.sample_info
+                        taxid:it[0].tokenize(".")[-1]] //taxid
                 meta.id = "${meta.sample_id}.${meta.taxid}"
                 reads = [it[1], it[2]]
                 [meta, reads]
