@@ -2,7 +2,7 @@ process bwa_alignment_and_post_processing {
     /*
     * Map reads to reference
     */
-    tag "${meta.id}"
+    //tag "${meta.id}"
     publishDir "${params.results_dir}/${meta.sample_id}/${meta.taxid}/", overwrite: true, mode: "copy", pattern:"*.bam*"
 
     input:
