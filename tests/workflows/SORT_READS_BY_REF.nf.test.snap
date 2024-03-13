@@ -20,8 +20,8 @@
                             "taxid_name": "Severe acute respiratory syndrome coronavirus 2 "
                         },
                         [
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.extracted_1.fq:md5,8bcd96733f6e9c5fac417d76012f06cf",
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.extracted_2.fq:md5,7379101db73756bc92027d7b704aefca"
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_2697049_R1.fq:md5,8bcd96733f6e9c5fac417d76012f06cf",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_2697049_R2.fq:md5,7379101db73756bc92027d7b704aefca"
                         ]
                     ],
                     [
@@ -41,8 +41,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 1 "
                         },
                         [
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000016.extracted_1.fq:md5,fae39fa54a4fc481ecaf60c528ef4506",
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000016.extracted_2.fq:md5,cad340ede78f717841ef901d72de05c3"
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000016_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000016_R2.fq:md5,b3bda8b7945911eb006adc95b3cc5343"
                         ]
                     ],
                     [
@@ -62,8 +62,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 2 "
                         },
                         [
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000017.extracted_1.fq:md5,e24a9078898de97f3d9a9799bb96227c",
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000017.extracted_2.fq:md5,84eb29ba3c602b2a66274100fc23a98e"
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000017_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000017_R2.fq:md5,b3bda8b7945911eb006adc95b3cc5343"
                         ]
                     ],
                     [
@@ -83,8 +83,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 3 "
                         },
                         [
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000018.extracted_1.fq:md5,2048182400cf44b4f347bf38bfac96ad",
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000018.extracted_2.fq:md5,f83264f309840ce0d16189fcd242cd67"
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000018_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000018_R2.fq:md5,b3bda8b7945911eb006adc95b3cc5343"
                         ]
                     ],
                     [
@@ -104,8 +104,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 4 "
                         },
                         [
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000019.extracted_1.fq:md5,d7219986c33bcf32329391a73e2bb4cc",
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000019.extracted_2.fq:md5,3879b33ba35d47ac2cbfc16eb07c4df6"
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000019_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000019_R2.fq:md5,b3bda8b7945911eb006adc95b3cc5343"
                         ]
                     ],
                     [
@@ -125,29 +125,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 5 "
                         },
                         [
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000020.extracted_1.fq:md5,6061517c508a1d3e321de1f26347b8fe",
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000020.extracted_2.fq:md5,2e2995c467d9378f089dcd2c2eee9c17"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1",
-                            "taxid": "9000021",
-                            "id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000021",
-                            "ref_files": [
-                                "9000021.fa:md5,d56c7801db8c9a1fe3f6bbe7cd640152",
-                                "9000021.fa.amb:md5,ae25a0aaab71802a056671cf732ae93e",
-                                "9000021.fa.ann:md5,bb5eb2af265736e581b6dc4f969ac4df",
-                                "9000021.fa.bwt:md5,edd157e292550fa4e93b083c6c6b8af7",
-                                "9000021.fa.pac:md5,1e2dac938e575df580e4f7f84c9ee0e8",
-                                "9000021.fa.sa:md5,4b5d868270d1c1d9cad92864b5797034"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 6"
-                        },
-                        [
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000021.extracted_1.fq:md5,5ecc0c86bae97b5a8fd1f778dae96655",
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000021.extracted_2.fq:md5,276d04557eace2e1bfaa09e5301130f0"
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000020_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000020_R2.fq:md5,b3bda8b7945911eb006adc95b3cc5343"
                         ]
                     ],
                     [
@@ -167,8 +146,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 7 "
                         },
                         [
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000022.extracted_1.fq:md5,45a82f62f2374c12f57367f12a21fb95",
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000022.extracted_2.fq:md5,9a9d3acf17e977f158350fd15c8b6569"
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000022_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000022_R2.fq:md5,b3bda8b7945911eb006adc95b3cc5343"
                         ]
                     ],
                     [
@@ -188,8 +167,8 @@
                             "taxid_name": "Severe acute respiratory syndrome coronavirus 2 "
                         },
                         [
-                            "SARSCoV2_FluH1N1_50K_each_P1.2697049.extracted_1.fq:md5,487c4688192a8580bae7a72019340396",
-                            "SARSCoV2_FluH1N1_50K_each_P1.2697049.extracted_2.fq:md5,b3f2833cd0baf71d0fd951521bd9d985"
+                            "SARSCoV2_FluH1N1_50K_each_P1_2697049_R1.fq:md5,487c4688192a8580bae7a72019340396",
+                            "SARSCoV2_FluH1N1_50K_each_P1_2697049_R2.fq:md5,b3f2833cd0baf71d0fd951521bd9d985"
                         ]
                     ],
                     [
@@ -209,8 +188,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 1 "
                         },
                         [
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000016.extracted_1.fq:md5,71747945640d51dfb745d7fe383aceb3",
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000016.extracted_2.fq:md5,a9fa7e7bb9d06fabfa727ddd1280514c"
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000016_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000016_R2.fq:md5,200b062e1f93c7a011c4d69f18d8ed77"
                         ]
                     ],
                     [
@@ -230,8 +209,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 2 "
                         },
                         [
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000017.extracted_1.fq:md5,c59cbfa90234d279f179ce49272a4910",
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000017.extracted_2.fq:md5,96ad3a65f8cd875bef121779ceca25bf"
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000017_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000017_R2.fq:md5,200b062e1f93c7a011c4d69f18d8ed77"
                         ]
                     ],
                     [
@@ -251,8 +230,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 3 "
                         },
                         [
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000018.extracted_1.fq:md5,f4b47d733d932b77e168558186df904c",
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000018.extracted_2.fq:md5,89a910593cc543c02eeb379297bca0eb"
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000018_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000018_R2.fq:md5,200b062e1f93c7a011c4d69f18d8ed77"
                         ]
                     ],
                     [
@@ -272,8 +251,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 4 "
                         },
                         [
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000019.extracted_1.fq:md5,8c291affd01c84db406146230eab9700",
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000019.extracted_2.fq:md5,f546e32d0a9cb7435a525041003f2c13"
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000019_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000019_R2.fq:md5,200b062e1f93c7a011c4d69f18d8ed77"
                         ]
                     ],
                     [
@@ -293,29 +272,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 5 "
                         },
                         [
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000020.extracted_1.fq:md5,5ca59a016428a2b1107dd101788ec4c5",
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000020.extracted_2.fq:md5,0b3a0f5b7ab39f30fcbfd2b623762e82"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "SARSCoV2_FluH1N1_50K_each_P1",
-                            "taxid": "9000021",
-                            "id": "SARSCoV2_FluH1N1_50K_each_P1.9000021",
-                            "ref_files": [
-                                "9000021.fa:md5,d56c7801db8c9a1fe3f6bbe7cd640152",
-                                "9000021.fa.amb:md5,ae25a0aaab71802a056671cf732ae93e",
-                                "9000021.fa.ann:md5,bb5eb2af265736e581b6dc4f969ac4df",
-                                "9000021.fa.bwt:md5,edd157e292550fa4e93b083c6c6b8af7",
-                                "9000021.fa.pac:md5,1e2dac938e575df580e4f7f84c9ee0e8",
-                                "9000021.fa.sa:md5,4b5d868270d1c1d9cad92864b5797034"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 6"
-                        },
-                        [
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000021.extracted_1.fq:md5,2816e69f858de75e3cad41c5fb699c43",
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000021.extracted_2.fq:md5,c575adbddc645896ca1d8c932d3a215e"
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000020_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000020_R2.fq:md5,200b062e1f93c7a011c4d69f18d8ed77"
                         ]
                     ],
                     [
@@ -335,176 +293,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 7 "
                         },
                         [
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000022.extracted_1.fq:md5,2ea7d8be15abba6b5a5146fcbc239458",
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000022.extracted_2.fq:md5,241268d13c5cd4bb58ba41563321495d"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
-                            "taxid": "2697049",
-                            "id": "Zeptometrix_Panel_2_1_Control1_P1.2697049",
-                            "ref_files": [
-                                "2697049.fa:md5,7ca8f77fb20a6bcb1eb0ce45d2504268",
-                                "2697049.fa.amb:md5,80f653e5d4e35ada77d0a10eb91e4d2d",
-                                "2697049.fa.ann:md5,60df9428892d946d9723a235b7e9346b",
-                                "2697049.fa.bwt:md5,88f3909bc7c2f9196bd5b1f1dd5d54a6",
-                                "2697049.fa.pac:md5,f631387e31f59214b85a8a80f63155f6",
-                                "2697049.fa.sa:md5,5bf62e5242a3b6889cb64a38049c6586"
-                            ],
-                            "taxid_rank": "S1",
-                            "taxid_name": "Severe acute respiratory syndrome coronavirus 2 "
-                        },
-                        [
-                            "Zeptometrix_Panel_2_1_Control1_P1.2697049.extracted_1.fq:md5,7d9c441b1fafcd34938381ee79db5d8d",
-                            "Zeptometrix_Panel_2_1_Control1_P1.2697049.extracted_2.fq:md5,41f4df6b3df0e2d509a4af871c436ee4"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
-                            "taxid": "9000016",
-                            "id": "Zeptometrix_Panel_2_1_Control1_P1.9000016",
-                            "ref_files": [
-                                "9000016.fa:md5,71cde01231f0c71b5f77b8b6710c697d",
-                                "9000016.fa.amb:md5,be1cb7424ad94cdb4ce7fdfe71297425",
-                                "9000016.fa.ann:md5,f72c27e667804d28f8436b1a3527d775",
-                                "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
-                                "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
-                                "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 1 "
-                        },
-                        [
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000016.extracted_1.fq:md5,a0ed2e5c0a619867f175b95b827f1fc4",
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000016.extracted_2.fq:md5,764a0b20c7e185ce79979bbb87314166"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
-                            "taxid": "9000017",
-                            "id": "Zeptometrix_Panel_2_1_Control1_P1.9000017",
-                            "ref_files": [
-                                "9000017.fa:md5,d953a7b748d91e7dd065d0b9ee40e2ae",
-                                "9000017.fa.amb:md5,04b5be82eb1793c10ea1fcd15cee7e43",
-                                "9000017.fa.ann:md5,161b7e7634382aeb81401921957e3a38",
-                                "9000017.fa.bwt:md5,e9cd8e72e2bcdcc13edc4a8d059d411e",
-                                "9000017.fa.pac:md5,1493d4662194f5527e09bc17f9907ca5",
-                                "9000017.fa.sa:md5,fa6fc8c221b31d22623113e45d003e64"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 2 "
-                        },
-                        [
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000017.extracted_1.fq:md5,5832690cade29e2021d9a6ca5be38dff",
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000017.extracted_2.fq:md5,0fccf53f7b2e27b0e717514f779c0415"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
-                            "taxid": "9000018",
-                            "id": "Zeptometrix_Panel_2_1_Control1_P1.9000018",
-                            "ref_files": [
-                                "9000018.fa:md5,d92b98f035c75f1b0f38310c56a5e4f4",
-                                "9000018.fa.amb:md5,0d4c57b8eee75a4649b82a6cfdac4b7c",
-                                "9000018.fa.ann:md5,9795c57a1145859122e8f26ee04b79e2",
-                                "9000018.fa.bwt:md5,f407383255a827f6e6655212035f3c29",
-                                "9000018.fa.pac:md5,c9828675b3ffc5b9cb1061ff8d79b172",
-                                "9000018.fa.sa:md5,fafaf258d54a1e673dbee42c80751c28"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 3 "
-                        },
-                        [
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000018.extracted_1.fq:md5,a32e7b764fb6a03fec4ff80fa0181a1d",
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000018.extracted_2.fq:md5,56a13c3f0988501d8b6a8ea5f7b14490"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
-                            "taxid": "9000019",
-                            "id": "Zeptometrix_Panel_2_1_Control1_P1.9000019",
-                            "ref_files": [
-                                "9000019.fa:md5,f2c7e81e467f59f607015ce331412739",
-                                "9000019.fa.amb:md5,7d62e2f97f21c1a288d4c7f3e7f7f9f2",
-                                "9000019.fa.ann:md5,bf41a9ee777957ee2b872981e4cb91af",
-                                "9000019.fa.bwt:md5,1bcf207abf1ae7a64db8c708e15180dc",
-                                "9000019.fa.pac:md5,e8c26d36248463e2d6c31d48109495a8",
-                                "9000019.fa.sa:md5,1437958cb3666c80de1cca5172a41b77"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 4 "
-                        },
-                        [
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000019.extracted_1.fq:md5,4075155a92bd8f29a0abba4ea4251cf4",
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000019.extracted_2.fq:md5,6edc4385aed95414b3075edfe3194839"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
-                            "taxid": "9000020",
-                            "id": "Zeptometrix_Panel_2_1_Control1_P1.9000020",
-                            "ref_files": [
-                                "9000020.fa:md5,afb569738a058ebdfead5526bbcc4341",
-                                "9000020.fa.amb:md5,27980febce3a028092af32105d9cbf8c",
-                                "9000020.fa.ann:md5,5ebaa9a58e6e63878c4c6a1364efdfac",
-                                "9000020.fa.bwt:md5,649cb4b039dee9a6692a7f3aec6b062c",
-                                "9000020.fa.pac:md5,b8cf7017fb81696ce5afdd6769dcc682",
-                                "9000020.fa.sa:md5,cca29c8283a33de15cd1af25b78a5546"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 5 "
-                        },
-                        [
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000020.extracted_1.fq:md5,1f5fb890723ba064f99694be0d8d05e0",
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000020.extracted_2.fq:md5,972751aac38af3975b731e9ccfe9831d"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
-                            "taxid": "9000021",
-                            "id": "Zeptometrix_Panel_2_1_Control1_P1.9000021",
-                            "ref_files": [
-                                "9000021.fa:md5,d56c7801db8c9a1fe3f6bbe7cd640152",
-                                "9000021.fa.amb:md5,ae25a0aaab71802a056671cf732ae93e",
-                                "9000021.fa.ann:md5,bb5eb2af265736e581b6dc4f969ac4df",
-                                "9000021.fa.bwt:md5,edd157e292550fa4e93b083c6c6b8af7",
-                                "9000021.fa.pac:md5,1e2dac938e575df580e4f7f84c9ee0e8",
-                                "9000021.fa.sa:md5,4b5d868270d1c1d9cad92864b5797034"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 6"
-                        },
-                        [
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000021.extracted_1.fq:md5,943240e814a8e6650f4e632ff47b601e",
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000021.extracted_2.fq:md5,3c011e3c2072e7ed99d728eff4d341e7"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
-                            "taxid": "9000022",
-                            "id": "Zeptometrix_Panel_2_1_Control1_P1.9000022",
-                            "ref_files": [
-                                "9000022.fa:md5,557032d0f5eb4445874cad1a73434666",
-                                "9000022.fa.amb:md5,211c108a3f210d381ecd3b4fb4a9f9b1",
-                                "9000022.fa.ann:md5,d1346bea8ce571c259cc73c48722e909",
-                                "9000022.fa.bwt:md5,0ca4a204d0370933ed688727fc3f1bfa",
-                                "9000022.fa.pac:md5,2d8189b026ca393c9067fe58f9632278",
-                                "9000022.fa.sa:md5,dde32a7cbd62ecbec06b9dd5bb9ca2e9"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 7 "
-                        },
-                        [
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000022.extracted_1.fq:md5,73dd870fdc3ea5ee22f0949feeb6fcc0",
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000022.extracted_2.fq:md5,1263326ca9207fa73c63b3ed3c025f3d"
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000022_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000022_R2.fq:md5,200b062e1f93c7a011c4d69f18d8ed77"
                         ]
                     ]
                 ],
@@ -526,8 +316,8 @@
                             "taxid_name": "Severe acute respiratory syndrome coronavirus 2 "
                         },
                         [
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.extracted_1.fq:md5,8bcd96733f6e9c5fac417d76012f06cf",
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.extracted_2.fq:md5,7379101db73756bc92027d7b704aefca"
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_2697049_R1.fq:md5,8bcd96733f6e9c5fac417d76012f06cf",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_2697049_R2.fq:md5,7379101db73756bc92027d7b704aefca"
                         ]
                     ],
                     [
@@ -547,8 +337,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 1 "
                         },
                         [
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000016.extracted_1.fq:md5,fae39fa54a4fc481ecaf60c528ef4506",
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000016.extracted_2.fq:md5,cad340ede78f717841ef901d72de05c3"
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000016_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000016_R2.fq:md5,b3bda8b7945911eb006adc95b3cc5343"
                         ]
                     ],
                     [
@@ -568,8 +358,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 2 "
                         },
                         [
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000017.extracted_1.fq:md5,e24a9078898de97f3d9a9799bb96227c",
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000017.extracted_2.fq:md5,84eb29ba3c602b2a66274100fc23a98e"
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000017_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000017_R2.fq:md5,b3bda8b7945911eb006adc95b3cc5343"
                         ]
                     ],
                     [
@@ -589,8 +379,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 3 "
                         },
                         [
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000018.extracted_1.fq:md5,2048182400cf44b4f347bf38bfac96ad",
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000018.extracted_2.fq:md5,f83264f309840ce0d16189fcd242cd67"
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000018_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000018_R2.fq:md5,b3bda8b7945911eb006adc95b3cc5343"
                         ]
                     ],
                     [
@@ -610,8 +400,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 4 "
                         },
                         [
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000019.extracted_1.fq:md5,d7219986c33bcf32329391a73e2bb4cc",
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000019.extracted_2.fq:md5,3879b33ba35d47ac2cbfc16eb07c4df6"
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000019_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000019_R2.fq:md5,b3bda8b7945911eb006adc95b3cc5343"
                         ]
                     ],
                     [
@@ -631,29 +421,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 5 "
                         },
                         [
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000020.extracted_1.fq:md5,6061517c508a1d3e321de1f26347b8fe",
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000020.extracted_2.fq:md5,2e2995c467d9378f089dcd2c2eee9c17"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1",
-                            "taxid": "9000021",
-                            "id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000021",
-                            "ref_files": [
-                                "9000021.fa:md5,d56c7801db8c9a1fe3f6bbe7cd640152",
-                                "9000021.fa.amb:md5,ae25a0aaab71802a056671cf732ae93e",
-                                "9000021.fa.ann:md5,bb5eb2af265736e581b6dc4f969ac4df",
-                                "9000021.fa.bwt:md5,edd157e292550fa4e93b083c6c6b8af7",
-                                "9000021.fa.pac:md5,1e2dac938e575df580e4f7f84c9ee0e8",
-                                "9000021.fa.sa:md5,4b5d868270d1c1d9cad92864b5797034"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 6"
-                        },
-                        [
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000021.extracted_1.fq:md5,5ecc0c86bae97b5a8fd1f778dae96655",
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000021.extracted_2.fq:md5,276d04557eace2e1bfaa09e5301130f0"
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000020_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000020_R2.fq:md5,b3bda8b7945911eb006adc95b3cc5343"
                         ]
                     ],
                     [
@@ -673,8 +442,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 7 "
                         },
                         [
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000022.extracted_1.fq:md5,45a82f62f2374c12f57367f12a21fb95",
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000022.extracted_2.fq:md5,9a9d3acf17e977f158350fd15c8b6569"
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000022_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000022_R2.fq:md5,b3bda8b7945911eb006adc95b3cc5343"
                         ]
                     ],
                     [
@@ -694,8 +463,8 @@
                             "taxid_name": "Severe acute respiratory syndrome coronavirus 2 "
                         },
                         [
-                            "SARSCoV2_FluH1N1_50K_each_P1.2697049.extracted_1.fq:md5,487c4688192a8580bae7a72019340396",
-                            "SARSCoV2_FluH1N1_50K_each_P1.2697049.extracted_2.fq:md5,b3f2833cd0baf71d0fd951521bd9d985"
+                            "SARSCoV2_FluH1N1_50K_each_P1_2697049_R1.fq:md5,487c4688192a8580bae7a72019340396",
+                            "SARSCoV2_FluH1N1_50K_each_P1_2697049_R2.fq:md5,b3f2833cd0baf71d0fd951521bd9d985"
                         ]
                     ],
                     [
@@ -715,8 +484,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 1 "
                         },
                         [
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000016.extracted_1.fq:md5,71747945640d51dfb745d7fe383aceb3",
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000016.extracted_2.fq:md5,a9fa7e7bb9d06fabfa727ddd1280514c"
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000016_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000016_R2.fq:md5,200b062e1f93c7a011c4d69f18d8ed77"
                         ]
                     ],
                     [
@@ -736,8 +505,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 2 "
                         },
                         [
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000017.extracted_1.fq:md5,c59cbfa90234d279f179ce49272a4910",
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000017.extracted_2.fq:md5,96ad3a65f8cd875bef121779ceca25bf"
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000017_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000017_R2.fq:md5,200b062e1f93c7a011c4d69f18d8ed77"
                         ]
                     ],
                     [
@@ -757,8 +526,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 3 "
                         },
                         [
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000018.extracted_1.fq:md5,f4b47d733d932b77e168558186df904c",
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000018.extracted_2.fq:md5,89a910593cc543c02eeb379297bca0eb"
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000018_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000018_R2.fq:md5,200b062e1f93c7a011c4d69f18d8ed77"
                         ]
                     ],
                     [
@@ -778,8 +547,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 4 "
                         },
                         [
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000019.extracted_1.fq:md5,8c291affd01c84db406146230eab9700",
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000019.extracted_2.fq:md5,f546e32d0a9cb7435a525041003f2c13"
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000019_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000019_R2.fq:md5,200b062e1f93c7a011c4d69f18d8ed77"
                         ]
                     ],
                     [
@@ -799,29 +568,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 5 "
                         },
                         [
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000020.extracted_1.fq:md5,5ca59a016428a2b1107dd101788ec4c5",
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000020.extracted_2.fq:md5,0b3a0f5b7ab39f30fcbfd2b623762e82"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "SARSCoV2_FluH1N1_50K_each_P1",
-                            "taxid": "9000021",
-                            "id": "SARSCoV2_FluH1N1_50K_each_P1.9000021",
-                            "ref_files": [
-                                "9000021.fa:md5,d56c7801db8c9a1fe3f6bbe7cd640152",
-                                "9000021.fa.amb:md5,ae25a0aaab71802a056671cf732ae93e",
-                                "9000021.fa.ann:md5,bb5eb2af265736e581b6dc4f969ac4df",
-                                "9000021.fa.bwt:md5,edd157e292550fa4e93b083c6c6b8af7",
-                                "9000021.fa.pac:md5,1e2dac938e575df580e4f7f84c9ee0e8",
-                                "9000021.fa.sa:md5,4b5d868270d1c1d9cad92864b5797034"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 6"
-                        },
-                        [
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000021.extracted_1.fq:md5,2816e69f858de75e3cad41c5fb699c43",
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000021.extracted_2.fq:md5,c575adbddc645896ca1d8c932d3a215e"
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000020_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000020_R2.fq:md5,200b062e1f93c7a011c4d69f18d8ed77"
                         ]
                     ],
                     [
@@ -841,176 +589,8 @@
                             "taxid_name": "Influenza A/H1N1 segment 7 "
                         },
                         [
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000022.extracted_1.fq:md5,2ea7d8be15abba6b5a5146fcbc239458",
-                            "SARSCoV2_FluH1N1_50K_each_P1.9000022.extracted_2.fq:md5,241268d13c5cd4bb58ba41563321495d"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
-                            "taxid": "2697049",
-                            "id": "Zeptometrix_Panel_2_1_Control1_P1.2697049",
-                            "ref_files": [
-                                "2697049.fa:md5,7ca8f77fb20a6bcb1eb0ce45d2504268",
-                                "2697049.fa.amb:md5,80f653e5d4e35ada77d0a10eb91e4d2d",
-                                "2697049.fa.ann:md5,60df9428892d946d9723a235b7e9346b",
-                                "2697049.fa.bwt:md5,88f3909bc7c2f9196bd5b1f1dd5d54a6",
-                                "2697049.fa.pac:md5,f631387e31f59214b85a8a80f63155f6",
-                                "2697049.fa.sa:md5,5bf62e5242a3b6889cb64a38049c6586"
-                            ],
-                            "taxid_rank": "S1",
-                            "taxid_name": "Severe acute respiratory syndrome coronavirus 2 "
-                        },
-                        [
-                            "Zeptometrix_Panel_2_1_Control1_P1.2697049.extracted_1.fq:md5,7d9c441b1fafcd34938381ee79db5d8d",
-                            "Zeptometrix_Panel_2_1_Control1_P1.2697049.extracted_2.fq:md5,41f4df6b3df0e2d509a4af871c436ee4"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
-                            "taxid": "9000016",
-                            "id": "Zeptometrix_Panel_2_1_Control1_P1.9000016",
-                            "ref_files": [
-                                "9000016.fa:md5,71cde01231f0c71b5f77b8b6710c697d",
-                                "9000016.fa.amb:md5,be1cb7424ad94cdb4ce7fdfe71297425",
-                                "9000016.fa.ann:md5,f72c27e667804d28f8436b1a3527d775",
-                                "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
-                                "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
-                                "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 1 "
-                        },
-                        [
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000016.extracted_1.fq:md5,a0ed2e5c0a619867f175b95b827f1fc4",
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000016.extracted_2.fq:md5,764a0b20c7e185ce79979bbb87314166"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
-                            "taxid": "9000017",
-                            "id": "Zeptometrix_Panel_2_1_Control1_P1.9000017",
-                            "ref_files": [
-                                "9000017.fa:md5,d953a7b748d91e7dd065d0b9ee40e2ae",
-                                "9000017.fa.amb:md5,04b5be82eb1793c10ea1fcd15cee7e43",
-                                "9000017.fa.ann:md5,161b7e7634382aeb81401921957e3a38",
-                                "9000017.fa.bwt:md5,e9cd8e72e2bcdcc13edc4a8d059d411e",
-                                "9000017.fa.pac:md5,1493d4662194f5527e09bc17f9907ca5",
-                                "9000017.fa.sa:md5,fa6fc8c221b31d22623113e45d003e64"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 2 "
-                        },
-                        [
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000017.extracted_1.fq:md5,5832690cade29e2021d9a6ca5be38dff",
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000017.extracted_2.fq:md5,0fccf53f7b2e27b0e717514f779c0415"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
-                            "taxid": "9000018",
-                            "id": "Zeptometrix_Panel_2_1_Control1_P1.9000018",
-                            "ref_files": [
-                                "9000018.fa:md5,d92b98f035c75f1b0f38310c56a5e4f4",
-                                "9000018.fa.amb:md5,0d4c57b8eee75a4649b82a6cfdac4b7c",
-                                "9000018.fa.ann:md5,9795c57a1145859122e8f26ee04b79e2",
-                                "9000018.fa.bwt:md5,f407383255a827f6e6655212035f3c29",
-                                "9000018.fa.pac:md5,c9828675b3ffc5b9cb1061ff8d79b172",
-                                "9000018.fa.sa:md5,fafaf258d54a1e673dbee42c80751c28"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 3 "
-                        },
-                        [
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000018.extracted_1.fq:md5,a32e7b764fb6a03fec4ff80fa0181a1d",
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000018.extracted_2.fq:md5,56a13c3f0988501d8b6a8ea5f7b14490"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
-                            "taxid": "9000019",
-                            "id": "Zeptometrix_Panel_2_1_Control1_P1.9000019",
-                            "ref_files": [
-                                "9000019.fa:md5,f2c7e81e467f59f607015ce331412739",
-                                "9000019.fa.amb:md5,7d62e2f97f21c1a288d4c7f3e7f7f9f2",
-                                "9000019.fa.ann:md5,bf41a9ee777957ee2b872981e4cb91af",
-                                "9000019.fa.bwt:md5,1bcf207abf1ae7a64db8c708e15180dc",
-                                "9000019.fa.pac:md5,e8c26d36248463e2d6c31d48109495a8",
-                                "9000019.fa.sa:md5,1437958cb3666c80de1cca5172a41b77"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 4 "
-                        },
-                        [
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000019.extracted_1.fq:md5,4075155a92bd8f29a0abba4ea4251cf4",
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000019.extracted_2.fq:md5,6edc4385aed95414b3075edfe3194839"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
-                            "taxid": "9000020",
-                            "id": "Zeptometrix_Panel_2_1_Control1_P1.9000020",
-                            "ref_files": [
-                                "9000020.fa:md5,afb569738a058ebdfead5526bbcc4341",
-                                "9000020.fa.amb:md5,27980febce3a028092af32105d9cbf8c",
-                                "9000020.fa.ann:md5,5ebaa9a58e6e63878c4c6a1364efdfac",
-                                "9000020.fa.bwt:md5,649cb4b039dee9a6692a7f3aec6b062c",
-                                "9000020.fa.pac:md5,b8cf7017fb81696ce5afdd6769dcc682",
-                                "9000020.fa.sa:md5,cca29c8283a33de15cd1af25b78a5546"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 5 "
-                        },
-                        [
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000020.extracted_1.fq:md5,1f5fb890723ba064f99694be0d8d05e0",
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000020.extracted_2.fq:md5,972751aac38af3975b731e9ccfe9831d"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
-                            "taxid": "9000021",
-                            "id": "Zeptometrix_Panel_2_1_Control1_P1.9000021",
-                            "ref_files": [
-                                "9000021.fa:md5,d56c7801db8c9a1fe3f6bbe7cd640152",
-                                "9000021.fa.amb:md5,ae25a0aaab71802a056671cf732ae93e",
-                                "9000021.fa.ann:md5,bb5eb2af265736e581b6dc4f969ac4df",
-                                "9000021.fa.bwt:md5,edd157e292550fa4e93b083c6c6b8af7",
-                                "9000021.fa.pac:md5,1e2dac938e575df580e4f7f84c9ee0e8",
-                                "9000021.fa.sa:md5,4b5d868270d1c1d9cad92864b5797034"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 6"
-                        },
-                        [
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000021.extracted_1.fq:md5,943240e814a8e6650f4e632ff47b601e",
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000021.extracted_2.fq:md5,3c011e3c2072e7ed99d728eff4d341e7"
-                        ]
-                    ],
-                    [
-                        {
-                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
-                            "taxid": "9000022",
-                            "id": "Zeptometrix_Panel_2_1_Control1_P1.9000022",
-                            "ref_files": [
-                                "9000022.fa:md5,557032d0f5eb4445874cad1a73434666",
-                                "9000022.fa.amb:md5,211c108a3f210d381ecd3b4fb4a9f9b1",
-                                "9000022.fa.ann:md5,d1346bea8ce571c259cc73c48722e909",
-                                "9000022.fa.bwt:md5,0ca4a204d0370933ed688727fc3f1bfa",
-                                "9000022.fa.pac:md5,2d8189b026ca393c9067fe58f9632278",
-                                "9000022.fa.sa:md5,dde32a7cbd62ecbec06b9dd5bb9ca2e9"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 7 "
-                        },
-                        [
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000022.extracted_1.fq:md5,73dd870fdc3ea5ee22f0949feeb6fcc0",
-                            "Zeptometrix_Panel_2_1_Control1_P1.9000022.extracted_2.fq:md5,1263326ca9207fa73c63b3ed3c025f3d"
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000022_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000022_R2.fq:md5,200b062e1f93c7a011c4d69f18d8ed77"
                         ]
                     ]
                 ]
@@ -1020,6 +600,6 @@
             "nf-test": "0.8.4",
             "nextflow": "22.04.5"
         },
-        "timestamp": "2024-03-04T11:04:08.299111"
+        "timestamp": "2024-03-13T12:05:38.506649"
     }
 }
