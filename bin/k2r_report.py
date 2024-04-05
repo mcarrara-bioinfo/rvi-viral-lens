@@ -89,7 +89,7 @@ def get_report(in_file, report_file, out_suffix=".viral_pipe.report.tsv"):
                                 "ref_selected": ref_name,
                                 "sample_subtype": subtype,
                                 "flu_segment": segment,
-                                "reference_subtype": generic_subtype,
+                                "virus_subtype": generic_subtype,
                                 "parent_selected": selected_data_dict["parent_selected"],
                                 "num_reads": num_reads
                             }

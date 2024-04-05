@@ -20,19 +20,18 @@ workflow GENERATE_CLASSIFICATION_REPORT {
         report_lines_ch = meta_ch.map{meta ->
         // convert null values for type and segments to empty strings
         if (meta[0].virus_subtype == null){
-            
             virus_subtype=''
         } else {
             virus_subtype = meta[0].virus_subtype
         }
-        
+
         if (meta[0].flu_segment==null){
             flu_segment=''
         } else {
             flu_segment = meta[0].flu_segment
         }
 
-        "${meta[0].sample_id},${meta[0].taxid},${meta[0].taxid_name.replace(",","|")},${virus_subtype},${flu_segment},${meta[0].percentage_genome_coverage},${meta[0].total_mapped_reads},${meta[0].longest_no_N_segment},${meta[0].percentage_of_N_bases}\n"
+        "${meta[0].sample_id},${meta[0].taxid},${meta[0].virus_name.replace(",","|")},${meta[0].virus_subtype},${flu_segment},${meta[0].percentage_genome_coverage},${meta[0].total_mapped_reads.replace("^M", "")},${meta[0].longest_no_N_segment},${meta[0].percentage_of_N_bases}\n"
         }.collect()
 
         // Write all of the per-sample report lines to a report file

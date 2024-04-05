@@ -62,37 +62,57 @@ workflow {
     // === 1 - Process input ===
     check_main_params()
     // ==========================
-    // Map reads to virus
 
+    // === 2 - Map reads to virus
     // sort reads by taxon
-    // input = per-sample fastq manifest; output = per-sample, per-taxon fastq manifest
-    
     if (params.entry_point == "sort_reads"){
         // check if 
         SORT_READS_BY_REF(params.manifest)
-        sample_taxid_ch = SORT_READS_BY_REF.out // tuple (meta, reads)
+        sample_taxid_ch = SORT_READS_BY_REF.out.sample_taxid_ch // tuple (meta, reads)
+        sample_pre_report_ch = SORT_READS_BY_REF.out.sample_pre_report_ch
     }
-    
-    // generate consensus
+
+    // === 3 - Generate consensus
     if (params.entry_point == "consensus_gen"){
         // process manifest
         sample_taxid_ch = parse_consensus_mnf_meta(params.consensus_mnf)
+        // TODO add pre_report as input
     }
 
     GENERATE_CONSENSUS(sample_taxid_ch)
 
-    // branching output from consensus for subtyping
-
+    // === 4 - Compute QC Metrics
+    
     COMPUTE_QC_METRICS(GENERATE_CONSENSUS.out)
+    
+    
+    // === 5 - branching output from QC for viral specofoc subtyping
 
+    // 5.1 - process pre_report files
+    // NOTE: if the consensus_gen entry point is removed, 
+    //       this processing should be moved back to SORT_READS_BY_REF workflow
+    sample_pre_report_ch
+      .splitCsv(header: true, sep:"\t")
+      .map{it -> 
+        id="${it.sample_id}.${it.virus}"
+        tuple(id, it)
+      }
+      .set{sample_report_ch}
+
+    // 5.2 - add report infor to out qc metric chanel
     COMPUTE_QC_METRICS.out
-      .branch{ it -> 
-        flu_subtyping_workflow_in_ch: it[0].taxid_name.contains("${params.flu_keyword}")
-        scv2_subtyping_workflow_in_ch: it[0].taxid_name.contains("${params.scv2_keyword}")
+      .map { meta, bam -> tuple(meta.id, meta, bam)}
+      .join(sample_report_ch, by: 0)
+      .map {id, meta, bam, report -> 
+        meta.putAll(report)
+        tuple(meta, bam)
+      }.view()
+      .branch{ it ->
+        //flu_subtyping_workflow_in_ch: it[0].taxid_name.contains("${params.flu_keyword}")
+        scv2_subtyping_workflow_in_ch: it[0].virus_name.contains("${params.scv2_keyword}")
         no_subtyping_ch: true
       }
       .set {qc_metrics_out_ch}
-    
 
     if (params.do_scov2_subtyping == true){
       qc_metrics_out_ch.scv2_subtyping_workflow_in_ch
@@ -103,24 +123,24 @@ workflow {
       SCOV2_SUBTYPING.out.set{scov2_subtyped_ch}
     }
 
-    if (params.do_flu_subtyping == true){
-      FLU_SUBTYPING(qc_metrics_out_ch.flu_subtyping_workflow_in_ch)
-      FLU_SUBTYPING.out.set{flu_subtyped_ch}
-    }
+    //if (params.do_flu_subtyping == true){
+    //  FLU_SUBTYPING(qc_metrics_out_ch.flu_subtyping_workflow_in_ch)
+    //  FLU_SUBTYPING.out.set{flu_subtyped_ch}
+    //}
   
   // TODO handle with no subtypinh is requested
-  if (!params.do_flu_subtyping == true){
-    flu_subtyped_ch = Channel.empty()
-  }
+  //if (!params.do_flu_subtyping == true){
+  //  flu_subtyped_ch = Channel.empty()
+  //}
 
   if (!params.do_scov2_subtyping == true){
     scov2_subtyped_ch = Channel.empty()
   }
-  qc_metrics_out_ch.no_subtyping_ch.concat(scov2_subtyped_ch, flu_subtyped_ch)
+  qc_metrics_out_ch.no_subtyping_ch.concat(scov2_subtyped_ch)//, flu_subtyped_ch)
     .set{report_in_ch}
 
-  report_in_ch
   GENERATE_CLASSIFICATION_REPORT(report_in_ch)
+
 }
 
 def __check_if_params_file_exist(param_name, param_value){
