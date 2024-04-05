@@ -1,5 +1,3 @@
-include {compute_percentage_covered_bases} from '../modules/compute_percentage_covered_bases.nf'
-include {compute_number_of_aligned_reads} from '../modules/compute_number_of_aligned_reads.nf'
 include {run_qc_script} from '../modules/run_qc_script.nf'
 
 workflow COMPUTE_QC_METRICS {
