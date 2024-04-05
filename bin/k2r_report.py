@@ -75,8 +75,8 @@ def get_report(in_file, report_file, out_suffix=".viral_pipe.report.tsv"):
             subtype = regex_subtyping("N[0-9]+", ref_name)
 
         ## collect number of reads written to each fastq filepair
-        if "per_taxon" in ref_json["metadata"].keys():
-            num_reads = ref_json["metadata"]["summary"]["per_taxon"][str(virus)]
+        if "per_taxon" in ref_json["metadata"]["summary"].keys():
+            num_reads = ref_json["metadata"]["summary"]["per_taxon"][str(selected_ref)]
         else:
             num_reads = None
 
