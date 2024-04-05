@@ -11,7 +11,6 @@ include {SORT_READS_BY_REF} from './workflows/SORT_READS_BY_REF.nf'
 include {GENERATE_CONSENSUS} from './workflows/GENERATE_CONSENSUS.nf'
 include {SCOV2_SUBTYPING} from './workflows/SCOV2_SUBTYPING.nf'
 include {COMPUTE_QC_METRICS} from './workflows/COMPUTE_QC_METRICS.nf'
-include {FLU_SUBTYPING} from './workflows/FLU_SUBTYPING.nf'
 include {GENERATE_CLASSIFICATION_REPORT} from './workflows/GENERATE_CLASSIFICATION_REPORT.nf'
 /*
 * ANSI escape codes to color output messages
@@ -45,7 +44,6 @@ log.info """${ANSI_RESET}
 
   --> viral subtyping branching parameters:
     --scv2_keyword             : ${params.scv2_keyword}
-    --flu_keyword              : ${params.flu_keyword}
 
   ------------------------------------------
   Runtime data:
@@ -106,9 +104,8 @@ workflow {
       .map {id, meta, bam, report -> 
         meta.putAll(report)
         tuple(meta, bam)
-      }.view()
+      }
       .branch{ it ->
-        //flu_subtyping_workflow_in_ch: it[0].taxid_name.contains("${params.flu_keyword}")
         scv2_subtyping_workflow_in_ch: it[0].virus_name.contains("${params.scv2_keyword}")
         no_subtyping_ch: true
       }
@@ -119,24 +116,13 @@ workflow {
         .map {it -> [it[0], it[0].consensus_fa]}
         .set {scov_2_subt_In_ch}
       SCOV2_SUBTYPING(scov_2_subt_In_ch)
-      //report_in_ch.concat(SCOV2_SUBTYPING.out)
       SCOV2_SUBTYPING.out.set{scov2_subtyped_ch}
     }
-
-    //if (params.do_flu_subtyping == true){
-    //  FLU_SUBTYPING(qc_metrics_out_ch.flu_subtyping_workflow_in_ch)
-    //  FLU_SUBTYPING.out.set{flu_subtyped_ch}
-    //}
-  
-  // TODO handle with no subtypinh is requested
-  //if (!params.do_flu_subtyping == true){
-  //  flu_subtyped_ch = Channel.empty()
-  //}
 
   if (!params.do_scov2_subtyping == true){
     scov2_subtyped_ch = Channel.empty()
   }
-  qc_metrics_out_ch.no_subtyping_ch.concat(scov2_subtyped_ch)//, flu_subtyped_ch)
+  qc_metrics_out_ch.no_subtyping_ch.concat(scov2_subtyped_ch)
     .set{report_in_ch}
 
   GENERATE_CLASSIFICATION_REPORT(report_in_ch)
