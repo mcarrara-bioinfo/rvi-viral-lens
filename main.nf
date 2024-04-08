@@ -32,7 +32,7 @@ log.info """${ANSI_RESET}
     --results_dir              : ${params.results_dir}
 
   --> SORT_READS_BY_REF workflow parameters:
-
+    --manifest                 : ${params.manifest}
     --db_path                  : ${params.db_path}
     --db_library_fa_path       : ${params.db_library_fa_path}
     --min_reads_for_taxid      : ${params.min_reads_for_taxid}
@@ -87,15 +87,21 @@ workflow {
     // === 5 - branching output from QC for viral specofoc subtyping
 
     // 5.1 - process pre_report files
-    // NOTE: if the consensus_gen entry point is removed, 
+    // NOTE: if the consensus_gen entry point is removed,
     //       this processing should be moved back to SORT_READS_BY_REF workflow
     sample_pre_report_ch
+      .filter{it -> (it.size() > 1)} // remove empty pre_reports
       .splitCsv(header: true, sep:"\t")
       .map{it -> 
         id="${it.sample_id}.${it.virus}"
         tuple(id, it)
       }
       .set{sample_report_ch}
+
+    // raise warning for sample taxids which had empty pre_reports
+    sample_pre_report_ch//.view(it -> log.warn("${it.size()}"))
+      .filter{it -> (it.size() <= 1)}
+      .view(it -> log.warn("Excluding ${it} as input due to small size ( < 1 byte)"))
 
     // 5.2 - add report infor to out qc metric chanel
     COMPUTE_QC_METRICS.out
@@ -195,8 +201,3 @@ workflow.onComplete {
   Error report : ${ANSI_GREEN}${workflow.errorReport ?: '-'}${ANSI_RESET}
   """.stripIndent()
 }
-/*
-workflow.onError {
-    println "Oops... Pipeline execution stopped with the following message: \n ${workflow.errorMessage}"
-}
-*/
