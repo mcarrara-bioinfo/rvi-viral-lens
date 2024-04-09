@@ -15,9 +15,7 @@
                                 "2697049.fa.bwt:md5,88f3909bc7c2f9196bd5b1f1dd5d54a6",
                                 "2697049.fa.pac:md5,f631387e31f59214b85a8a80f63155f6",
                                 "2697049.fa.sa:md5,5bf62e5242a3b6889cb64a38049c6586"
-                            ],
-                            "taxid_rank": "S1",
-                            "taxid_name": "Severe acute respiratory syndrome coronavirus 2 "
+                            ]
                         },
                         [
                             "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_2697049_R1.fq:md5,8bcd96733f6e9c5fac417d76012f06cf",
@@ -36,9 +34,7 @@
                                 "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
                                 "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
                                 "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 1 "
+                            ]
                         },
                         [
                             "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000016_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
@@ -57,9 +53,7 @@
                                 "9000017.fa.bwt:md5,e9cd8e72e2bcdcc13edc4a8d059d411e",
                                 "9000017.fa.pac:md5,1493d4662194f5527e09bc17f9907ca5",
                                 "9000017.fa.sa:md5,fa6fc8c221b31d22623113e45d003e64"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 2 "
+                            ]
                         },
                         [
                             "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000017_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
@@ -78,9 +72,7 @@
                                 "9000018.fa.bwt:md5,f407383255a827f6e6655212035f3c29",
                                 "9000018.fa.pac:md5,c9828675b3ffc5b9cb1061ff8d79b172",
                                 "9000018.fa.sa:md5,fafaf258d54a1e673dbee42c80751c28"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 3 "
+                            ]
                         },
                         [
                             "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000018_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
@@ -99,9 +91,7 @@
                                 "9000019.fa.bwt:md5,1bcf207abf1ae7a64db8c708e15180dc",
                                 "9000019.fa.pac:md5,e8c26d36248463e2d6c31d48109495a8",
                                 "9000019.fa.sa:md5,1437958cb3666c80de1cca5172a41b77"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 4 "
+                            ]
                         },
                         [
                             "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000019_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
@@ -120,9 +110,7 @@
                                 "9000020.fa.bwt:md5,649cb4b039dee9a6692a7f3aec6b062c",
                                 "9000020.fa.pac:md5,b8cf7017fb81696ce5afdd6769dcc682",
                                 "9000020.fa.sa:md5,cca29c8283a33de15cd1af25b78a5546"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 5 "
+                            ]
                         },
                         [
                             "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000020_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
@@ -141,9 +129,7 @@
                                 "9000022.fa.bwt:md5,0ca4a204d0370933ed688727fc3f1bfa",
                                 "9000022.fa.pac:md5,2d8189b026ca393c9067fe58f9632278",
                                 "9000022.fa.sa:md5,dde32a7cbd62ecbec06b9dd5bb9ca2e9"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 7 "
+                            ]
                         },
                         [
                             "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000022_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
@@ -162,9 +148,7 @@
                                 "2697049.fa.bwt:md5,88f3909bc7c2f9196bd5b1f1dd5d54a6",
                                 "2697049.fa.pac:md5,f631387e31f59214b85a8a80f63155f6",
                                 "2697049.fa.sa:md5,5bf62e5242a3b6889cb64a38049c6586"
-                            ],
-                            "taxid_rank": "S1",
-                            "taxid_name": "Severe acute respiratory syndrome coronavirus 2 "
+                            ]
                         },
                         [
                             "SARSCoV2_FluH1N1_50K_each_P1_2697049_R1.fq:md5,487c4688192a8580bae7a72019340396",
@@ -183,9 +167,7 @@
                                 "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
                                 "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
                                 "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 1 "
+                            ]
                         },
                         [
                             "SARSCoV2_FluH1N1_50K_each_P1_9000016_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
@@ -204,9 +186,7 @@
                                 "9000017.fa.bwt:md5,e9cd8e72e2bcdcc13edc4a8d059d411e",
                                 "9000017.fa.pac:md5,1493d4662194f5527e09bc17f9907ca5",
                                 "9000017.fa.sa:md5,fa6fc8c221b31d22623113e45d003e64"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 2 "
+                            ]
                         },
                         [
                             "SARSCoV2_FluH1N1_50K_each_P1_9000017_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
@@ -225,9 +205,7 @@
                                 "9000018.fa.bwt:md5,f407383255a827f6e6655212035f3c29",
                                 "9000018.fa.pac:md5,c9828675b3ffc5b9cb1061ff8d79b172",
                                 "9000018.fa.sa:md5,fafaf258d54a1e673dbee42c80751c28"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 3 "
+                            ]
                         },
                         [
                             "SARSCoV2_FluH1N1_50K_each_P1_9000018_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
@@ -246,9 +224,7 @@
                                 "9000019.fa.bwt:md5,1bcf207abf1ae7a64db8c708e15180dc",
                                 "9000019.fa.pac:md5,e8c26d36248463e2d6c31d48109495a8",
                                 "9000019.fa.sa:md5,1437958cb3666c80de1cca5172a41b77"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 4 "
+                            ]
                         },
                         [
                             "SARSCoV2_FluH1N1_50K_each_P1_9000019_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
@@ -267,9 +243,7 @@
                                 "9000020.fa.bwt:md5,649cb4b039dee9a6692a7f3aec6b062c",
                                 "9000020.fa.pac:md5,b8cf7017fb81696ce5afdd6769dcc682",
                                 "9000020.fa.sa:md5,cca29c8283a33de15cd1af25b78a5546"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 5 "
+                            ]
                         },
                         [
                             "SARSCoV2_FluH1N1_50K_each_P1_9000020_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
@@ -288,15 +262,23 @@
                                 "9000022.fa.bwt:md5,0ca4a204d0370933ed688727fc3f1bfa",
                                 "9000022.fa.pac:md5,2d8189b026ca393c9067fe58f9632278",
                                 "9000022.fa.sa:md5,dde32a7cbd62ecbec06b9dd5bb9ca2e9"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 7 "
+                            ]
                         },
                         [
                             "SARSCoV2_FluH1N1_50K_each_P1_9000022_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
                             "SARSCoV2_FluH1N1_50K_each_P1_9000022_R2.fq:md5,200b062e1f93c7a011c4d69f18d8ed77"
                         ]
                     ]
+                ],
+                "1": [
+                    "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_pre_report.tsv:md5,46b7064bbc98b856e02664f890103dc0",
+                    "SARSCoV2_FluH1N1_50K_each_P1_pre_report.tsv:md5,c0886b1f4c5f2ce32a41974f2519a59a",
+                    "Zeptometrix_Panel_2_1_Control1_P1_pre_report.tsv:md5,7c1b40838c7094bcaef2e775f415e7dc"
+                ],
+                "sample_pre_report_ch": [
+                    "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_pre_report.tsv:md5,46b7064bbc98b856e02664f890103dc0",
+                    "SARSCoV2_FluH1N1_50K_each_P1_pre_report.tsv:md5,c0886b1f4c5f2ce32a41974f2519a59a",
+                    "Zeptometrix_Panel_2_1_Control1_P1_pre_report.tsv:md5,7c1b40838c7094bcaef2e775f415e7dc"
                 ],
                 "sample_taxid_ch": [
                     [
@@ -311,9 +293,7 @@
                                 "2697049.fa.bwt:md5,88f3909bc7c2f9196bd5b1f1dd5d54a6",
                                 "2697049.fa.pac:md5,f631387e31f59214b85a8a80f63155f6",
                                 "2697049.fa.sa:md5,5bf62e5242a3b6889cb64a38049c6586"
-                            ],
-                            "taxid_rank": "S1",
-                            "taxid_name": "Severe acute respiratory syndrome coronavirus 2 "
+                            ]
                         },
                         [
                             "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_2697049_R1.fq:md5,8bcd96733f6e9c5fac417d76012f06cf",
@@ -332,9 +312,7 @@
                                 "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
                                 "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
                                 "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 1 "
+                            ]
                         },
                         [
                             "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000016_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
@@ -353,9 +331,7 @@
                                 "9000017.fa.bwt:md5,e9cd8e72e2bcdcc13edc4a8d059d411e",
                                 "9000017.fa.pac:md5,1493d4662194f5527e09bc17f9907ca5",
                                 "9000017.fa.sa:md5,fa6fc8c221b31d22623113e45d003e64"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 2 "
+                            ]
                         },
                         [
                             "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000017_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
@@ -374,9 +350,7 @@
                                 "9000018.fa.bwt:md5,f407383255a827f6e6655212035f3c29",
                                 "9000018.fa.pac:md5,c9828675b3ffc5b9cb1061ff8d79b172",
                                 "9000018.fa.sa:md5,fafaf258d54a1e673dbee42c80751c28"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 3 "
+                            ]
                         },
                         [
                             "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000018_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
@@ -395,9 +369,7 @@
                                 "9000019.fa.bwt:md5,1bcf207abf1ae7a64db8c708e15180dc",
                                 "9000019.fa.pac:md5,e8c26d36248463e2d6c31d48109495a8",
                                 "9000019.fa.sa:md5,1437958cb3666c80de1cca5172a41b77"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 4 "
+                            ]
                         },
                         [
                             "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000019_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
@@ -416,9 +388,7 @@
                                 "9000020.fa.bwt:md5,649cb4b039dee9a6692a7f3aec6b062c",
                                 "9000020.fa.pac:md5,b8cf7017fb81696ce5afdd6769dcc682",
                                 "9000020.fa.sa:md5,cca29c8283a33de15cd1af25b78a5546"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 5 "
+                            ]
                         },
                         [
                             "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000020_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
@@ -437,9 +407,7 @@
                                 "9000022.fa.bwt:md5,0ca4a204d0370933ed688727fc3f1bfa",
                                 "9000022.fa.pac:md5,2d8189b026ca393c9067fe58f9632278",
                                 "9000022.fa.sa:md5,dde32a7cbd62ecbec06b9dd5bb9ca2e9"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 7 "
+                            ]
                         },
                         [
                             "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000022_R1.fq:md5,895b962fb72ae2fd70d61fe3a29e535c",
@@ -458,9 +426,7 @@
                                 "2697049.fa.bwt:md5,88f3909bc7c2f9196bd5b1f1dd5d54a6",
                                 "2697049.fa.pac:md5,f631387e31f59214b85a8a80f63155f6",
                                 "2697049.fa.sa:md5,5bf62e5242a3b6889cb64a38049c6586"
-                            ],
-                            "taxid_rank": "S1",
-                            "taxid_name": "Severe acute respiratory syndrome coronavirus 2 "
+                            ]
                         },
                         [
                             "SARSCoV2_FluH1N1_50K_each_P1_2697049_R1.fq:md5,487c4688192a8580bae7a72019340396",
@@ -479,9 +445,7 @@
                                 "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
                                 "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
                                 "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 1 "
+                            ]
                         },
                         [
                             "SARSCoV2_FluH1N1_50K_each_P1_9000016_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
@@ -500,9 +464,7 @@
                                 "9000017.fa.bwt:md5,e9cd8e72e2bcdcc13edc4a8d059d411e",
                                 "9000017.fa.pac:md5,1493d4662194f5527e09bc17f9907ca5",
                                 "9000017.fa.sa:md5,fa6fc8c221b31d22623113e45d003e64"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 2 "
+                            ]
                         },
                         [
                             "SARSCoV2_FluH1N1_50K_each_P1_9000017_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
@@ -521,9 +483,7 @@
                                 "9000018.fa.bwt:md5,f407383255a827f6e6655212035f3c29",
                                 "9000018.fa.pac:md5,c9828675b3ffc5b9cb1061ff8d79b172",
                                 "9000018.fa.sa:md5,fafaf258d54a1e673dbee42c80751c28"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 3 "
+                            ]
                         },
                         [
                             "SARSCoV2_FluH1N1_50K_each_P1_9000018_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
@@ -542,9 +502,7 @@
                                 "9000019.fa.bwt:md5,1bcf207abf1ae7a64db8c708e15180dc",
                                 "9000019.fa.pac:md5,e8c26d36248463e2d6c31d48109495a8",
                                 "9000019.fa.sa:md5,1437958cb3666c80de1cca5172a41b77"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 4 "
+                            ]
                         },
                         [
                             "SARSCoV2_FluH1N1_50K_each_P1_9000019_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
@@ -563,9 +521,7 @@
                                 "9000020.fa.bwt:md5,649cb4b039dee9a6692a7f3aec6b062c",
                                 "9000020.fa.pac:md5,b8cf7017fb81696ce5afdd6769dcc682",
                                 "9000020.fa.sa:md5,cca29c8283a33de15cd1af25b78a5546"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 5 "
+                            ]
                         },
                         [
                             "SARSCoV2_FluH1N1_50K_each_P1_9000020_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
@@ -584,9 +540,7 @@
                                 "9000022.fa.bwt:md5,0ca4a204d0370933ed688727fc3f1bfa",
                                 "9000022.fa.pac:md5,2d8189b026ca393c9067fe58f9632278",
                                 "9000022.fa.sa:md5,dde32a7cbd62ecbec06b9dd5bb9ca2e9"
-                            ],
-                            "taxid_rank": "S3",
-                            "taxid_name": "Influenza A/H1N1 segment 7 "
+                            ]
                         },
                         [
                             "SARSCoV2_FluH1N1_50K_each_P1_9000022_R1.fq:md5,9c39b8a961fd8cf8755256b3bd16dbc9",
@@ -598,8 +552,8 @@
         ],
         "meta": {
             "nf-test": "0.8.4",
-            "nextflow": "22.04.5"
+            "nextflow": "23.10.1"
         },
-        "timestamp": "2024-03-13T12:05:38.506649"
+        "timestamp": "2024-04-09T14:02:00.931881"
     }
 }
