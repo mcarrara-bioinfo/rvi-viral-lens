@@ -5,7 +5,7 @@ process run_kraken2ref_and_pre_report {
     */
     tag "${meta.id}"
     label "kraken2ref"
-
+    cache 'lenient'
     publishDir "${params.results_dir}/${meta.id}/reads_by_taxon/", mode: 'copy', pattern: "*.{fq,json,tsv,log}"
 
     input:
@@ -22,9 +22,17 @@ process run_kraken2ref_and_pre_report {
     """
     kraken2r -s ${meta.id} parse_report -i ${kraken_report} -o ./ -t ${params.min_reads_for_taxid}
 
-    ## sort reads by reference (requires parse_report to have been run before)
-    kraken2r -s ${meta.id} sort_reads -fq1 ${fq1_file} -fq2 ${fq2_file} -k ${kraken_output} -r ./${meta.id}_decomposed.json -u
+    # Check if the JSON file exists
+    if [ -e "${meta.id}_decomposed.json" ]; then
+        ## sort reads by reference (requires parse_report to have been run before)
+        kraken2r -s ${meta.id} sort_reads -fq1 ${fq1_file} -fq2 ${fq2_file} -k ${kraken_output} -r ./${meta.id}_decomposed.json -u
+        # write pre report
+        k2r_report.py -i ${meta.id}_decomposed.json -r ${kraken_report} -out_suffix _pre_report.tsv
 
-    k2r_report.py -i ${meta.id}_decomposed.json -r ${kraken_report} -out_suffix _pre_report.tsv
+    else
+        echo "Warning: JSON file does not exist. Skipping downstream commands."
+        # generate an empty pre repot report file
+        touch ${meta.id}_pre_report.tsv
+    fi
     """
 }

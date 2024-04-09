@@ -1,0 +1,8 @@
+sample_id	virus	virus_name	selected_taxid	ref_selected	sample_subtype	flu_segment	virus_subtype	parent_selected	num_reads
+test.9000000	694009	Severe acute respiratory syndrome-related coronavirus	2697049	Severe acute respiratory syndrome coronavirus 2	None	None		False	11928
+test.9000000	2955291	Alphainfluenzavirus influenzae	9000016	Influenza A/H1N1 segment 1	None	1	H1N1	False	4231
+test.9000000	2955291	Alphainfluenzavirus influenzae	9000017	Influenza A/H1N1 segment 2	None	2	H1N1	False	4231
+test.9000000	2955291	Alphainfluenzavirus influenzae	9000018	Influenza A/H1N1 segment 3	None	3	H1N1	False	4231
+test.9000000	2955291	Alphainfluenzavirus influenzae	9000019	Influenza A/H1N1 segment 4	None	4	H1N1	False	4231
+test.9000000	2955291	Alphainfluenzavirus influenzae	9000020	Influenza A/H1N1 segment 5	None	5	H1N1	False	4231
+test.9000000	2955291	Alphainfluenzavirus influenzae	9000022	Influenza A/H1N1 segment 7	None	7	H1N1	False	4231
