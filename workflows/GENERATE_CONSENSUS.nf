@@ -15,7 +15,7 @@ workflow GENERATE_CONSENSUS {
     main:
         // prepare bwa input channel
         sample_taxid_ch
-            | map {meta, reads -> [meta,reads,meta.ref_files]}
+            | map {meta, reads -> tuple(meta,reads,meta.ref_files)}
             | set {bwa_input_ch} // tuple(meta, reads, ref_genome_paths)
 
         // align reads to reference
@@ -57,7 +57,7 @@ def parse_consensus_mnf_meta(consensus_mnf) {
                             reads = [row.reads_1, row.reads_2]
 
                             // declare channel shape
-                            [meta, reads]
+                            tuple(meta, reads)
                         }
     return mnf_ch // tuple(index, [fastq_pairs])
 }

@@ -17,7 +17,7 @@ workflow COMPUTE_QC_METRICS {
             | map {meta, fasta_file, quality_files, variant_tsv ->
                 // store fasta_files at meta
                 meta.consensus_fa = fasta_file
-                [meta, meta.bam_file, fasta_file, meta.ref_files[0]]
+                tuple(meta, meta.bam_file, fasta_file, meta.ref_files[0])
             }
             | set{qc_script_In_ch}
 
@@ -35,7 +35,7 @@ workflow COMPUTE_QC_METRICS {
                 meta.total_unmapped_reads = tokens_lst[8]
                 meta.total_mapped_reads = tokens_lst[10].replace("\n","")
                 
-                [meta, meta.bam_file]
+                tuple(meta, meta.bam_file)
             }
             | set {qc_Out_ch}
    emit:

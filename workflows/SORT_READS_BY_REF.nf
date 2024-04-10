@@ -12,7 +12,7 @@ def parse_clean_mnf_meta(consensus_mnf) {
                         // set files
                         reads = [row.reads_1, row.reads_2]
                         // declare channel shape
-                        [meta, reads]
+                        tuple(meta, reads)
                     }
     return mnf_ch // tuple(sample_id, [fastq_pairs])
 }
@@ -76,7 +76,7 @@ workflow SORT_READS_BY_REF {
                         taxid:it[0].tokenize(".")[-1]] //taxid
                 meta.id = "${meta.sample_id}.${meta.taxid}"
                 reads = [it[1], it[2]]
-                [meta, reads]
+                tuple(meta, reads)
             }
             | set {pre_sample_taxid_ch}
 
@@ -95,12 +95,12 @@ workflow SORT_READS_BY_REF {
         // add reference files to meta
         pre_sample_taxid_ch
             | map {meta, reads ->
-                [meta.taxid, meta, reads]
+                tuple(meta.taxid, meta, reads)
             }
             | combine(taxid_ref_files_map_ch, by:0) // [taxid, meta, reads, ref_files]
             | map {taxid, meta, reads, ref_files ->
                 meta.ref_files = ref_files
-                [meta, reads]
+                tuple(meta, reads)
             }
             | set {sample_taxid_ch}
 
