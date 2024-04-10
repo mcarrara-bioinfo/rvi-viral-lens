@@ -96,9 +96,13 @@ def get_report(in_file, report_file, out_suffix=".viral_pipe.report.tsv"):
 
     ## once iteration over all chosen refs is done
     ## convert dict of dicts to tabular format and write to tsv
-    output = pd.DataFrame.from_dict(report_output.values())
-    output.to_csv(f"{sample_id}{out_suffix}", sep = "\t", header=True, index = False)
-
+    output_df = pd.DataFrame.from_dict(report_output.values())
+    # if not empty, sort dataframe and write csv
+    if len(output_df) > 0:
+        output_df.sort_values("selected_taxid").to_csv(f"{sample_id}{out_suffix}", sep = "\t", header=True, index = False)
+    # if empty, write a csv file
+    else:
+        output_df.to_csv(f"{sample_id}{out_suffix}", sep = "\t", header=True, index = False)
 def main():
     args = get_args().parse_args()
     get_report(args.input_json, args.report, out_suffix=args.out_suffix)
