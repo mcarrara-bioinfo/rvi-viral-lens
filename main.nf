@@ -119,7 +119,7 @@ workflow {
 
     if (params.do_scov2_subtyping == true){
       qc_metrics_out_ch.scv2_subtyping_workflow_in_ch
-        .map {it -> [it[0], it[0].consensus_fa]}
+        .map {it -> tuple(it[0], it[0].consensus_fa)}
         .set {scov_2_subt_In_ch}
       SCOV2_SUBTYPING(scov_2_subt_In_ch)
       SCOV2_SUBTYPING.out.set{scov2_subtyped_ch}
