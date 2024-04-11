@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- **[improvement]**: Remove reduntant processes, rewiring and tiding up code base.  
+- **[improvement]**: Remove redundant processes, rewiring and tiding up code base.  
 - **[improvement]**: Qc metrics using the same method of the Artic pipeline
 - **[improvement]**: add kraken2ref as the new reference selection tool
 - **[updated]**: Unit tests adapted to new channel and processes structure
