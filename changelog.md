@@ -6,8 +6,15 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- **[improvement]**: Remove reduntant processes, rewiring and tiding up code base.  
 - **[improvement]**: Qc metrics using the same method of the Artic pipeline
 - **[improvement]**: add kraken2ref as the new reference selection tool
+- **[updated]**: Unit tests adapted to new channel and processes structure
+
+### Added
+
+- **[added]**: A script (`k2r_report.py`) was added to generate a pre report file from k2r software
+- **[added]**: unit tests for new `run_kraken2ref_and_pre_report.nf`
 
 ## [0.1.0] - 2024-02-05
 
