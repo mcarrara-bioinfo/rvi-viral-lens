@@ -4,35 +4,35 @@ workflow GENERATE_CLASSIFICATION_REPORT {
     take:
         /*
         meta must have the following keys:
-            - id
+            - sample_id
             - taxid
-            - virus_species
-            - type
-            - segment
+            - virus_name
+            - virus_subtype
+            - flu_segment
             - percentage_genome_coverage
-            - read_depth
+            - total_mapped_reads
+            - longest_no_N_segment
+            - percentage_of_N_bases
         */
         meta_ch // meta
 
     main:
 
         // Create a report line for every sample and then aggregate them
-        report_lines_ch = meta_ch.map{meta ->
+        report_lines_ch = meta_ch.map{it ->
         // convert null values for type and segments to empty strings
-        if (meta[0].virus_subtype == null){
-            
+        if (it[0].virus_subtype == null){
             virus_subtype=''
         } else {
-            virus_subtype = meta[0].virus_subtype
-        }
-        
-        if (meta[0].flu_segment==null){
-            flu_segment=''
-        } else {
-            flu_segment = meta[0].flu_segment
+            virus_subtype = it[0].virus_subtype
         }
 
-        "${meta[0].sample_id},${meta[0].taxid},${meta[0].taxid_name.replace(",","|")},${virus_subtype},${flu_segment},${meta[0].percentage_genome_coverage},${meta[0].total_mapped_reads},${meta[0].longest_no_N_segment},${meta[0].percentage_of_N_bases}\n"
+        if (it[0].flu_segment==null){
+            flu_segment=''
+        } else {
+            flu_segment = it[0].flu_segment
+        }
+        "${it[0].sample_id},${it[0].taxid},${it[0].virus_name.replace(",","|")},${it[0].virus_subtype},${flu_segment},${it[0].percentage_genome_coverage},${it[0].total_mapped_reads.replace("^M", "")},${it[0].longest_no_N_segment},${it[0].percentage_of_N_bases}\n"
         }.collect()
 
         // Write all of the per-sample report lines to a report file

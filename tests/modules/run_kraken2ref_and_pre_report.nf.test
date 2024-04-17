@@ -1,8 +1,8 @@
 nextflow_process {
 
-    name "Test Process run_kraken2ref process"
-    script "modules/run_kraken2ref.nf"
-    process "run_kraken2ref"
+    name "Test Process run_kraken2ref_and_pre_report process"
+    script "modules/run_kraken2ref_and_pre_report.nf"
+    process "run_kraken2ref_and_pre_report"
 
     test("Should run without failures") {
 
