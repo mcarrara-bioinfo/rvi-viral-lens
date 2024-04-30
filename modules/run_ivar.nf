@@ -27,17 +27,17 @@ process run_ivar{
     set -e
     set -o pipefail
     # IVAR STEP 1 ----------------------------------------------------------------
-    samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} | \
-    ivar variants -p ${meta.id} -q ${mapping_quality} -t 0.05
+    samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} > mpileup.out
+    
+    cat mpileup.out | ivar variants -p ${meta.id} -q ${mapping_quality} -t 0.05
 
     # IVAR STEP 2 ----------------------------------------------------------------
-    samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} | \
-    ivar consensus -p ${meta.id} -q ${mapping_quality} -t 0 -m ${depth} -n N
+    cat mpileup.out | ivar consensus -p ${meta.id} -q ${mapping_quality} -t 0 -m ${depth} -n N
 
     # IVAR STEP 3 ----------------------------------------------------------------
-    samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} | \
-    ivar consensus -p ${meta.id}.ivar060 -q ${mapping_quality} -t 0.60 -n N -m ${depth}
+    cat mpileup.out | ivar consensus -p ${meta.id}.ivar060 -q ${mapping_quality} -t 0.60 -n N -m ${depth}
 
+    rm mpileup.out
     """
 }
 
