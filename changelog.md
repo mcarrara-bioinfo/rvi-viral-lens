@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 ## UNRELEASED
 
 ### Changed
-
+- **[improvement]**: Remove mpileup repeated command calls on ivar process.  
 - **[improvement]**: Remove redundant processes, rewiring and tiding up code base.  
 - **[improvement]**: Qc metrics using the same method of the Artic pipeline
 - **[improvement]**: add kraken2ref as the new reference selection tool
