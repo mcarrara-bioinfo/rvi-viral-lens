@@ -32,8 +32,8 @@ workflow COMPUTE_QC_METRICS {
                 meta.percentage_genome_coverage = tokens_lst[2]
                 meta.longest_no_N_segment = tokens_lst[3]
                 meta.total_aligned_reads = tokens_lst[4]
-                meta.total_unmapped_reads = tokens_lst[8]
-                meta.total_mapped_reads = tokens_lst[10].replace("\n","")
+                meta.total_unmapped_reads = tokens_lst[10].replace("\n","")
+                meta.total_mapped_reads = tokens_lst[8]
                 
                 tuple(meta, meta.bam_file)
             }

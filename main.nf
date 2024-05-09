@@ -93,30 +93,31 @@ workflow {
       .filter{it -> (it.size() > 1)} // remove empty pre_reports
       .splitCsv(header: true, sep:"\t")
       .map{it -> 
-        id="${it.sample_id}.${it.virus}"
+        id="${it.sample_id}.${it.selected_taxid}"
         tuple(id, it)
       }
       .set{sample_report_ch}
 
     // raise warning for sample taxids which had empty pre_reports
-    sample_pre_report_ch//.view(it -> log.warn("${it.size()}"))
+    sample_pre_report_ch
       .filter{it -> (it.size() <= 1)}
       .view(it -> log.warn("Excluding ${it} as input due to small size ( < 1 byte)"))
 
     // 5.2 - add report infor to out qc metric chanel
     COMPUTE_QC_METRICS.out
       .map { meta, bam -> tuple(meta.id, meta, bam)}
-      .join(sample_report_ch, by: 0)
-      .map {id, meta, bam, report -> 
+      .join(sample_report_ch)//, by: 0)
+      .map {id, meta, bam, report ->
         meta.putAll(report)
         tuple(meta, bam)
       }
       .branch{ it ->
-        scv2_subtyping_workflow_in_ch: it[0].virus_name.contains("${params.scv2_keyword}")
+        scv2_subtyping_workflow_in_ch: it[0].ref_selected.contains("${params.scv2_keyword}")
         no_subtyping_ch: true
       }
       .set {qc_metrics_out_ch}
-
+    
+    // 5.3 - do SCOV2 subtyping
     if (params.do_scov2_subtyping == true){
       qc_metrics_out_ch.scv2_subtyping_workflow_in_ch
         .map {it -> tuple(it[0], it[0].consensus_fa)}
@@ -124,6 +125,8 @@ workflow {
       SCOV2_SUBTYPING(scov_2_subt_In_ch)
       SCOV2_SUBTYPING.out.set{scov2_subtyped_ch}
     }
+
+  // === 6 - write final classification report
 
   if (!params.do_scov2_subtyping == true){
     scov2_subtyped_ch = Channel.empty()
@@ -136,7 +139,6 @@ workflow {
 }
 
 def __check_if_params_file_exist(param_name, param_value){
-
   def error = 0
 
   if (!(param_value==null)){
@@ -151,7 +153,6 @@ def __check_if_params_file_exist(param_name, param_value){
     log.error("${param_name} must be provided")
     error +=1
   }
-  // ----------------------
   return error
 }
 
@@ -194,7 +195,7 @@ workflow.onComplete {
   ---------------------------
   Completed at : ${ANSI_GREEN}${workflow.complete}${ANSI_RESET}
   Duration     : ${ANSI_GREEN}${workflow.duration}${ANSI_RESET}
-  Success      : ${workflow.success ? ANSI_GREEN : ANSI_REF}${workflow.success}${ANSI_RESET}
+  Success      : ${workflow.success ? ANSI_GREEN : ANSI_RED}${workflow.success}${ANSI_RESET}
   Results Dir  : ${ANSI_GREEN}${file(params.results_dir)}${ANSI_RESET}
   Work Dir     : ${ANSI_GREEN}${workflow.workDir}${ANSI_RESET}
   Exit status  : ${ANSI_GREEN}${workflow.exitStatus}${ANSI_RESET}
