@@ -63,7 +63,7 @@ def parse_consensus_mnf_meta(consensus_mnf) {
 }
 
 def check_generate_consensus_params(){
-
+    // < placeholder >
     def errors = 0
     return errors
 }

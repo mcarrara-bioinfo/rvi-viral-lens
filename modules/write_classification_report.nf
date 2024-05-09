@@ -10,13 +10,13 @@ process write_classification_report {
 
     script:
         output_report_file = "classification_report.csv"
-        report_files = list_of_report_lines.join("")
+        report_lines = list_of_report_lines.join("")
         """
         # Write header to output report file
         echo "Sample_ID,Taxon_ID,Virus,Type,Flu_Segment,Percentage_of_Genome_Covered,Total_Mapped_Reads,Longest_non_N_segment,Percentage_of_N_bases" > ${output_report_file}_pre
 
         # Write data lines to report file
-        echo '${report_files}' >> ${output_report_file}_pre
+        echo '${report_lines}' >> ${output_report_file}_pre
         sed -e "s/\r//g" ${output_report_file}_pre > ${output_report_file}
         # NOTE: the sed expression is there to remove "^M" added characteres
         """

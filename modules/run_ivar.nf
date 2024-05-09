@@ -7,7 +7,7 @@ process run_ivar{
   publishDir "${params.results_dir}/${meta.sample_id}/${meta.taxid}/", mode: "copy", pattern: "*.{fa,tsv,txt}"
 
   label "ivar"
-  
+
   input:
     tuple val(meta), path(bams), path(ref_fa_fls)
 
@@ -20,7 +20,7 @@ process run_ivar{
     mapping_quality = params.mapping_quality_treshold
 
     ref_fa="${meta.taxid}.fa"
-  
+
     """
     which samtools
     samtools --version

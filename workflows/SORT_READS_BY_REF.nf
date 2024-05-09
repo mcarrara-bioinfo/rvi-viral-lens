@@ -2,7 +2,7 @@ include {run_kraken} from '../modules/run_kraken.nf'
 include {get_taxid_reference_files} from '../modules/get_taxid_references.nf'
 include {run_kraken2ref_and_pre_report} from '../modules/run_kraken2ref_and_pre_report.nf'
 
-def parse_clean_mnf_meta(consensus_mnf) {
+def parse_mnf(consensus_mnf) {
 
     def mnf_ch = Channel.fromPath(consensus_mnf)
                     | splitCsv(header: true, sep: ',')
@@ -20,12 +20,12 @@ def parse_clean_mnf_meta(consensus_mnf) {
 workflow SORT_READS_BY_REF {
     take:
 
-        clean_mnf // path to clean manifest
+        mnf_path // path to manifest
 
     main:
 
         // 0 - create channel from input per-sample manifest
-        mnf_ch = parse_clean_mnf_meta(clean_mnf)
+        mnf_ch = parse_mnf(mnf_path)
         // -------------------------------------------------//
 
 
@@ -106,7 +106,7 @@ workflow SORT_READS_BY_REF {
 
     emit:
         sample_taxid_ch // tuple (meta, reads)
-        sample_pre_report_ch // tuple (meta,)
+        sample_pre_report_ch // pre_report
 }
 
 def check_sort_reads_params(){
