@@ -1,67 +1,41 @@
-# rvi_consensus_gen
+# Viral Pipeline
 
+| **TODO**: add short description
 
 ## Installation
 
-### build container
+### dependencies
 
-```
+- [Nextflow](https://www.nextflow.io) (tested on v23.10.0)
+- [Singularity](https://docs.sylabs.io/guides/latest/user-guide/)
+
+### build containers
+
+Recipes for the container used on this pipeline are available on this repository at `containers/` dir
+
+```{bash}
 cd containers/
 sudo singularity build base_container.sif baseContainer.sing
 sudo singularity build ivar.sif ivarContainer.sing
 sudo singularity build pangolin.sif pangolinContainer.sing
-# sudo singularity build kraken.sif kraken_container.singularity
-```
-### prepare reference genomes
-
-```
-cd virus_resources/
-bwa index NC_045512.2.fasta
-```
-
-## Unit Tests
-The workflow & process unit tests for this pipeline are written in the [nf-test](https://www.nf-test.com/) (v0.8.4) Nextflow testing framework. [nf-test](https://www.nf-test.com/) will need to be installed to run the tests.
-
-### Running Tests
-The following command if entered from the repository top-level directory can be used to execute all of the per-process & per-workflow unit tests:
-
-#### Run all tests
-```
-nf-test test
-```
-
-#### Run all module tests
-```
-nf-test test tests/modules/*.nf.test
-```
-
-#### Run all workflows tests
-```
-nf-test test tests/workflows/*.nf.test
-```
-
-#### Run whole pipeline test 
-```
-nf-test test tests/main.nf.test
-```
-
-#### Run individual module/workflow test
-```
-nf-test test tests/<modules or workflows>/<module_to_test>.nf.test
+sudo singularity build kraken.sif krakenContainer.sing
 ```
 
 ## Usage
 
-#### Generate manifest
+| TODO: Add Usage and Output more extensive documentation
+
+### Generate manifest
 
 For convenience, a script to generate the manifest is provided on this repo
 
-```
+```{bash}
 python write_manifest.py ./path/to/my/fastqs_dir/ -fq1_ext my_r1_ext -fq2_ext my_r2_ext
 ```
-#### Run pipeline
 
-```
+### Run pipeline
+
+```{bash}
 nextflow run /path/to/rvi_consensus_gen/main.nf --manifest /path/to/my/manifest.csv \
         --db_path /path/to/my/kraken_db \
         --results_dir outputs/ \
@@ -69,10 +43,9 @@ nextflow run /path/to/rvi_consensus_gen/main.nf --manifest /path/to/my/manifest.
         -profile sanger_local -resume -with-trace -with-report
 ```
 
-> [TODO] add manifest description
+### Running from **GENERATE_CONSENSUS**
 
-#### Running from **consensus_gen**
-```
+```{bash}
 nextflow run ${CHECKOUT}/main.nf --entry_point consensus_gen \
         --consensus_mnf sorted_manifest.csv     
         --results_dir $LAUNCHDIR/outputs/ \
@@ -80,7 +53,43 @@ nextflow run ${CHECKOUT}/main.nf --entry_point consensus_gen \
         -profile sanger_local -resume -with-trace -with-report
 ```
 
-> [TODO] add manifest description
+## Unit Tests
+
+The workflow & process unit tests for this pipeline are written in the [nf-test](https://www.nf-test.com/) (v0.8.4) Nextflow testing framework. Nf-test will need to be installed to run the tests.
+
+### Running Tests
+
+The following command if entered from the repository top-level directory can be used to execute all of the per-process & per-workflow unit tests:
+
+#### Run all tests
+
+```{bash}
+nf-test test
+```
+
+#### Run all module tests
+
+```{bash}
+nf-test test tests/modules/*.nf.test
+```
+
+#### Run all workflows tests
+
+```{bash}
+nf-test test tests/workflows/*.nf.test
+```
+
+#### Run whole pipeline test
+
+```{bash}
+nf-test test tests/main.nf.test
+```
+
+#### Run individual module/workflow test
+
+```{bash}
+nf-test test tests/<modules or workflows>/<module_to_test>.nf.test
+```
 
 ## Input
 
@@ -90,6 +99,6 @@ nextflow run ${CHECKOUT}/main.nf --entry_point consensus_gen \
 - manifest for fastqs
 
 ### consensus_gen
-- Pair ended Reads
-- virus resources json file
-- manifest (required if starting from this entry point) 
+
+- Manifest containing pair ended Reads and genome reference files for each pair
+- manifest (required if starting from this entry point)
