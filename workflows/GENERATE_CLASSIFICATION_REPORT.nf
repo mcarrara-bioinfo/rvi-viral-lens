@@ -6,6 +6,7 @@ workflow GENERATE_CLASSIFICATION_REPORT {
         meta must have the following keys:
             - sample_id
             - taxid
+            - ref_selected
             - virus_name
             - virus_subtype
             - flu_segment
@@ -34,7 +35,7 @@ workflow GENERATE_CLASSIFICATION_REPORT {
             }
             "${it[0].sample_id},${it[0].taxid},${it[0].ref_selected.replace(",","|")},${it[0].virus_subtype},${flu_segment},${it[0].percentage_genome_coverage},${it[0].total_mapped_reads.replace("^M", "")},${it[0].longest_no_N_segment},${it[0].percentage_of_N_bases}\n"
         }.collect()
-        //println(report_lines_ch.count().view())
+
         // Write all of the per-sample report lines to a report file
         write_classification_report(report_lines_ch)
 
