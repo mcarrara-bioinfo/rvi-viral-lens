@@ -26,11 +26,17 @@ workflow SORT_READS_BY_REF {
 
         // 0 - create channel from input per-sample manifest
         mnf_ch = parse_mnf(mnf_path)
+
+        // drop channel tuples where 1 or more FASTQ files are empty
+        mnf_ch.branch {
+            empty: file(it[1][0]).size() == 0 || file(it[1][1]).size() == 0
+                log.warn("Empty fastq file(s) for ${it[0].id}")
+            not_empty: true
+            }.not_empty.set { filtered_mnf_ch }
         // -------------------------------------------------//
 
-
         // 1 - run kraken and get outputs
-        run_kraken(mnf_ch, params.db_path)
+        run_kraken(filtered_mnf_ch, params.db_path)
         // -------------------------------------------------//
         
         // 2 - obtain unique taxid reference fasta file and metadata from kraken db 
