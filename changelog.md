@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## UNRELEASED
 
+### Fixed
+
+- **[bug]**: Classification report and pre report parising errors fixed
+
+
 ### Changed
 - **[improvement]**: Remove mpileup repeated command calls on ivar process.  
 - **[improvement]**: Remove redundant processes, rewiring and tiding up code base.  
