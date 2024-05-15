@@ -23,13 +23,13 @@ workflow GENERATE_CLASSIFICATION_REPORT {
         report_lines_ch = meta_ch.map{it ->
             // convert null values for type and segments to empty strings
             if (it[0].virus_subtype == null){
-                virus_subtype=''
+                virus_subtype='None'
             } else {
                 virus_subtype = it[0].virus_subtype
             }
 
             if (it[0].flu_segment==null){
-                flu_segment=''
+                flu_segment='None'
             } else {
                 flu_segment = it[0].flu_segment
             }
