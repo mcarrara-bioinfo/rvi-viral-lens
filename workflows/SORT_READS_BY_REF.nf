@@ -29,7 +29,7 @@ workflow SORT_READS_BY_REF {
 
         // drop channel tuples where 1 or more FASTQ files are empty
         mnf_ch.branch {
-            empty: file(it[1][0]).size() == 0 || file(it[1][1]).size() == 0
+            empty: file(it[1][0]).size() < 5000 || file(it[1][1]).size() < 5000
                 log.warn("Empty fastq file(s) for ${it[0].id}")
             not_empty: true
             }.not_empty.set { filtered_mnf_ch }
