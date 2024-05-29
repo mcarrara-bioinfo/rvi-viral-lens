@@ -2,20 +2,39 @@
 
 All notable changes to this project will be documented in this file.
 
-## UNRELEASED
+## [0.2.0] - 2024-05-29
+
+### Fixed
+
+- **[bug]**: Classification report and pre report parising errors fixed
+
+
+### Changed
+- **[improvement]**: Remove mpileup repeated command calls on ivar process.  
+- **[improvement]**: Remove redundant processes, rewiring and tiding up code base.  
+- **[improvement]**: Qc metrics using the same method of the Artic pipeline
+- **[improvement]**: add kraken2ref as the new reference selection tool
+- **[updated]**: Unit tests adapted to new channel and processes structure
+
+### Added
+
+- **[added]**: A script (`k2r_report.py`) was added to generate a pre report file from k2r software
+- **[added]**: unit tests for new `run_kraken2ref_and_pre_report.nf`
+
+## [0.1.0] - 2024-02-05
 
 ### Added
 
 - **[added]**: Viral subtyping and classification reports routines integrated to pipeline
 - **[added]**: `Percentage Coverage` and `number of mapped reads` are now computed at a new QC metrics workflow
-- **[added]**: new parameter (`min_reads_for_taxid`)to set a threshold for minimum number of reads assigned for a taxid to be considered
 - **[added]**: new workflow (`SUBTYPE_AND_SEGMENT_FLU.nf`) attempts to retrieve the flu subtype and segment from kraken report file and populates the meta with these values
 - **[added]**: new module (`retrieve_flu_subtype_and_segment.nf`) attempts to parse out the flu subtype and segment from the kraken report file and sets these values to Null if nothing retrieved
 - **[added]**: QC metrics workflow, currently computes reads depth and percentage genome coverage
 - **[added]**: SARS-CoV-2 sequences subtyping via pangolin
 - **[added]**: branching `GENERATE_CONSENSUS` workflow output for viral subtyping routines
 - **[added]**: new parameter (`min_reads_for_taxid`)to set a treshold for minimum number of reads assigned for a taxid to be considered
-- **[added]**: new workflow and module (`GENERATE_CLASSIFICATION_REPORT and write_classification_report`) to generate a classifcation report file 
+- **[added]**: new workflow and module (`GENERATE_CLASSIFICATION_REPORT and write_classification_report`) to generate a classifcation report file
+- **[added]**: unit tests written in `nf-test` covering modules, workflows and pipeline
 
 ### Changed
 

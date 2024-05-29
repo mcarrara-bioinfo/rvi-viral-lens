@@ -1,0 +1,100 @@
+Bootstrap: docker
+From: ubuntu:22.04
+Stage: spython-base
+ 
+%labels
+    NAME kraken2ref
+    AUTHOR Antonio Marinho
+    ID ad45
+    TEAM ARD/DAE
+    JIRA_TICKET DT-1998
+    REPO https://gitlab.internal.sanger.ac.uk/malariagen1/viral/viral_pipeline.git
+ 
+%post
+ 
+# //--- STAGING ---//
+# set release number
+
+PYTEST_VER="6.2.2"
+IMPORTLIB_RSRC_VER="5.1.0"
+FLAKE8_VER="7.0.0"
+PANDAS_VER="2.1.4"
+CACHED_PROPERTY_VER="1.5.2"
+SCIPY_VER="1.12.0"
+BIOPYTHON_VER="1.83"
+
+KRAKEN2REF_RELEASE="v2.0.0"
+# enables the "exit on error" mode
+set -e
+set -u
+
+DEBIAN_FRONTEND=noninteractive 
+
+# /-----------------/
+
+# install basic requeriments
+apt update
+apt-get install -y --no-install-recommends build-essential
+apt install -y git python3 python3-pip
+
+# setup app dir
+mkdir /app/
+
+# // --- INSTALL KRAKEN2REF ---//
+cd /app/
+# | -- install dependencies
+pip3 install --upgrade pip
+pip3 install pytest==6.2.2 importlib-resources==5.1.0 flake8==7.0.0 \
+                pandas==2.1.4 cached-property==1.5.2 scipy==1.12.0
+
+# | -- install from source
+git clone https://gitlab.internal.sanger.ac.uk/malariagen1/misc_utils/kraken2ref.git --branch $KRAKEN2REF_RELEASE
+cd kraken2ref/
+pip install .
+
+# |------------------|
+
+# // --- LOGGING ---//
+
+# //---> get versions which were actually installed
+KRAKEN2REF_VERSION=$(kraken2ref -v | awk '{print $2}')
+
+# get container build date
+NOW=`date`
+
+# store variables on singularity environment
+
+echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
+echo "export PYTEST_VER=\"${PYTEST_VER}\"" >> $SINGULARITY_ENVIRONMENT
+echo "export IMPORTLIB_RSRC_VER=\"${IMPORTLIB_RSRC_VER}\"" >> $SINGULARITY_ENVIRONMENT
+echo "export FLAKE8_VER=\"${FLAKE8_VER}\"" >> $SINGULARITY_ENVIRONMENT
+echo "export PANDAS_VER=\"${PANDAS_VER}\"" >> $SINGULARITY_ENVIRONMENT
+echo "export CACHED_PROPERTY_VER=\"${CACHED_PROPERTY_VER}\"" >> $SINGULARITY_ENVIRONMENT
+echo "export SCIPY_VER=\"${SCIPY_VER}\"" >> $SINGULARITY_ENVIRONMENT
+echo "export BIOPYTHON_VER=\"${BIOPYTHON_VER}\"" >> $SINGULARITY_ENVIRONMENT
+echo "export KRAKEN2REF_VERSION=\"${KRAKEN2REF_VERSION}\"" >> $SINGULARITY_ENVIRONMENT
+
+%environment
+    export PATH=$PATH:/app/
+    export PATH=$PATH:/app/bin/
+
+%test
+    kraken2ref -v
+
+%runscript
+    echo "Container was created $NOW"
+    echo " --- VERSIONS:"
+    echo " -- dependencies "
+    echo "PYTEST_VER=${PYTEST_VER}"
+    echo "IMPORTLIB_RSRC_VER=${IMPORTLIB_RSRC_VER}"
+    echo "FLAKE8_VER=${FLAKE8_VER}"
+    echo "PANDAS_VER=${PANDAS_VER}"
+    echo "CACHED_PROPERTY_VER=${CACHED_PROPERTY_VER}"
+    echo "SCIPY_VER=${SCIPY_VER}"
+    echo "BIOPYTHON_VER=${BIOPYTHON_VER}"
+    echo " -- softwares "
+    echo "KRAKEN2REF_VERSION=${KRAKEN2REF_VERSION}"
+    echo " ------------ "
+    echo "Arguments received: $*"
+    echo " ------------ "
+    exec "$@"

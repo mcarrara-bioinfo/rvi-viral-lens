@@ -1,0 +1,21 @@
+{
+    "Should run without failures": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test.9000000",
+                            "taxid": 9000000,
+                            "sample_id": "test"
+                        },
+                        "test.9000000.qc.csv:md5,9ebf86f87dd785309535d2c36d292ffd",
+                        "test.9000000.depth.png:md5,81848422ba9ec3bb5447faa89cbfe9ae",
+                        "test.9000000,0.42,0.00,2360,32358,test.9000000.fa,test.9000000.sorted.bam,TRUE,0,5,0\r\n"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2024-03-04T17:34:48+0000"
+    }
+}

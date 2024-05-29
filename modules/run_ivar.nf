@@ -7,7 +7,7 @@ process run_ivar{
   publishDir "${params.results_dir}/${meta.sample_id}/${meta.taxid}/", mode: "copy", pattern: "*.{fa,tsv,txt}"
 
   label "ivar"
-  
+
   input:
     tuple val(meta), path(bams), path(ref_fa_fls)
 
@@ -20,24 +20,24 @@ process run_ivar{
     mapping_quality = params.mapping_quality_treshold
 
     ref_fa="${meta.taxid}.fa"
-  
+
     """
     which samtools
     samtools --version
     set -e
     set -o pipefail
     # IVAR STEP 1 ----------------------------------------------------------------
-    samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} | \
-    ivar variants -p ${meta.id} -q ${mapping_quality} -t 0.05
+    samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} > mpileup.out
+    
+    cat mpileup.out | ivar variants -p ${meta.id} -q ${mapping_quality} -t 0.05
 
     # IVAR STEP 2 ----------------------------------------------------------------
-    samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} | \
-    ivar consensus -p ${meta.id} -q ${mapping_quality} -t 0 -m ${depth} -n N
+    cat mpileup.out | ivar consensus -p ${meta.id} -q ${mapping_quality} -t 0 -m ${depth} -n N
 
     # IVAR STEP 3 ----------------------------------------------------------------
-    samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} | \
-    ivar consensus -p ${meta.id}.ivar060 -q ${mapping_quality} -t 0.60 -n N -m ${depth}
+    cat mpileup.out | ivar consensus -p ${meta.id}.ivar060 -q ${mapping_quality} -t 0.60 -n N -m ${depth}
 
+    rm mpileup.out
     """
 }
 

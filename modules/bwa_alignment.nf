@@ -2,7 +2,7 @@ process bwa_alignment_and_post_processing {
     /*
     * Map reads to reference
     */
-    tag "${meta.id}"
+
     publishDir "${params.results_dir}/${meta.sample_id}/${meta.taxid}/", overwrite: true, mode: "copy", pattern:"*.bam*"
 
     input:
@@ -34,5 +34,5 @@ process bwa_alignment_and_post_processing {
 // note we may need to provide the index for the ref genome
 // better than generate at run time for every single sample
 
-//bwa-mem - align to reference 
-//samtools-sort - sort alignments by the leftmost coordinates
+// bwa-mem - align to reference 
+// samtools-sort - sort alignments by the leftmost coordinates

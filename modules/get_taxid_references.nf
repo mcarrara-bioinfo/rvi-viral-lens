@@ -1,4 +1,5 @@
 process get_taxid_reference_files{
+    // obtain reference fasta files for a given taxid from a fasta file
 
     tag "${taxid}"
     publishDir "${params.results_dir}/reference_files/${taxid}/", mode: 'copy'

@@ -13,7 +13,7 @@ workflow SCOV2_SUBTYPING {
 
     main:
 
-        // generate consensus
+        // get SCOV2 lineage classification
         run_pangolin(consensus_seq_ch)
         run_pangolin.out
             .map { meta, consensus_seq, lineage -> 

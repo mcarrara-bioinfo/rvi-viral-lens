@@ -1,0 +1,24 @@
+{
+    "Should run without failures": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test.2222222",
+                            "taxid": 2222222,
+                            "sample_id": "test"
+                        },
+                        "test2_sarscov2.fa:md5,1f41369aa84e4e348f0b5ba6d70a7257",
+                        "EG.5.1.1"
+                    ]
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "22.04.5"
+        },
+        "timestamp": "2024-02-29T12:02:44.185278"
+    }
+}
