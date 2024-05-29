@@ -23,7 +23,7 @@ CACHED_PROPERTY_VER="1.5.2"
 SCIPY_VER="1.12.0"
 BIOPYTHON_VER="1.83"
 
-KRAKEN2REF_RELEASE="v1.0.0"
+KRAKEN2REF_RELEASE="v2.0.0"
 # enables the "exit on error" mode
 set -e
 set -u
@@ -43,7 +43,7 @@ mkdir /app/
 # // --- INSTALL KRAKEN2REF ---//
 cd /app/
 # | -- install dependencies
-
+pip3 install --upgrade pip
 pip3 install pytest==6.2.2 importlib-resources==5.1.0 flake8==7.0.0 \
                 pandas==2.1.4 cached-property==1.5.2 scipy==1.12.0
 
@@ -57,7 +57,7 @@ pip install .
 # // --- LOGGING ---//
 
 # //---> get versions which were actually installed
-KRAKEN2REF_VERSION=$(kraken2r -v | awk '{print $2}')
+KRAKEN2REF_VERSION=$(kraken2ref -v | awk '{print $2}')
 
 # get container build date
 NOW=`date`
@@ -79,7 +79,7 @@ echo "export KRAKEN2REF_VERSION=\"${KRAKEN2REF_VERSION}\"" >> $SINGULARITY_ENVIR
     export PATH=$PATH:/app/bin/
 
 %test
-    kraken2r -v
+    kraken2ref -v
 
 %runscript
     echo "Container was created $NOW"

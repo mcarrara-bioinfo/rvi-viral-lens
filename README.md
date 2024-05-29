@@ -1,6 +1,6 @@
 # Viral Pipeline
 
-| **TODO**: add short description
+This pipeline accepts `fastq` files as inputs and leverages `Kraken2` to perform read sorting, `ivar` for consensus sequence generation, and computes quality control (QC) metrics for each reference sequence identified in a given sample. Additionally, it facilitates SARS-CoV-2 subtyping. The primary output is a comprehensive classification report detailing all findings.
 
 ## Installation
 
@@ -22,8 +22,6 @@ sudo singularity build kraken.sif krakenContainer.sing
 ```
 
 ## Usage
-
-| TODO: Add Usage and Output more extensive documentation
 
 ### Generate manifest
 

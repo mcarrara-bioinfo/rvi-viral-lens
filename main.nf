@@ -22,7 +22,7 @@ ANSI_BOLD = "\033[1m"
   
 log.info """${ANSI_RESET}
   ===========================================
-  Viral Pipeline [Dev - Prototype]
+  Viral Pipeline [v0.2.0]
   Used parameters:
   -------------------------------------------
   --> general pipeline parameters:

@@ -20,12 +20,13 @@ process run_kraken2ref_and_pre_report {
     fq2_file = classified_fqs[1]
 
     """
-    kraken2r -s ${meta.id} parse_report -i ${kraken_report} -o ./ -t ${params.min_reads_for_taxid}
+    kraken2ref -s ${meta.id} parse_report -i ${kraken_report} -o ./ -t ${params.min_reads_for_taxid}
 
     # Check if the JSON file exists
     if [ -e "${meta.id}_decomposed.json" ]; then
         ## sort reads by reference (requires parse_report to have been run before)
-        kraken2r -s ${meta.id} sort_reads -fq1 ${fq1_file} -fq2 ${fq2_file} -k ${kraken_output} -r ./${meta.id}_decomposed.json -u
+        kraken2ref -s ${meta.id} sort_reads -fq1 ${fq1_file} -fq2 ${fq2_file} -k ${kraken_output} -r ./${meta.id}_decomposed.json -m tree -u
+
         # write pre report
         k2r_report.py -i ${meta.id}_decomposed.json -r ${kraken_report} -out_suffix _pre_report.tsv
 
