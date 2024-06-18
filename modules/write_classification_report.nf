@@ -10,6 +10,7 @@ process write_classification_report {
 
     script:
         output_report_file = "classification_report.csv"
+        // Replace " with ' to prevent issues with writing lines to file 
         report_lines = list_of_report_lines.join("").replaceAll(/"/, "'")
         """
         # Write header to output report file
