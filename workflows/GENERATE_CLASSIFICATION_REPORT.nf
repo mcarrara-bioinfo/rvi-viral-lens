@@ -18,7 +18,7 @@ workflow GENERATE_CLASSIFICATION_REPORT {
         meta_ch // meta
 
     main:
-
+    
         // Create a report line for every sample and then aggregate them
         report_lines_ch = meta_ch.map{it ->
             // convert null values for type and segments to empty strings
@@ -45,14 +45,17 @@ workflow {
     manifest_channel = Channel.fromPath(params.manifest_file)
     | splitCsv(header: true, sep: ',')
     | map { row ->
-        meta = [id:row.sample_id,
+        meta = [[id:row.sample_id,
             taxid:row.taxid,
-            virus_species:row.virus_species,
-            type:row.type,
+            ref_selected:row.ref_selected,
+            virus_name:row.virus_name,
+            virus_subtype:row.virus_subtype,
             flu_segment:row.flu_segment,
             percentage_genome_coverage:row.percentage_genome_coverage,
-            read_depth:row.read_depth
-        ]
+            total_mapped_reads:row.total_mapped_reads,
+            longest_no_N_segment:row.longest_no_N_segment,
+            percentage_of_N_bases:row.percentage_of_N_bases
+        ]]
     }
 
     GENERATE_CLASSIFICATION_REPORT(manifest_channel)
