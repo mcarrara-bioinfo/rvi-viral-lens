@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.1] - 2024-06-20
+
 ### Fixed
 
 - **[bug]**: Classification report generation would crash if ' was present in output report file lines
