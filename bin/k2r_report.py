@@ -80,6 +80,13 @@ def get_report(in_file, report_file, out_suffix=".viral_pipe.report.tsv"):
         else:
             num_reads = None
 
+        if "Alphainfluenzavirus" in virus_name:
+            report_name = "Influenza A Virus"
+        elif "Betainfluenzavirus" in virus_name:
+            report_name = "Influenza B Virus"
+        else:
+            report_name = virus_name
+
         ## populate output data dict
         report_output[idx] = {
                                 "sample_id": sample_id,
@@ -91,7 +98,8 @@ def get_report(in_file, report_file, out_suffix=".viral_pipe.report.tsv"):
                                 "flu_segment": segment,
                                 "virus_subtype": generic_subtype,
                                 "parent_selected": selected_data_dict["parent_selected"],
-                                "num_reads": num_reads
+                                "num_reads": num_reads,
+                                "report_name": report_name
                             }
 
     ## once iteration over all chosen refs is done
