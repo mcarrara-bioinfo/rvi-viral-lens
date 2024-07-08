@@ -14,7 +14,7 @@ process write_classification_report {
         report_lines = list_of_report_lines.join("").replaceAll(/"/, "'")
         """
         # Write header to output report file
-        echo "Sample_ID,Taxon_ID,Virus,Type,Flu_Segment,Percentage_of_Genome_Covered,Total_Mapped_Reads,Longest_non_N_segment,Percentage_of_N_bases" > ${output_report_file}_pre
+        echo "Sample_ID,Virus_Taxon_ID,Virus,Species,Reference_Taxon_ID,Selected_Reference,Flu_Segment,Reference_Subtype,Sample_Subtype,Percentage_of_Genome_Covered,Total_Mapped_Reads,Longest_non_N_segment,Percentage_of_N_bases" > ${output_report_file}_pre
 
         # Write data lines to report file
         echo "${report_lines}" >> ${output_report_file}_pre
