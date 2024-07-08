@@ -69,9 +69,9 @@ def get_report(in_file, report_file, out_suffix=".viral_pipe.report.tsv"):
         segment = "None"
         if generic_subtype is not None:
             segment = regex_subtyping("(?<=segment )[0-9]", ref_name)
-        if segment == 4:
+        if segment in [4, "4"]:
             subtype = regex_subtyping("H[0-9]+", ref_name)
-        if segment == 6:
+        if segment in [6, "6"]:
             subtype = regex_subtyping("N[0-9]+", ref_name)
 
         ## collect number of reads written to each fastq filepair
