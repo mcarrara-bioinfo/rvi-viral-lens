@@ -33,7 +33,7 @@ workflow GENERATE_CLASSIFICATION_REPORT {
             } else {
                 flu_segment = it[0].flu_segment
             }
-            "${it[0].sample_id},${it[0].taxid},${it[0].ref_selected.replace(",","|")},${it[0].virus_subtype},${flu_segment},${it[0].percentage_genome_coverage},${it[0].total_mapped_reads.replace("^M", "")},${it[0].longest_no_N_segment},${it[0].percentage_of_N_bases}\n"
+            "${it[0].sample_id},${it[0].virus},${it[0].report_name},${it[0].virus_name},${it[0].taxid},${it[0].ref_selected.replace(",","|")},${flu_segment},${virus_subtype},${it[0].sample_subtype},${it[0].percentage_genome_coverage},${it[0].total_mapped_reads.replace("^M", "")},${it[0].longest_no_N_segment},${it[0].percentage_of_N_bases}\n"
         }.collect()
 
         // Write all of the per-sample report lines to a report file
