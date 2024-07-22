@@ -19,10 +19,10 @@ ANSI_GREEN = "\033[1;32m"
 ANSI_RED = "\033[1;31m"
 ANSI_RESET = "\033[0m"
 ANSI_BOLD = "\033[1m"
-  
+
 log.info """${ANSI_RESET}
   ===========================================
-  Viral Pipeline [v0.2.0]
+  Viral Pipeline [dev]
   Used parameters:
   -------------------------------------------
   --> general pipeline parameters:
