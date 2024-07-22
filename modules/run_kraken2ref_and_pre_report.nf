@@ -3,9 +3,10 @@ process run_kraken2ref_and_pre_report {
     /*
     Run Kraken2Ref and write a report
     */
-    tag "${meta.id}"
-    label "kraken2ref"
+    tag "${meta.id} - ${task.attempt} - ${task.memory}"
     cache 'lenient'
+    label 'kraken2ref'
+    label 'mem_k2r_escalate'
     publishDir "${params.results_dir}/${meta.id}/reads_by_taxon/", mode: 'copy', pattern: "*.{fq,json,tsv,log}"
 
     input:
