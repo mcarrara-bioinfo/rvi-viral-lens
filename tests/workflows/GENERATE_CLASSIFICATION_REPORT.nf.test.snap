@@ -1,0 +1,16 @@
+{
+    "Should run without failures": {
+        "content": [
+            {
+                "0": [
+                    "classification_report.csv:md5,e3d55d84c4264a4dff648359c3ba1c2a"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.0",
+            "nextflow": "23.10.0"
+        },
+        "timestamp": "2024-07-22T14:53:03.143809418"
+    }
+}
