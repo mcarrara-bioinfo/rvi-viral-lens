@@ -45,6 +45,15 @@ log.info """${ANSI_RESET}
   --> viral subtyping branching parameters:
     --scv2_keyword             : ${params.scv2_keyword}
 
+  --> resource management:
+    --default_error_strategy   : ${params.default_error_strategy}
+    --mem_k2r_b0_offset        : ${params.mem_k2r_b0_offset}
+    --mem_k2r_b0               : ${params.mem_k2r_b0}
+    --mem_k2r_b0_final         : ${params.mem_k2r_b0_final}
+    --mem_k2r_b1               : ${params.mem_k2r_b1}
+    --mem_k2r_f1               : ${params.mem_k2r_f1}
+    --mem_k2r_a2               : ${params.mem_k2r_a2}
+    --max_attempts             : ${params.max_attempts}
   ------------------------------------------
   Runtime data:
   -------------------------------------------
