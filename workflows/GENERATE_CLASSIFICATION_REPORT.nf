@@ -38,7 +38,8 @@ workflow GENERATE_CLASSIFICATION_REPORT {
 
         // Write all of the per-sample report lines to a report file
         write_classification_report(report_lines_ch)
-
+	emit:
+		write_classification_report.out
 }
 
 workflow {
