@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 - **[bug]**: Independent workflow stanza for GENERATE_CLASSIFICATION_REPORT.nf was outdated / broken
 
 ### Added
-
+- **[added]**: add LSF memory escalation strategy for kraken2ref 
 - **[added]**: Columns Virus_Taxon_ID, Virus, Species, Reference_Taxon_ID, Selected_Reference added/populated to classification report
 
 ## [0.2.0] - 2024-05-29

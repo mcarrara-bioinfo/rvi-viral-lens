@@ -56,6 +56,14 @@ workflow SORT_READS_BY_REF {
         // drop unclassified fq filepair
         run_kraken.out // tuple (meta, kraken_output, [classified_fq_filepair], [unclassified_fq_filepair], kraken_report)
             | map {it -> tuple(it[0], it[1], it[2], it[4])} // tuple (meta, kraken_output, [classified_fq_filepair], kraken_report)
+            | map {meta, kraken_output, classified_fq_filepair, kraken_report -> 
+                // get input file sizes to estimate resources usage (cpu and mem) 
+                fq_1_size = classified_fq_filepair[0].size() // byte
+                fq_2_size = classified_fq_filepair[1].size() // byte
+                meta.fqs_total_size = fq_1_size + fq_2_size
+
+                tuple(meta, kraken_output,classified_fq_filepair,kraken_report)
+            }
             | set {sort_reads_in_ch}
 
         // -------------------------------------------------//
