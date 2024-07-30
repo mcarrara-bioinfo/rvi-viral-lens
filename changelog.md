@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 ### Fixed
-
+- **[bug]**: publish the correct (`*.ivar060.*`) consensus sequence
 - **[bug]**: Classification report generation would crash if ' was present in output report file lines
 - **[bug]**: Independent workflow stanza for GENERATE_CLASSIFICATION_REPORT.nf was outdated / broken
 
