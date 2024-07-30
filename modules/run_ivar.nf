@@ -1,5 +1,5 @@
 params.depth_treshold = 5
-params.mapping_quality_treshold = 30
+params.min_quality_score = 30
 params.ivar_min_var_frequency = 0.60
 
 // this process was based on the one available at ViralFlow (https://github.com/dezordi/ViralFlow/blob/vfnext/vfnext/modules/runIvar.nf)
@@ -18,7 +18,7 @@ process run_ivar{
   script:
     sorted_bam = "${meta.id}.sorted.bam"
     depth = params.depth_treshold
-    mapping_quality = params.mapping_quality_treshold
+    min_quality_score = params.min_quality_score
     min_var_frequency = "${params.ivar_min_var_frequency}"
     freq_suffix = min_var_frequency.replace(".", "")
     ref_fa="${meta.taxid}.fa"
@@ -31,13 +31,13 @@ process run_ivar{
     # IVAR STEP 1 ----------------------------------------------------------------
     samtools mpileup -aa -d 50000 --reference ${ref_fa} -a -B ${sorted_bam} > mpileup.out
     
-    cat mpileup.out | ivar variants -p ${meta.id} -q ${mapping_quality} -t 0.05
+    cat mpileup.out | ivar variants -p ${meta.id} -q ${min_quality_score} -t 0.05
 
     # IVAR STEP 2 ----------------------------------------------------------------
-    cat mpileup.out | ivar consensus -p ${meta.id} -q ${mapping_quality} -t 0 -m ${depth} -n N
+    cat mpileup.out | ivar consensus -p ${meta.id} -q ${min_quality_score} -t 0 -m ${depth} -n N
 
     # IVAR STEP 3 ----------------------------------------------------------------
-    cat mpileup.out | ivar consensus -p ${consensus_out_name} -q ${mapping_quality} -t ${min_var_frequency} -n N -m ${depth}
+    cat mpileup.out | ivar consensus -p ${consensus_out_name} -q ${min_quality_score} -t ${min_var_frequency} -n N -m ${depth}
 
     rm mpileup.out
     """
@@ -100,9 +100,7 @@ ivar consensus: This is the main command for running the ivar tool with the cons
   The consensus subcommand is typically used to generate a consensus sequence from aligned
   sequencing data.
 -p : This option specifies the prefix for the output files, similar to the previous command.
--q : This option specifies the minimum mapping quality score threshold for including reads in
-    the consensus sequence generation. Reads with mapping quality scores below this threshold
-    may be filtered out.
+-q : Minimum quality score threshold to count base 
 -t : This option is used to set a variant frequency threshold for including variants in the 
   consensus sequence. Setting it to 0 means that even variants with very low frequencies will be
   included in the consensus sequence.
