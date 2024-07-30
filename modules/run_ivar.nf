@@ -1,5 +1,6 @@
 params.depth_treshold = 5
 params.mapping_quality_treshold = 30
+params.ivar_min_var_frequency = 0.60
 
 // this process was based on the one available at ViralFlow (https://github.com/dezordi/ViralFlow/blob/vfnext/vfnext/modules/runIvar.nf)
 process run_ivar{
@@ -12,15 +13,16 @@ process run_ivar{
     tuple val(meta), path(bams), path(ref_fa_fls)
 
   output:
-    tuple val(meta), path("${meta.id}.fa"), path("*.txt"), path("${meta.id}.tsv")
+    tuple val(meta), path("${consensus_out_name}.fa"), path("*.txt"), path("${meta.id}.tsv")
 
   script:
     sorted_bam = "${meta.id}.sorted.bam"
     depth = params.depth_treshold
     mapping_quality = params.mapping_quality_treshold
-
+    min_var_frequency = params.min_var_frequency
+    freq_suffix = min_var_frequency.replace(".", "")
     ref_fa="${meta.taxid}.fa"
-
+    consensus_out_name = "${meta.id}.ivar${freq_suffix}"
     """
     which samtools
     samtools --version
@@ -35,7 +37,7 @@ process run_ivar{
     cat mpileup.out | ivar consensus -p ${meta.id} -q ${mapping_quality} -t 0 -m ${depth} -n N
 
     # IVAR STEP 3 ----------------------------------------------------------------
-    cat mpileup.out | ivar consensus -p ${meta.id}.ivar060 -q ${mapping_quality} -t 0.60 -n N -m ${depth}
+    cat mpileup.out | ivar consensus -p ${consensus_out_name} -q ${mapping_quality} -t ${ivar_min_var_frequency} -n N -m ${depth}
 
     rm mpileup.out
     """

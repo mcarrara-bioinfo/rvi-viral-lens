@@ -41,6 +41,7 @@ log.info """${ANSI_RESET}
     --consensus_mnf            : ${params.consensus_mnf}
     --depth_treshold           : ${params.depth_treshold}
     --mapping_quality_treshold : ${params.mapping_quality_treshold}
+    --ivar_min_var_frequency   : ${params.ivar_min_var_frequency}
 
   --> viral subtyping branching parameters:
     --scv2_keyword             : ${params.scv2_keyword}
