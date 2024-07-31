@@ -9,12 +9,7 @@
                             "taxid": 9000000,
                             "sample_id": "test"
                         },
-                        "test.9000000.ivar060.fa:md5,6c2970a8ef85674b2b64fcd13ac84308",
-                        [
-                            "test.9000000.ivar060.qual.txt:md5,68b329da9893e34099c7d8ad5cb9c940",
-                            "test.9000000.qual.txt:md5,68b329da9893e34099c7d8ad5cb9c940"
-                        ],
-                        "test.9000000.tsv:md5,a347e6bcfc7295a637df50fc0b99c7cf"
+                        "test.9000000.consensus.fa:md5,cd4e19860f9350371b21da8ee836f286"
                     ]
                 ]
             }
@@ -23,6 +18,6 @@
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-07-30T14:49:21.984053"
+        "timestamp": "2024-07-31T14:12:24.698468"
     }
 }
