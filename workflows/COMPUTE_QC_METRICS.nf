@@ -10,7 +10,7 @@ workflow COMPUTE_QC_METRICS {
             - ref_files
         */
 
-        qc_metrics_In_ch // [meta, fasta_file, [quality_txt_files], variant_tsv]
+        qc_metrics_In_ch // [meta, fasta_file]
 
     main:
         qc_metrics_In_ch
