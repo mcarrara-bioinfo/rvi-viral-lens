@@ -39,8 +39,7 @@ log.info """${ANSI_RESET}
 
   --> GENERATE_CONSENSUS workflow parameters:
     --consensus_mnf            : ${params.consensus_mnf}
-    --depth_treshold           : ${params.depth_treshold}
-    --min_quality_score        : ${params.min_quality_score}
+    --ivar_depth_treshold      : ${params.ivar_depth_treshold}
     --ivar_min_var_frequency   : ${params.ivar_min_var_frequency}
 
   --> viral subtyping branching parameters:

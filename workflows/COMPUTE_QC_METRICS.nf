@@ -14,7 +14,7 @@ workflow COMPUTE_QC_METRICS {
 
     main:
         qc_metrics_In_ch
-            | map {meta, fasta_file, quality_files, variant_tsv ->
+            | map {meta, fasta_file ->
                 // store fasta_files at meta
                 meta.consensus_fa = fasta_file
                 tuple(meta, meta.bam_file, fasta_file, meta.ref_files[0])
