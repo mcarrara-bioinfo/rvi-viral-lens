@@ -1,5 +1,5 @@
-params.ivar_depth_treshold = 10 // previously 5
-params.ivar_min_var_frequency = 0.25 // previously 0.60
+params.ivar_depth_treshold = 10
+params.ivar_freq_threshold = 0.75
 
 // this process reproduce the ARTIC pipeline approach
 process run_ivar{
@@ -21,6 +21,6 @@ process run_ivar{
     set -o pipefail
 
     samtools mpileup -aa -A -B -d 0 -Q0 ${sorted_bam} | \
-      ivar consensus -t ${params.ivar_min_var_frequency} -m ${params.ivar_depth_treshold} -n N -p ${meta.id}.consensus
+      ivar consensus -t ${params.ivar_freq_threshold} -m ${params.ivar_depth_treshold} -n N -p ${meta.id}.consensus
     """
 }
