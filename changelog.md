@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.2] - 2024-08-02
+
 ### Changed
 - **[improvement]**: Ivar module now follows Artic pipeline standards
 
