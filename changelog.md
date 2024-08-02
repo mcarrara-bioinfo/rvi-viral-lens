@@ -7,15 +7,15 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - **[improvement]**: Ivar module now follows Artic pipeline standards
 
+### Added
+- **[added]**: add LSF memory escalation strategy for kraken2ref 
+- **[added]**: Columns Virus_Taxon_ID, Virus, Species, Reference_Taxon_ID, Selected_Reference added/populated to classification report
+
 ## [0.2.1] - 2024-06-20
 
 ### Fixed
 - **[bug]**: Classification report generation would crash if ' was present in output report file lines
 - **[bug]**: Independent workflow stanza for GENERATE_CLASSIFICATION_REPORT.nf was outdated / broken
-
-### Added
-- **[added]**: add LSF memory escalation strategy for kraken2ref 
-- **[added]**: Columns Virus_Taxon_ID, Virus, Species, Reference_Taxon_ID, Selected_Reference added/populated to classification report
 
 ## [0.2.0] - 2024-05-29
 
