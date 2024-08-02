@@ -39,8 +39,8 @@ log.info """${ANSI_RESET}
 
   --> GENERATE_CONSENSUS workflow parameters:
     --consensus_mnf            : ${params.consensus_mnf}
-    --depth_treshold           : ${params.depth_treshold}
-    --mapping_quality_treshold : ${params.mapping_quality_treshold}
+    --ivar_min_depth      : ${params.ivar_min_depth}
+    --ivar_freq_threshold   : ${params.ivar_freq_threshold}
 
   --> viral subtyping branching parameters:
     --scv2_keyword             : ${params.scv2_keyword}

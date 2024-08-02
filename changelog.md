@@ -2,8 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
-### Fixed
+### Changed
+- **[improvement]**: Ivar module now follows Artic pipeline standards
 
+## [0.2.1] - 2024-06-20
+
+### Fixed
 - **[bug]**: Classification report generation would crash if ' was present in output report file lines
 - **[bug]**: Independent workflow stanza for GENERATE_CLASSIFICATION_REPORT.nf was outdated / broken
 
@@ -17,10 +21,10 @@ All notable changes to this project will be documented in this file.
 
 - **[bug]**: Classification report and pre report parsing errors fixed
 
-
 ### Changed
-- **[improvement]**: Remove mpileup repeated command calls on ivar process.  
-- **[improvement]**: Remove redundant processes, rewiring and tiding up code base.  
+
+- **[improvement]**: Remove mpileup repeated command calls on ivar process.
+- **[improvement]**: Remove redundant processes, rewiring and tiding up code base.
 - **[improvement]**: Qc metrics using the same method of the Artic pipeline
 - **[improvement]**: add kraken2ref as the new reference selection tool
 - **[updated]**: Unit tests adapted to new channel and processes structure

@@ -14,7 +14,6 @@ nextflow_process {
                     sample_id:"test",
                     taxid:9000000
                 ]
-                depth_treshold=5
                 test_loc="${projectDir}/tests/test_data/"
             }
 

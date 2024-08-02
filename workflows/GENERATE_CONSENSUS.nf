@@ -26,7 +26,7 @@ workflow GENERATE_CONSENSUS {
         bams_ch
             | map {meta, bams -> 
                 meta.bam_file = bams[0]
-                tuple(meta, bams, meta.ref_files)}
+                tuple(meta, bams)}
             | set {ivar_in_ch}
 
         // generate consensus
@@ -37,7 +37,7 @@ workflow GENERATE_CONSENSUS {
 
 
     emit:
-        run_ivar.out // tuple (meta, [fasta_files], [quality_txt_files], variant_tsv)
+        run_ivar.out // tuple (meta, fasta_file)
 }
 
 def parse_consensus_mnf_meta(consensus_mnf) {

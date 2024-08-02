@@ -18,7 +18,7 @@ process run_qc_script {
         --ref ${ref} \
         --bam ${bam} \
         --fasta ${fasta} \
-        --ivar_md ${params.depth_treshold}
+        --ivar_md ${params.ivar_min_depth}
 
     # print first row
     sed -n "2p" ${meta.id}.qc.csv

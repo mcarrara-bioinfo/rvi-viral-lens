@@ -18,20 +18,15 @@
                             "sample_id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1",
                             "bam_file": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.sorted.bam:md5,d89eb0b1974e11136558a1ba9533649f"
                         },
-                        "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.fa:md5,c5fd7a43fe4ba0a66e53795dbf6fa2b7",
-                        [
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.ivar060.qual.txt:md5,cede485beb95e6c934a4d63e5ef034b6",
-                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.qual.txt:md5,cede485beb95e6c934a4d63e5ef034b6"
-                        ],
-                        "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.tsv:md5,ad9b1b07c78add17cd23f7636336fa4a"
+                        "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.consensus.fa:md5,35582ae1636c2b51a7ee183e8df0bfba"
                     ]
                 ]
             }
         ],
         "meta": {
             "nf-test": "0.8.4",
-            "nextflow": "22.04.5"
+            "nextflow": "23.10.1"
         },
-        "timestamp": "2024-03-05T14:30:39.52503"
+        "timestamp": "2024-07-31T19:00:46.315171"
     }
 }
