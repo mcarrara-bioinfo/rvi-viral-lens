@@ -69,9 +69,9 @@ def get_report(in_file, report_file, out_suffix=".viral_pipe.report.tsv"):
         segment = "None"
         if generic_subtype is not None:
             segment = regex_subtyping("(?<=segment )[0-9]", ref_name)
-        if segment == 4:
+        if segment in [4, "4"]:
             subtype = regex_subtyping("H[0-9]+", ref_name)
-        if segment == 6:
+        if segment in [6, "6"]:
             subtype = regex_subtyping("N[0-9]+", ref_name)
 
         ## collect number of reads written to each fastq filepair
@@ -79,6 +79,13 @@ def get_report(in_file, report_file, out_suffix=".viral_pipe.report.tsv"):
             num_reads = ref_json["metadata"]["summary"]["per_taxon"][str(selected_ref)]
         else:
             num_reads = None
+
+        if "Alphainfluenzavirus" in virus_name:
+            report_name = "Influenza A Virus"
+        elif "Betainfluenzavirus" in virus_name:
+            report_name = "Influenza B Virus"
+        else:
+            report_name = virus_name
 
         ## populate output data dict
         report_output[idx] = {
@@ -91,7 +98,8 @@ def get_report(in_file, report_file, out_suffix=".viral_pipe.report.tsv"):
                                 "flu_segment": segment,
                                 "virus_subtype": generic_subtype,
                                 "parent_selected": selected_data_dict["parent_selected"],
-                                "num_reads": num_reads
+                                "num_reads": num_reads,
+                                "report_name": report_name
                             }
 
     ## once iteration over all chosen refs is done
