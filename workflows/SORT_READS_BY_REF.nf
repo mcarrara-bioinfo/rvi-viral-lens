@@ -1,6 +1,6 @@
 include {run_kraken} from '../modules/run_kraken.nf'
 include {get_taxid_reference_files} from '../modules/get_taxid_references.nf'
-include {run_kraken2ref_and_pre_report} from '../modules/run_kraken2ref_and_pre_report.nf'
+include {run_k2r_sort_reads; run_k2r_dump_fastqs_and_pre_report; concatenate_fqs_parts} from '../modules/run_kraken2ref_and_pre_report.nf'
 
 def parse_mnf(consensus_mnf) {
 
@@ -38,7 +38,7 @@ workflow SORT_READS_BY_REF {
         // 1 - run kraken and get outputs
         run_kraken(filtered_mnf_ch, params.db_path)
         // -------------------------------------------------//
-        
+
         // 2 - obtain unique taxid reference fasta file and metadata from kraken db 
 
         // check if library fasta was set, 
@@ -51,29 +51,108 @@ workflow SORT_READS_BY_REF {
         }
         // -------------------------------------------------//
 
-        // 3 - reads per taxid on fastq file
+        // 3 - run Kraken2Ref
 
-        // drop unclassified fq filepair
+        // 3.1 - sort reads
+        // drop unclassified fq filepair and store kraken2 files on meta 
         run_kraken.out // tuple (meta, kraken_output, [classified_fq_filepair], [unclassified_fq_filepair], kraken_report)
             | map {it -> tuple(it[0], it[1], it[2], it[4])} // tuple (meta, kraken_output, [classified_fq_filepair], kraken_report)
             | map {meta, kraken_output, classified_fq_filepair, kraken_report -> 
+
+                //tuple(meta, kraken_output,classified_fq_filepair,kraken_report)
+                // store kraken2 outputs on meta to simplify channel gymnastics
+                meta.kraken_output = kraken_output
+                meta.kraken_report = kraken_report
+                meta.classified_fq_filepair = classified_fq_filepair
+
                 // get input file sizes to estimate resources usage (cpu and mem) 
                 fq_1_size = classified_fq_filepair[0].size() // byte
                 fq_2_size = classified_fq_filepair[1].size() // byte
                 meta.fqs_total_size = fq_1_size + fq_2_size
-
-                tuple(meta, kraken_output,classified_fq_filepair,kraken_report)
+                return tuple (meta, kraken_output, kraken_report)
             }
             | set {sort_reads_in_ch}
+        
+        // run sort reads (meta, kraken_report, kraken_output)
+        run_k2r_sort_reads(sort_reads_in_ch)
+        
+        
+        // 3.2 - prepare chanel for k2r dump fqs
+        // find which samples needs splitting
+        run_k2r_sort_reads.out // meta, tax_to_reads_json, decomposed_json
+            | branch {meta, tax_to_reads_json, decomposed_json -> 
+                // store json files on meta
+                meta.tax_to_reads_json = tax_to_reads_json
+                meta.decomposed_json = decomposed_json
+
+                // count reads
+                fq_1_n_reads = meta.classified_fq_filepair[0].countFastq()
+                fq_2_n_reads = meta.classified_fq_filepair[1].countFastq()
+
+                meta.fqs_total_size = fq_1_size + fq_2_size
+                assert(fq_1_n_reads == fq_2_n_reads)
+                meta.class_fq_n_reads = fq_1_n_reads
+                
+                // branch channels
+                needs_fq_spliting: meta.class_fq_n_reads > params.k2r_max_total_reads_per_fq
+                    meta.splitted = true
+                    return tuple (meta, meta.classified_fq_filepair[0], meta.classified_fq_filepair[1])
+
+                no_fq_spliting: meta.class_fq_n_reads <= params.k2r_max_total_reads_per_fq
+                    meta.splitted = false
+                    return tuple(meta, meta.classified_fq_filepair, meta.tax_to_reads_json, meta.decomposed_json, meta.kraken_report)
+            }
+            | set {k2r_sorted_read_Out_ch}
+
+        // split fq files
+        k2r_sorted_read_Out_ch.needs_fq_spliting // meta, fq_reads_1, fq_reads_2
+            | splitFastq(pe:true, by:params.k2r_max_total_reads_per_fq, file:true)
+            | map {meta, reads_1_part, reads_2_part ->
+                //meta.part = reads_1_part.name.tokenize(".")[-2]
+                tuple (meta, [reads_1_part, reads_2_part], meta.tax_to_reads_json, meta.decomposed_json, meta.kraken_report)
+            }
+            | concat(k2r_sorted_read_Out_ch.no_fq_spliting)
+            | set {k2r_dump_fq_In_ch}
+
+        run_k2r_dump_fastqs_and_pre_report(k2r_dump_fq_In_ch)
+
+        // 3.3 - merge per taxid fastq parts
+        // separate the item which needs to be concatenated
+        run_k2r_dump_fastqs_and_pre_report.out.fq_files // meta, taxid_fastqs_list
+            | branch { meta, taxid_fastqs_list ->
+                do_concatenate: meta.splitted == true
+                not_concatenate: meta.splitted == false
+            }
+            | set{k2r_dump_out_fqs}
+
+        // merge all parts into a single channel item
+        k2r_dump_out_fqs.do_concatenate
+            | map { meta, taxid_fastqs_list -> 
+                tuple(meta.id, taxid_fastqs_list)
+            }
+            | groupTuple()
+            | map {id, taxid_fastqs_list -> 
+                tuple(id, taxid_fastqs_list.flatten())
+            }
+            | set {concatenate_fqs_In_ch}
+        // concatenate parts
+        concatenate_fqs_parts(concatenate_fqs_In_ch)
+
+        // collect final fastqs on a single channel 
+        concatenate_fqs_parts.out
+            | concat(k2r_dump_out_fqs.not_concatenate)
+            | set{per_taxid_fqs_Ch}
 
         // -------------------------------------------------//
 
         // 4 - run kraken2ref and collect all per-sample per-taxon fq filepairs
-        run_kraken2ref_and_pre_report(sort_reads_in_ch)
-        sample_pre_report_ch = run_kraken2ref_and_pre_report.out.report_file
-        
+
+        sample_pre_report_ch = run_k2r_dump_fastqs_and_pre_report.out.report_file
+
         // prepare channel to be emitted
-        run_kraken2ref_and_pre_report.out.fq_files // tuple (meta, [id_taxid_R{1,2}.fq])
+
+        //run_k2r_dump_fastqs_and_pre_report.out.fq_files // tuple (meta, [id_taxid_R{1,2}.fq])
+        per_taxid_fqs_Ch 
             | map {meta, reads ->
                 // group pairs of fastqs based on file names, and add new info to meta
                 reads
@@ -117,10 +196,11 @@ workflow SORT_READS_BY_REF {
                 tuple(meta, reads)
             }
             | set {sample_taxid_ch}
-
+    
     emit:
         sample_taxid_ch // tuple (meta, reads)
         sample_pre_report_ch // pre_report
+
 }
 
 def check_sort_reads_params(){
