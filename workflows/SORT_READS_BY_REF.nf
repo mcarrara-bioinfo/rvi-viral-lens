@@ -79,7 +79,7 @@ workflow SORT_READS_BY_REF {
         
         // 3.2 - prepare chanel for k2r dump fqs
         // find which samples needs splitting
-        run_k2r_sort_reads.out // meta, tax_to_reads_json, decomposed_json
+        run_k2r_sort_reads.out.json_files // meta, tax_to_reads_json, decomposed_json
             | branch {meta, tax_to_reads_json, decomposed_json -> 
                 // store json files on meta
                 meta.tax_to_reads_json = tax_to_reads_json

@@ -13,15 +13,20 @@ process run_k2r_sort_reads {
         tuple val(meta), path(kraken_output), path(kraken_report)
 
     output:
-        tuple val(meta), path("${meta.id}_tax_to_reads.json"), path("${meta.id}_decomposed.json")
-
+        tuple val(meta), path("${meta.id}_tax_to_reads.json"), path("${meta.id}_decomposed.json"), optional: true, emit: json_files
     script:
 
 
     """
     kraken2ref -s ${meta.id} parse_report -i ${kraken_report} -o ./ -t ${params.min_reads_for_taxid}
+    
+    # if empty file, no decomposed json file will be generated
+    if [ -e "${meta.id}_decomposed.json" ]; then
+        kraken2ref -s ${meta.id} sort_reads -k ${kraken_output} -r ./${meta.id}_decomposed.json -m tree -u
+    else
+        echo "Warning: JSON file does not exist. Skipping downstream commands."
+    fi
 
-    kraken2ref -s ${meta.id} sort_reads -k ${kraken_output} -r ./${meta.id}_decomposed.json -m tree -u
     """
 }
 
@@ -69,11 +74,12 @@ process concatenate_fqs_parts {
 
     input:
         tuple val(id), path(fq_parts)
-    
+
     output:
        tuple val(id), path("*_R{1,2}.fq")
 
     shell:
+
     '''
     #!/bin/bash
 
