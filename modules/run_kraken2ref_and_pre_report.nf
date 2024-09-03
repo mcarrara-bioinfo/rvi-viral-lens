@@ -43,9 +43,16 @@ process run_k2r_dump_fastqs_and_pre_report {
     shell:
     fq_1 = classified_fqs[0]
     fq_2 = classified_fqs[1]
+    
     '''
-    part=$(echo !{fq_1}| awk -F'[.]' '{print $(NF-1)}')
-    kraken2ref -s ${part}-!{meta.id} dump_fastqs \
+    if [ "!{meta.splitted}" == "true"]; then
+        part=$(echo !{fq_1}| awk -F'[.]' '{print $(NF-1)}')
+        prefix="${part}-!{meta.id}"
+    else
+        prefix="!{meta.id}"
+    fi
+
+    kraken2ref -s ${prefix} dump_fastqs \
             -fq1 !{fq_1} -fq2 !{fq_2} \
             --tax_to_readsid_path !{json_tax_to_readsid} \
             -o ./ --fq_load_mode !{params.k2r_fq_load_mode} \
