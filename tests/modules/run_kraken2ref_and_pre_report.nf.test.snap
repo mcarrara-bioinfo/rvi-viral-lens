@@ -9,41 +9,16 @@
                             "taxid": 9000000,
                             "sample_id": "test"
                         },
-                        [
-                            "test.9000000_2697049_R1.fq:md5,b0eaac69db411379704837a2b2a9dbd8",
-                            "test.9000000_2697049_R2.fq:md5,705ce6f753733d8ba3ccdffad193ef52",
-                            "test.9000000_9000019_R1.fq:md5,5618fdbb4f73478ee97133395db9ec44",
-                            "test.9000000_9000019_R2.fq:md5,e7cd0de58458d603335bbc239e5cfafd"
-                        ]
+                        "test.9000000_tax_to_reads.json:md5,b7eac600e8a6e0ea03dfd04b577535f0",
+                        "test.9000000_decomposed.json:md5,a8fcca56746f0948f2a18782ac4a8d9c"
                     ]
-                ],
-                "1": [
-                    "test.9000000_pre_report.tsv:md5,fb32c46b26125db6275602638f254830"
-                ],
-                "fq_files": [
-                    [
-                        {
-                            "id": "test.9000000",
-                            "taxid": 9000000,
-                            "sample_id": "test"
-                        },
-                        [
-                            "test.9000000_2697049_R1.fq:md5,b0eaac69db411379704837a2b2a9dbd8",
-                            "test.9000000_2697049_R2.fq:md5,705ce6f753733d8ba3ccdffad193ef52",
-                            "test.9000000_9000019_R1.fq:md5,5618fdbb4f73478ee97133395db9ec44",
-                            "test.9000000_9000019_R2.fq:md5,e7cd0de58458d603335bbc239e5cfafd"
-                        ]
-                    ]
-                ],
-                "report_file": [
-                    "test.9000000_pre_report.tsv:md5,fb32c46b26125db6275602638f254830"
                 ]
             }
         ],
         "meta": {
-            "nf-test": "0.9.0",
-            "nextflow": "23.10.0"
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
         },
-        "timestamp": "2024-07-22T14:30:28.886590992"
+        "timestamp": "2024-09-03T19:45:40.419849"
     }
 }
