@@ -38,7 +38,7 @@ nextflow run /path/to/rvi_consensus_gen/main.nf --manifest /path/to/my/manifest.
         --db_path /path/to/my/kraken_db \
         --results_dir outputs/ \
         --containers_dir /path/to/my/containers_dir/ \
-        -profile sanger_local -resume -with-trace -with-report
+        -profile sanger_stantard -resume -with-trace -with-report -with-timeline
 ```
 
 ### Running from **GENERATE_CONSENSUS**
@@ -48,7 +48,7 @@ nextflow run ${CHECKOUT}/main.nf --entry_point consensus_gen \
         --consensus_mnf sorted_manifest.csv
         --results_dir $LAUNCHDIR/outputs/ \
         --containers_dir /path/to/containers_dir/ \
-        -profile sanger_local -resume -with-trace -with-report
+        -profile sanger_standard-resume -with-trace -with-report -with-timeline
 ```
 
 ## Unit Tests
@@ -89,7 +89,11 @@ nf-test test tests/main.nf.test
 nf-test test tests/<modules or workflows>/<module_to_test>.nf.test
 ```
 
-## Input
+## Required Input
+
+- `manifest` : Manifest if input fastq files
+- `db_path` : Path of kraken2 database
+
 
 ### sort_reads
 
@@ -103,18 +107,28 @@ nf-test test tests/<modules or workflows>/<module_to_test>.nf.test
 
 ## Parameters
 
+### General
+
+- `containers_dir` [DEFAULT =  `containers/` dir of this repository] : By default, the pipeline relies on Singularity containers and __assumes__ all containers are present on this directory and were named on a specific manner
+- `results_dir` [DEFAULT = `$launchDir/output/`] : set where output files should be published. By default, it will write files to an `output/` dir (if not existent, it will be created) at pipeline launch directory.
+
 ### Pipeline flow controls
 
-- `scv2_keyword` [Default = "Severe acute respiratory syndrome coronavirus 2"] : keyword to identified samples with SARS-CoV-2. This string is obtained from the kraken2 database, therefore, it should be in line with the database in use. 
-- `do_scov2_subtyping` [Default = true] : Switch SARS-CoV-2 on and off
+- `entry_point` [Default = "sort_reads"] : Defines the entry point of the pipeline. The `sort_reads`
+- `scv2_keyword` [Default = "Severe acute respiratory syndrome coronavirus 2"] : keyword to identified samples with SARS-CoV-2. This string is obtained from the kraken2 database, therefore, it should be in line with the database in use.
+- `do_scov2_subtyping` [Default = true] : Switch SARS-CoV-2 on and off.
 
+### Specific processes
 
-### Kraken2ref
+- `db_library_fa_path` [Default = null]:
+
+#### Kraken2ref
 - `k2r_fq_load_mode` [Default = "full"] : kraken2ref load fastq into memory mode ["full"/"chunk"]
 - `k2r_max_total_reads_per_fq` [Default = 10000000] : set maximum number of reads to be accepted any classified fastq file pair. Files excedding that limit will be splitted before `run_k2r_dump_fastq`.
 - `k2r_dump_fq_mem` [Default = "6 GB"] : Memory to be requested by `run_k2r_dump_fq`, adjust according to `k2r_max_total_reads_per_fq`.
 - `min_reads_for_taxid` [Default = 100] : min reads number to be considered.
 
+Kraken2ref have a escalation memory strategy based on linear regression.
 ### ivar params
 
 - `ivar_min_depth` [Default = 10] : <to add>
