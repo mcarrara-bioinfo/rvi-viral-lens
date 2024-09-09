@@ -2,16 +2,37 @@
 
 This pipeline accepts `fastq` files as inputs and leverages `Kraken2` to perform read sorting, `ivar` for consensus sequence generation, and computes quality control (QC) metrics for each reference sequence identified in a given sample. Additionally, it facilitates SARS-CoV-2 subtyping. The primary output is a comprehensive classification report detailing all findings.
 
+## Pipeline introduction
+
+---
+
+## Pipeline Summary
+
+---
+
+## Quitck Start
+
+---
+
 ## Installation
 
+---
 ### dependencies
 
+
 - [Nextflow](https://www.nextflow.io) (tested on v23.10.0)
-- [Singularity](https://docs.sylabs.io/guides/latest/user-guide/)
+- [Singularity](https://docs.sylabs.io/guides/latest/user-guide/) (required to use Singularity Containers)
+
+> We strongly recommend to run the pipeline using the containers recipe provided at `containers/` subdir.
+
+If not using containers, all the software needs to be available at run time. A list of this softwares can be found [here](./doc/requirements.md)
 
 ### build containers
 
-Recipes for the container used on this pipeline are available on this repository at `containers/` dir
+#### Singularity
+
+Recipes for the container used on this pipeline are available on this repository at `containers/` dir. The commands bellow 
+
 
 ```{bash}
 cd containers/
@@ -19,6 +40,7 @@ sudo singularity build base_container.sif baseContainer.sing
 sudo singularity build ivar.sif ivarContainer.sing
 sudo singularity build pangolin.sif pangolinContainer.sing
 sudo singularity build kraken.sif krakenContainer.sing
+sudo singularity build kraken2ref.sif kraken2ref.sing
 ```
 
 ## Usage
@@ -107,6 +129,10 @@ nf-test test tests/<modules or workflows>/<module_to_test>.nf.test
 
 ## Parameters
 
+### Input data
+
+- `manifest` [REQUIRED] : Manifest containing sample id and fastq pairs paths.
+
 ### General
 
 - `containers_dir` [DEFAULT =  `containers/` dir of this repository] : By default, the pipeline relies on Singularity containers and __assumes__ all containers are present on this directory and were named on a specific manner
@@ -123,15 +149,18 @@ nf-test test tests/<modules or workflows>/<module_to_test>.nf.test
 - `db_library_fa_path` [Default = null]:
 
 #### Kraken2ref
+
 - `k2r_fq_load_mode` [Default = "full"] : kraken2ref load fastq into memory mode ["full"/"chunk"]
 - `k2r_max_total_reads_per_fq` [Default = 10000000] : set maximum number of reads to be accepted any classified fastq file pair. Files excedding that limit will be splitted before `run_k2r_dump_fastq`.
 - `k2r_dump_fq_mem` [Default = "6 GB"] : Memory to be requested by `run_k2r_dump_fq`, adjust according to `k2r_max_total_reads_per_fq`.
 - `min_reads_for_taxid` [Default = 100] : min reads number to be considered.
 
 Kraken2ref have a escalation memory strategy based on linear regression.
+
 ### ivar params
 
 - `ivar_min_depth` [Default = 10] : <to add>
 - `ivar_freq_threshold` [Default = 0.75] : <to add >
 
+### 
 > TODO: add documentation for all pipeline parameters
