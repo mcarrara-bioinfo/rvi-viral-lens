@@ -1,3 +1,6 @@
+[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A523.10.1-23aa62.svg)](https://www.nextflow.io/)
+[![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
+---
 # Viral Pipeline
 
 This pipeline accepts `fastq` files as inputs and leverages `Kraken2` to perform read sorting, `ivar` for consensus sequence generation, and computes quality control (QC) metrics for each reference sequence identified in a given sample. Additionally, it facilitates SARS-CoV-2 subtyping. The primary output is a comprehensive classification report detailing all findings.
