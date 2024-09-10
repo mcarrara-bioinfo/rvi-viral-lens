@@ -6,9 +6,9 @@ The `run_ivar` process in this Nextflow pipeline is designed to reproduce the AR
 
 ## Parameters
 
-- `params.ivar_min_depth`: The minimum read depth required to make a base call in the consensus sequence. If the depth at a given position is below this threshold, an `'N'` will be used instead. The default value is `10`.
+- `params.ivar_min_depth`: The minimum depth required to make a base call in the consensus sequence. If the depth at a given position is below this threshold, an `'N'` will be used instead. The default value is `10`.
 
-- `params.ivar_freq_threshold`: Minimum frequency threshold (0 - 1) to call consensus. Bases with a frequency below this threshold are not called in the consensus. The default value is 0.75.
+- `params.ivar_freq_threshold`: Minimum frequency threshold (0 - 1) to call consensus. Bases with a frequency below this threshold are not called. The default value is `0.75`.
 
 ## Process Description
 
@@ -16,25 +16,33 @@ The `run_ivar` process generates a consensus sequence from a sorted BAM file usi
 
 ## Tags and Labels
 
-- Tag: `meta.id` – This tag is used for tracking and logging purposes within the Nextflow pipeline, allowing identification of process runs by sample ID.
+- Tag: `meta.id` – This tag is used for tracking and logging purposes within the Nextflow pipeline, allowing identification of process runs by ID.
 
-- Label: `"ivar"` – This label is used for resource configuration in Nextflow, typically to specify compute resources like memory or CPU for the ivar process.
+- Label: `"ivar"` – This label is used for resource configuration, at current version this label only sets which container to be used. For more information check the [Labels documentation[TODO]]().
 
 ## Input
 
 - Input Tuple: tuple val(meta), path(bams)
-  - `meta`: Metadata associated with the sample, containing identifiers such as sample ID and taxonomic ID.
+  - `meta`: Metadata associated with the sample, the process assumes it contains:
+    - pipeline internal ID (`meta.id`)
+    - taxonomic ID (`meta.taxid`)
+    - sample ID (`meta.sample_id`)
+
   - `bams`: Path to the BAM file(s) to be processed.
 
 ## Output
 
 - Output Tuple: `tuple val(meta), path("${meta.id}.consensus.fa")`
-  - The output consists of the metadata and the path to the generated consensus FASTA file (.fa) for the given sample.
+  - `meta`: same metadata provided as the input
+  - `${meta.id}.consensus.fa`: the path to the generated consensus FASTA file (`.fa`) for the given sample.
 
 ## Publish Directory
 
 - Publish Directory: `${params.results_dir}/\${meta.sample_id}/\${meta.taxid}/`
-  - The results are published to a directory structure based on sample ID and taxonomic ID, copying files with extensions .fa, .tsv, and .txt.
+  - The results are published to a directory structure based on sample ID and taxonomic ID, copying files with extensions:
+    - `.fa`: which include the consensus sequence 
+    - `.tsv`: - TODO no tsv file is outputed anymore, this needs to be removed
+    - `.txt`: - TODO no txt file is outputed anymore, this needs to be removed
 
 ## Script
 
