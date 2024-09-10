@@ -41,7 +41,6 @@ The `run_ivar` process generates a consensus sequence from a sorted BAM file usi
 The script section includes the commands executed within the process:
 
 ```bash
-Copy code
 set -e
 set -o pipefail
 
