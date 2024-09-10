@@ -1,0 +1,77 @@
+# Nextflow Process Documentation: `run_kraken`
+
+## Overview
+
+The `run_kraken` process is designed to perform taxonomic classification of sequencing reads using Kraken2, a widely-used tool for rapid classification of metagenomic sequences. This process classifies reads into taxonomic categories, and outputs classified, unclassified reads, and a detailed report, organizing the results by sample ID.
+
+## Process: `run_kraken`
+
+The `run_kraken` process executes Kraken2 on paired-end FASTQ files, producing outputs that include the classification results, classified and unclassified reads, and a summary report. Below is a detailed breakdown of the process components:
+
+### Tags and Labels
+
+- Tag: `${meta.id}` – This tag helps track the execution of the process based on the sample ID, providing clear identification for logs and outputs.
+- Label: `"kraken"` – This label is used for resource configuration, at current version this label only sets which container to be used. For more information check the [Labels documentation[TODO]]().
+
+### Input
+
+- Input Tuple: `tuple val(meta), path(fastqs)`
+  - `meta`: Metadata associated with the sample, it assumes it includes 
+    - `ID`: identifier
+  - `fastqs`: Paths to the paired-end FASTQ files that will be analyzed.
+
+- Input Value: `val(db_path)`
+  - `db_path`: Absolute path to the Kraken2 database used for classification.
+
+### Output
+
+- Output Tuple: `tuple val(meta), path("*.kraken.output"), path("*.class_seqs*"), path("*.unclass_seqs*"), path("*.report.txt")`
+
+The outputs include:
+
+- Classification results `(*.kraken.output)`.
+- FASTQ files with classified reads `(*.class_seqs*)`.
+- FASTQ files with unclassified reads `(*.unclass_seqs*)`.
+- A summary report `(*.report.txt)`.
+
+### Publish Directory
+
+Publish Directory: `${params.results_dir}/${meta.id}`
+
+The results are published to a directory named after the sample ID, ensuring organized and easily accessible outputs.
+
+### Script
+
+The script section includes the commands executed within the process:
+
+```bash
+#!/bin/bash
+
+set -e
+set -u
+
+kraken2 \
+  --db ${db_path} \
+  --output ${meta.id}.kraken.output \
+  --paired \
+  --classified-out ${meta.id}.class_seqs#.fq \
+  --unclassified-out ${meta.id}.unclass_seqs#.fq \
+  --report ${meta.id}.report.txt \
+  ${fastqs}
+```
+
+#### Command Breakdown
+
+- `set -e`: This command ensures that the script exits immediately if any command exits with a non-zero status, which is useful for handling errors during execution.
+- `set -u`: This command treats unset variables as an error and exits immediately, adding an additional layer of error checking.
+- `kraken2`: This command runs Kraken2 to classify the sequencing reads. Options used:
+  - `--db ${db_path}`: Specifies the path to the Kraken2 database used for classification.
+  - `--output ${meta.id}.kraken.output`: Outputs the classification results to a file named with the sample ID and .kraken.output extension.
+  - `--paired`: Indicates that the input reads are paired-end.
+  - `--classified-out ${meta.id}.class_seqs#.fq`: Outputs classified reads to files prefixed with the sample ID and .class_seqs extension.
+  - `--unclassified-out ${meta.id}.unclass_seqs#.fq`: Outputs unclassified reads to files prefixed with the sample ID and .unclass_seqs extension.
+  - `--report ${meta.id}.report.txt`: Generates a detailed report of the classification results, including the number of reads classified to each taxonomic level.
+
+For more details, check [Kraken2 classification command documentation](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown#classification).
+
+> NOTES: consider add multithreading options (`--threads ${params.kraken2_threads}`). This add control for the user to set the amount of cpus to be allocated.
