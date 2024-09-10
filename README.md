@@ -34,7 +34,7 @@ If not using containers, all the software needs to be available at run time. A l
 
 #### Singularity
 
-Recipes for the container used on this pipeline are available on this repository at `containers/` dir. The commands bellow 
+Recipes for the container used on this pipeline are available on this repository at `containers/` dir. To build the containers, run the command bellow.
 
 
 ```{bash}
@@ -76,43 +76,6 @@ nextflow run ${CHECKOUT}/main.nf --entry_point consensus_gen \
         -profile sanger_standard-resume -with-trace -with-report -with-timeline
 ```
 
-## Unit Tests
-
-The workflow & process unit tests for this pipeline are written in the [nf-test](https://www.nf-test.com/) (v0.8.4) Nextflow testing framework. Nf-test will need to be installed to run the tests.
-
-### Running Tests
-
-The following command if entered from the repository top-level directory can be used to execute all of the per-process & per-workflow unit tests:
-
-#### Run all tests
-
-```{bash}
-nf-test test
-```
-
-#### Run all module tests
-
-```{bash}
-nf-test test tests/modules/*.nf.test
-```
-
-#### Run all workflows tests
-
-```{bash}
-nf-test test tests/workflows/*.nf.test
-```
-
-#### Run whole pipeline test
-
-```{bash}
-nf-test test tests/main.nf.test
-```
-
-#### Run individual module/workflow test
-
-```{bash}
-nf-test test tests/<modules or workflows>/<module_to_test>.nf.test
-```
 
 ## Required Input
 
@@ -162,8 +125,28 @@ Kraken2ref have a escalation memory strategy based on linear regression.
 
 ### ivar params
 
-- `ivar_min_depth` [Default = 10] : <to add>
-- `ivar_freq_threshold` [Default = 0.75] : <to add >
+- `ivar_min_depth` [Default = 10] : Minimum depth to call consensus
+- `ivar_freq_threshold` [Default = 0.75] : Minimum frequency threshold(0 - 1) to call consensus.
 
 ### 
 > TODO: add documentation for all pipeline parameters
+
+## Unit Tests
+---
+The workflow & process unit tests for this pipeline are written in the [nf-test](https://www.nf-test.com/) (v0.8.4) Nextflow testing framework. Nf-test will need to be installed to run the tests.
+
+### Running Tests
+
+The following command if entered from the repository top-level directory can be used to execute all of the per-process & per-workflow unit tests:
+
+#### Run all tests
+
+```{bash}
+nf-test test ./
+```
+
+#### Run individual module/workflow test
+
+```{bash}
+nf-test test tests/<modules or workflows>/<module_to_test>.nf.test
+```
