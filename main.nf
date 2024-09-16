@@ -32,15 +32,17 @@ log.info """${ANSI_RESET}
     --results_dir              : ${params.results_dir}
 
   --> SORT_READS_BY_REF workflow parameters:
-    --manifest                 : ${params.manifest}
-    --db_path                  : ${params.db_path}
-    --db_library_fa_path       : ${params.db_library_fa_path}
-    --min_reads_for_taxid      : ${params.min_reads_for_taxid}
+    --manifest                   : ${params.manifest}
+    --db_path                    : ${params.db_path}
+    --db_library_fa_path         : ${params.db_library_fa_path}
+    --min_reads_for_taxid        : ${params.min_reads_for_taxid}
+    --k2r_max_total_reads_per_fq : ${params.max_total_reads_per_fq}
+    --k2r_dump_fq_mem            : ${params.k2r_dump_fq_mem}
 
   --> GENERATE_CONSENSUS workflow parameters:
     --consensus_mnf            : ${params.consensus_mnf}
-    --ivar_min_depth      : ${params.ivar_min_depth}
-    --ivar_freq_threshold   : ${params.ivar_freq_threshold}
+    --ivar_min_depth           : ${params.ivar_min_depth}
+    --ivar_freq_threshold      : ${params.ivar_freq_threshold}
 
   --> viral subtyping branching parameters:
     --scv2_keyword             : ${params.scv2_keyword}

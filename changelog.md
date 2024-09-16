@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 ## Unreleased
 
+### Changed
+
+- **[improvement]**: implement k2r release new features
+- **[improvement]**: split fastq files if higher than a set numbers of reads per fq
+
 ## [0.2.2] - 2024-08-02
 
 ### Changed

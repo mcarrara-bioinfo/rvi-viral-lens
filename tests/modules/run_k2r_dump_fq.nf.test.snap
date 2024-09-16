@@ -1,0 +1,49 @@
+{
+    "Should run without failures": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test.9000000",
+                            "taxid": 9000000,
+                            "sample_id": "test"
+                        },
+                        [
+                            "test.9000000_2697049_R1.fq:md5,b0eaac69db411379704837a2b2a9dbd8",
+                            "test.9000000_2697049_R2.fq:md5,705ce6f753733d8ba3ccdffad193ef52",
+                            "test.9000000_9000019_R1.fq:md5,5618fdbb4f73478ee97133395db9ec44",
+                            "test.9000000_9000019_R2.fq:md5,e7cd0de58458d603335bbc239e5cfafd"
+                        ]
+                    ]
+                ],
+                "1": [
+                    "test.9000000_pre_report.tsv:md5,fb32c46b26125db6275602638f254830"
+                ],
+                "fq_files": [
+                    [
+                        {
+                            "id": "test.9000000",
+                            "taxid": 9000000,
+                            "sample_id": "test"
+                        },
+                        [
+                            "test.9000000_2697049_R1.fq:md5,b0eaac69db411379704837a2b2a9dbd8",
+                            "test.9000000_2697049_R2.fq:md5,705ce6f753733d8ba3ccdffad193ef52",
+                            "test.9000000_9000019_R1.fq:md5,5618fdbb4f73478ee97133395db9ec44",
+                            "test.9000000_9000019_R2.fq:md5,e7cd0de58458d603335bbc239e5cfafd"
+                        ]
+                    ]
+                ],
+                "report_file": [
+                    "test.9000000_pre_report.tsv:md5,fb32c46b26125db6275602638f254830"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-09-03T16:46:52.921568"
+    }
+}
