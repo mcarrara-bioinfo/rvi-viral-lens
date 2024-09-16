@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 ## Unreleased
 
+### Changed
+- **[improvement]**: Mpileup output retained by run_ivar & used by the QC script for calculating % genome coverage.
+- **[improvement]**: Removed unnecessary code from qc.py and run_qc.nf including the plot generation.
+- **[improvement]**: Modified qc.py to read input files from command line including using samtools flagstat for read counts.
+
+### Added
+- **[added]**: Container for the run_qc process
+
 ## [0.2.2] - 2024-08-02
 
 ### Changed
