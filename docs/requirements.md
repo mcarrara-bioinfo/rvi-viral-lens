@@ -1,5 +1,10 @@
 # Software Requirements
 
+This pipeline was tested using
+
+- Nextflow = `23.10.1`
+- Singularity = `ce version 3.11.4`
+
 Here is a list of all the softwares versions currently in use in the pipeline as set on each container.
 
 - **Base container**
