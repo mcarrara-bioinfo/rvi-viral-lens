@@ -148,7 +148,11 @@ nextflow run ${CHECKOUT}/main.nf --entry_point consensus_gen \
 
 - `manifest` : CSV Manifest of input fastq file pairs.
   - Must have `sample_id`,`reads_1` and `reads_2` collumns
+  - If you have your set of fastq pairs in a single dir, a script (`write_manifest.py`) is provided to facilitate this process.
+
 - `db_path` : Path of a valid [kraken2 database](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown#kraken-2-databases)
+
+check [Input documentation](./docs/input.md) for more details.
 
 > **NOTE**: if using the `consensus_gen` entry point, the manifest must containing pair ended reads and genome reference files for each pair. must have `sample_id`, `taxid`, `ref_files`, `reads_1`, `reads_2`
 
