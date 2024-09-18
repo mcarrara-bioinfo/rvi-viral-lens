@@ -14,6 +14,7 @@ The **VIRAL_PIPELINE** is a Nextflow pipeline developed under the context of the
   - [build containers](#build-containers)
 - [Usage](#usage)
 - [Inputs](#inputs)
+- [Outputs](#outputs)
 - [Parameters](#parameters)
 - [Unit Tests](#unit-tests)
 - [Pipeline components documentation](#pipeline-components-documentation)
@@ -145,11 +146,43 @@ nextflow run ${CHECKOUT}/main.nf --entry_point consensus_gen \
 
 ## Inputs
 
-- `manifest` : Manifest of input fastq file pairs.
+- `manifest` : CSV Manifest of input fastq file pairs.
   - Must have `sample_id`,`reads_1` and `reads_2` collumns
-- `db_path` : Path of kraken2 database
+- `db_path` : Path of a valid [kraken2 database](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown#kraken-2-databases)
 
 > **NOTE**: if using the `consensus_gen` entry point, the manifest must containing pair ended reads and genome reference files for each pair. must have `sample_id`, `taxid`, `ref_files`, `reads_1`, `reads_2`
+
+
+## Outputs
+
+The **main output** files of the pipeline are:
+
+- **Report CSV**: A csv file summarizing consensus sequences information and qc metrics obtained from each input samples.
+  - location: `<output_dir>/classification_report.csv`
+- **Consensus sequences per taxid**: the consensus sequence obtained for a given `taxid` and `sample_id` combination.
+  -  location: `<output_dir/<sample_id>/<sample_id>.<taxid>.consensus.fa`
+
+The pipeline outputs a set of **intermediate files** which are key to generate the information of the main output and can be helpful for futher investigation, for a more detailed description check [intermediate files documentation](./docs/output.docs).
+
+The output file tree should look like the tree bellow: 
+```bash
+<output_dir>/
+├── <sample_id>
+│   ├── <taxid>
+│   │   ├── <sample_id>.<taxid>.consensus.fa
+│   │   ├── <sample_id>.<taxid>.qc.csv
+│   │   ├── <sample_id>.<taxid>.sorted.bam
+│   │   └── <sample_id>.<taxid>.sorted.bam.bai
+│   ├── [...]
+│   ├── <sample_id>.class_seqs_1.fq
+│   ├── <sample_id>.class_seqs_2.fq
+│   ├── <sample_id>.kraken.output
+│   ├── <sample_id>.report.txt
+│   ├── <sample_id>.unclass_seqs_1.fq
+│   ├── <sample_id>.unclass_seqs_2.fq
+├── [...]
+├── classification_report.csv
+```
 
 ## Parameters
 
