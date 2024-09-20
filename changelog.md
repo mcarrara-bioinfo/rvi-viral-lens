@@ -7,9 +7,13 @@ All notable changes to this project will be documented in this file.
 - **[improvement]**: Mpileup output retained by run_ivar & used by the QC script for calculating % genome coverage.
 - **[improvement]**: Removed unnecessary code from qc.py and run_qc.nf including the plot generation.
 - **[improvement]**: Modified qc.py to read input files from command line including using samtools flagstat for read counts.
+- **[improvement]**: Unit test files and snapshot files for run_ivar, run_qc_script, and GENERATE_CONSENSUS to account for changes
+- **[improvement]**: Modified tests/nextflow.config to import conf/container.config for consistency. Moved containers_dir parameter to top-level nextflow.config
 
 ### Added
 - **[added]**: Container for the run_qc process
+- **[added]**: Unit test for COMPUTE_QC_METRICS
+- **[added]**: Mpileup test data
 
 ## [0.2.2] - 2024-08-02
 
