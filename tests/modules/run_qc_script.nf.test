@@ -14,7 +14,6 @@ nextflow_process {
                     sample_id:"test",
                     taxid:9000000
                 ]
-                containers_dir="/lustre/scratch126/gsu/team112/personal/ad45/rvi_box/dev_containers/"
             }
 
             process {
@@ -24,7 +23,8 @@ nextflow_process {
                     params.meta,
                     file("${projectDir}/tests/test_data/test_alignments/test.9000000.sorted.bam"),
                     file("${projectDir}/tests/test_data/test_consensuses/test.9000000.fa"),
-                    file("${projectDir}/tests/test_data/test_references/9000000.fa")
+                    file("${projectDir}/tests/test_data/test_references/9000000.fa"),
+                    file("${projectDir}/tests/test_data/test_mpileup_out/9000000.mpileup.out")
                     )
                 """
             }
