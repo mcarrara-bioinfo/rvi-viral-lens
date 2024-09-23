@@ -1,8 +1,8 @@
 nextflow_process {
 
-    name "Test Process run_kraken2ref_and_pre_report process"
+    name "Test Process run_k2r_dump_fq process"
     script "modules/run_kraken2ref_and_pre_report.nf"
-    process "run_k2r_sort_reads"
+    process "run_k2r_dump_fastqs_and_pre_report"
 
     test("Should run without failures") {
 
@@ -22,9 +22,15 @@ nextflow_process {
             """
             // define inputs of the process here. Example:
             input[0] = tuple(
-                params.meta, 
-                file("${params.test_loc}/test_kraken_outputs/test.kraken.output"),
-                file("${params.test_loc}/test_kraken_outputs/test.report.txt"))
+                params.meta,
+                [
+                    file("${params.test_loc}/test_kraken_outputs/test.class_seqs_1.fq"),
+                    file("${params.test_loc}/test_kraken_outputs/test.class_seqs_2.fq")
+                ],
+                file("${params.test_loc}/test_kraken_outputs/test.9000000_tax_to_reads.json"),
+                file("${params.test_loc}/test_kraken_outputs/test.9000000_decomposed.json"),
+                file("${params.test_loc}/test_kraken_outputs/test.report.txt")
+                )
             """
 
             }
