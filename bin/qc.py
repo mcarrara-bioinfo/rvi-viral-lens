@@ -96,7 +96,7 @@ def generate_qc_file(args: argparse.ArgumentParser.parse_args):
     # Get QC values for a pair of bam-fasta files
     qc_values = assess_depths_and_consensus(args.minimum_depth, args.fasta, args.ref, args.depths_file)
 
-   # Get the original dictionary keys in the order they were inserted
+    # Get the original dictionary keys in the order they were inserted
     column_names = list(qc_values)
 
     # Parse input flagstat file
