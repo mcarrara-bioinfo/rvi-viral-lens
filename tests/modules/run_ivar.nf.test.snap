@@ -9,15 +9,16 @@
                             "taxid": 9000000,
                             "sample_id": "test"
                         },
-                        "test.9000000.consensus.fa:md5,5ef1ee718b9117316c8ffb11eb9a5bb8"
+                        "test.9000000.consensus.fa:md5,5ef1ee718b9117316c8ffb11eb9a5bb8",
+                        "test.9000000.mpileup.out:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ]
             }
         ],
         "meta": {
             "nf-test": "0.8.4",
-            "nextflow": "23.10.1"
+            "nextflow": "23.10.0"
         },
-        "timestamp": "2024-07-31T18:38:51.317775"
+        "timestamp": "2024-09-17T09:22:02.510868622"
     }
 }

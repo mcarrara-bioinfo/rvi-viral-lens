@@ -12,15 +12,16 @@ process run_ivar{
     tuple val(meta), path(bams)
 
   output:
-    tuple val(meta), path("${meta.id}.consensus.fa")
+    tuple val(meta), path("${meta.id}.consensus.fa"), path(mpileup_output)
 
   script:
     sorted_bam = "${meta.id}.sorted.bam"
+    mpileup_output="${meta.id}.mpileup.out"
     """
     set -e
     set -o pipefail
 
-    samtools mpileup -aa -A -B -d 0 -Q0 ${sorted_bam} | \
-      ivar consensus -t ${params.ivar_freq_threshold} -m ${params.ivar_min_depth} -n N -p ${meta.id}.consensus
+    samtools mpileup -aa -A -B -d 0 -Q0 ${sorted_bam} > ${mpileup_output}
+    cat ${mpileup_output} | ivar consensus -t ${params.ivar_freq_threshold} -m ${params.ivar_min_depth} -n N -p ${meta.id}.consensus
     """
 }

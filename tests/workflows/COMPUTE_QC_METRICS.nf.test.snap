@@ -1,0 +1,67 @@
+{
+    "Should run without failures": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "taxid": 9000000,
+                            "sample_id": "test",
+                            "bam_file": "test.9000000.sorted.bam:md5,2f6b034826ae40672acd8059e084e788",
+                            "mpileup_file": "9000000.mpileup.out:md5,80121bd05022c26e057cad566f24eb35",
+                            "id": "test.9000000",
+                            "ref_files": [
+                                "9000000.fa:md5,6c38e163d9237257547847cfdc3bbe1c",
+                                "9000000.fa.amb:md5,09ac005afb0d84727d981bf17390666b",
+                                "9000000.fa.ann:md5,38b386185e13faaf203a72d6eb35b3b1",
+                                "9000000.fa.bwt:md5,bb168f9981319ee685c46a530d0e023b",
+                                "9000000.fa.pac:md5,4d688454edcfd4288c81c53ec3fd61f7",
+                                "9000000.fa.sa:md5,e28e31851f205dc7e10addb1539a37b8"
+                            ],
+                            "consensus_fa": "test.9000000.fa:md5,5b9760f4b95d4de4bfb0144f6793085c",
+                            "percentage_of_N_bases": "0.42",
+                            "percentage_genome_coverage": "0.00",
+                            "longest_no_N_segment": "2360",
+                            "total_aligned_reads": "32358",
+                            "total_unmapped_reads": "0\r",
+                            "total_mapped_reads": "0"
+                        },
+                        "test.9000000.sorted.bam:md5,2f6b034826ae40672acd8059e084e788"
+                    ]
+                ],
+                "qc_Out_ch": [
+                    [
+                        {
+                            "taxid": 9000000,
+                            "sample_id": "test",
+                            "bam_file": "test.9000000.sorted.bam:md5,2f6b034826ae40672acd8059e084e788",
+                            "mpileup_file": "9000000.mpileup.out:md5,80121bd05022c26e057cad566f24eb35",
+                            "id": "test.9000000",
+                            "ref_files": [
+                                "9000000.fa:md5,6c38e163d9237257547847cfdc3bbe1c",
+                                "9000000.fa.amb:md5,09ac005afb0d84727d981bf17390666b",
+                                "9000000.fa.ann:md5,38b386185e13faaf203a72d6eb35b3b1",
+                                "9000000.fa.bwt:md5,bb168f9981319ee685c46a530d0e023b",
+                                "9000000.fa.pac:md5,4d688454edcfd4288c81c53ec3fd61f7",
+                                "9000000.fa.sa:md5,e28e31851f205dc7e10addb1539a37b8"
+                            ],
+                            "consensus_fa": "test.9000000.fa:md5,5b9760f4b95d4de4bfb0144f6793085c",
+                            "percentage_of_N_bases": "0.42",
+                            "percentage_genome_coverage": "0.00",
+                            "longest_no_N_segment": "2360",
+                            "total_aligned_reads": "32358",
+                            "total_unmapped_reads": "0\r",
+                            "total_mapped_reads": "0"
+                        },
+                        "test.9000000.sorted.bam:md5,2f6b034826ae40672acd8059e084e788"
+                    ]
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.0"
+        },
+        "timestamp": "2024-09-17T15:09:40.901597924"
+    }
+}
