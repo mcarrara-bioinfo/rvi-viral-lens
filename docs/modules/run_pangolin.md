@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `run_pangolin` process in this Nextflow pipeline is designed to classify SARS-CoV-2 sequences into lineages using the Pangolin tool. [Pangolin (Phylogenetic Assignment of Named Global Outbreak LINeages)](https://github.com/cov-lineages/pangolin) is a tool widely used in the analysis of SARS-CoV-2 genomes to determine the likely lineage of the virus based on the consensus sequence. In the current pipeline version, 
+The `run_pangolin` process in this Nextflow pipeline is designed to classify SARS-CoV-2 sequences into lineages using the Pangolin tool. [Pangolin (Phylogenetic Assignment of Named Global Outbreak LINeages)](https://github.com/cov-lineages/pangolin) is a tool widely used in the analysis of SARS-CoV-2 genomes to determine the likely lineage of the virus based on the consensus sequence.
 
 ## Process: `run_pangolin`
 
