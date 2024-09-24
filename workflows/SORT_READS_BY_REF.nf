@@ -18,6 +18,18 @@ def parse_mnf(consensus_mnf) {
 }
 
 workflow SORT_READS_BY_REF {
+    /*
+    Sort Reads to A Given Reference
+
+    The SORT_READS_BY_REF workflow processes paired-end
+    sequencing reads by sorting them according to taxonomic
+    classifications obtained from Kraken2. This workflow
+    uses a manifest file to process multiple samples and
+    produces sorted by taxid FASTQ files for each sample
+    and classification reports.
+
+    check docs/workflow/SORT_READS_BY_REF.md for a more extensive documentation
+    */
     take:
 
         mnf_path // path to manifest
@@ -57,9 +69,8 @@ workflow SORT_READS_BY_REF {
         // drop unclassified fq filepair and store kraken2 files on meta 
         run_kraken.out // tuple (meta, kraken_output, [classified_fq_filepair], [unclassified_fq_filepair], kraken_report)
             | map {it -> tuple(it[0], it[1], it[2], it[4])} // tuple (meta, kraken_output, [classified_fq_filepair], kraken_report)
-            | map {meta, kraken_output, classified_fq_filepair, kraken_report -> 
+            | map {meta, kraken_output, classified_fq_filepair, kraken_report -> //tuple(meta, kraken_output,classified_fq_filepair,kraken_report) 
 
-                //tuple(meta, kraken_output,classified_fq_filepair,kraken_report)
                 // store kraken2 outputs on meta to simplify channel gymnastics
                 meta.kraken_output = kraken_output
                 meta.kraken_report = kraken_report
@@ -72,11 +83,10 @@ workflow SORT_READS_BY_REF {
                 return tuple (meta, kraken_output, kraken_report)
             }
             | set {sort_reads_in_ch}
-        
+
         // run sort reads (meta, kraken_report, kraken_output)
         run_k2r_sort_reads(sort_reads_in_ch)
-        
-        
+
         // 3.2 - prepare chanel for k2r dump fqs
         // find which samples needs splitting
         run_k2r_sort_reads.out.json_files // meta, tax_to_reads_json, decomposed_json
@@ -135,6 +145,7 @@ workflow SORT_READS_BY_REF {
                 tuple(id, taxid_fastqs_list.flatten())
             }
             | set {concatenate_fqs_In_ch}
+
         // concatenate parts
         concatenate_fqs_parts(concatenate_fqs_In_ch)
 
@@ -225,10 +236,7 @@ def check_sort_reads_params(){
             log.error("The manifest provided (${params.manifest}) does not exist.")
             errors += 1
         }
-        //TODO
-        //else {
-        //    validate_manifest(params.manifest)
-        //}
+        //TODO: validate manifest
     }
 
     return errors

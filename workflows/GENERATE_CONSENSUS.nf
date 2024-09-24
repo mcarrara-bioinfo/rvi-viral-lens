@@ -4,11 +4,24 @@ include {run_ivar} from '../modules/run_ivar.nf'
 workflow GENERATE_CONSENSUS {
     take:
         /*
+        Obtain Consensus Sequences
+
+        The GENERATE_CONSENSUS workflow performs read
+        alignment and consensus sequence generation for
+        sequencing data. It processes paired-end reads
+        by aligning them to reference genomes using BWA,
+        followed by consensus calling with iVar. This
+        workflow is designed to take in sequencing data
+        for different samples and taxonomic IDs, process
+        them, and produce consensus sequences.
+
         meta must have the following keys:
             - id
             - taxid
             - sample_id
             - ref_files
+
+        check docs/workflow/GENERATE_CONSENSUS.md for more information
         */
         sample_taxid_ch // tuple (meta, reads)
         

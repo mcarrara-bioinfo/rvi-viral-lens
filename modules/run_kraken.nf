@@ -1,4 +1,19 @@
 process run_kraken {
+    /*
+    * Assign Reads to Taxids
+    *
+    * The `run_kraken` process is designed to perform
+    * taxonomic classification of sequencing reads
+    * using Kraken2, a widely-used tool for rapid
+    * classification of metagenomic sequences. This
+    * process classifies reads into taxonomic
+    * categories, and outputs classified, unclassified
+    * reads, and a detailed report, organizing the
+    * results by sample ID.
+    *
+    * check docs/run_kraken.md for more extensive documentation
+    */
+
     tag "${meta.id}"
     label "kraken"
 

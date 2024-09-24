@@ -3,11 +3,26 @@ include {run_qc_script} from '../modules/run_qc_script.nf'
 workflow COMPUTE_QC_METRICS {
     take:
         /*
+
+        Obtain QC Metrics
+
+        The `COMPUTE_QC_METRICS` workflow is designed to compute
+        quality control (QC) metrics for consensus sequences
+        generated from sequencing data. The workflow processes
+        each sample's data to evaluate the quality and coverage
+        of the generated consensus sequences. The QC metrics 
+        include the percentage of bases covered, the percentage
+        of N bases, the longest segment without N bases, and 
+        read alignment statistics (total reads aligned, unmapped
+        and mapped).
+
         meta must have the following keys:
             - id
             - taxid
             - sample_id
             - ref_files
+
+        check docs/workflow/COMPUTE_QC_METRICS.md for a more extensive documentation
         */
 
         qc_metrics_In_ch // [meta, fasta_file]
@@ -41,3 +56,5 @@ workflow COMPUTE_QC_METRICS {
    emit:
         qc_Out_ch // (meta)
 }
+
+// DEV NOTES: We should consider to make reference files on the input channels

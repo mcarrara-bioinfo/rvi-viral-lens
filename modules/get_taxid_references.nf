@@ -1,5 +1,18 @@
 process get_taxid_reference_files{
-    // obtain reference fasta files for a given taxid from a fasta file
+    /*
+    * Fetch Fasta Sequence Files for a Given Taxid
+    *
+    * The get_taxid_reference_files process is designed to extract reference 
+    * sequences corresponding to a specified taxonomic ID (taxid) from a 
+    * larger FASTA file. This process retrieves the relevant sequence, 
+    * writes it to an output file, and indexes it using BWA (Burrows-Wheeler 
+    * Aligner). This step is essential for downstream analysis that requires
+    * taxon-specific reference sequences. In the context of the pipeline, it
+    * is used to extract all the reference files from the Kraken database 
+    * which were observed on that input batch.
+    *
+    * check docs/get_taxid_references.md for more extensive documentation
+    */
 
     tag "${taxid}"
     publishDir "${params.results_dir}/reference_files/${taxid}/", mode: 'copy'

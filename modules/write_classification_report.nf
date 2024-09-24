@@ -1,4 +1,18 @@
 process write_classification_report {
+    /*
+    * Write classification report
+    *
+    * The process in this Nextflow pipeline generates
+    * a classification report in CSV format by
+    * writing provided lines of data into the report
+    * file. This report summarizes various metrics
+    * and classifications related to the sequencing
+    * analysis, including information on sample
+    * identification, taxonomic classification,
+    * genome coverage, and more.
+    *
+    * check docs/modules/write_classification_report.md for more extensive documentation
+    */
 
     publishDir "${params.results_dir}/", mode: 'copy'
 

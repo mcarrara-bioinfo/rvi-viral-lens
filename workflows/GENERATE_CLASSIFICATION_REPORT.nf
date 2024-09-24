@@ -3,6 +3,15 @@ include {write_classification_report} from '../modules/write_classification_repo
 workflow GENERATE_CLASSIFICATION_REPORT {
     take:
         /*
+        Write Classification Report
+        
+        The GENERATE_CLASSIFICATION_REPORT workflow generates
+        a classification report based on metadata associated
+        with sequencing samples. This workflow collects
+        metadata from each sample, formats the data into a
+        report line, and aggregates these lines into a final
+        classification report file.
+        
         meta must have the following keys:
             - sample_id
             - taxid
@@ -14,6 +23,8 @@ workflow GENERATE_CLASSIFICATION_REPORT {
             - total_mapped_reads
             - longest_no_N_segment
             - percentage_of_N_bases
+        
+        check docs/workflow/GENERATE_CLASSIFICATION_REPORT for a more extensive documentation
         */
         meta_ch // meta
 
@@ -21,7 +32,7 @@ workflow GENERATE_CLASSIFICATION_REPORT {
     
         // Create a report line for every sample and then aggregate them
         report_lines_ch = meta_ch.map{it ->
-            // convert null values for type and segments to empty strings
+            // convert null values for type and segments to None strings
             if (it[0].virus_subtype == null){
                 virus_subtype='None'
             } else {
@@ -38,8 +49,8 @@ workflow GENERATE_CLASSIFICATION_REPORT {
 
         // Write all of the per-sample report lines to a report file
         write_classification_report(report_lines_ch)
-	emit:
-		write_classification_report.out
+    emit:
+        write_classification_report.out
 }
 
 workflow {

@@ -72,8 +72,7 @@ workflow {
     check_main_params()
     // ==========================
 
-    // === 2 - Map reads to virus
-    // sort reads by taxon
+    // === 2 - Map reads to taxid
     if (params.entry_point == "sort_reads"){
         // check if 
         SORT_READS_BY_REF(params.manifest)
@@ -81,7 +80,7 @@ workflow {
         sample_pre_report_ch = SORT_READS_BY_REF.out.sample_pre_report_ch
     }
 
-    // === 3 - Generate consensus
+    // === 3 - Generate consensus ==
     if (params.entry_point == "consensus_gen"){
         // process manifest
         sample_taxid_ch = parse_consensus_mnf_meta(params.consensus_mnf)
@@ -95,11 +94,12 @@ workflow {
     COMPUTE_QC_METRICS(GENERATE_CONSENSUS.out)
     
     
-    // === 5 - branching output from QC for viral specofoc subtyping
+    // === 5 - branching output from QC for viral specific subtyping
 
     // 5.1 - process pre_report files
-    // NOTE: if the consensus_gen entry point is removed,
-    //       this processing should be moved back to SORT_READS_BY_REF workflow
+    // DEV NOTE: if the consensus_gen entry point is removed,
+    //           this processing should be moved back to 
+    //           SORT_READS_BY_REF workflow
     sample_pre_report_ch
       .filter{it -> (it.size() > 1)} // remove empty pre_reports
       .splitCsv(header: true, sep:"\t")
@@ -114,10 +114,10 @@ workflow {
       .filter{it -> (it.size() <= 1)}
       .view(it -> log.warn("Excluding ${it} as input due to small size ( < 1 byte)"))
 
-    // 5.2 - add report infor to out qc metric chanel
-    COMPUTE_QC_METRICS.out
+    // 5.2 - add report info to out qc metric chanel and branch for SCOV2 subtyping
+    COMPUTE_QC_METRICS.out // tuple (meta, bam)
       .map { meta, bam -> tuple(meta.id, meta, bam)}
-      .join(sample_report_ch)//, by: 0)
+      .join(sample_report_ch)//, by: 0) // tuple (id, meta, bam, report)
       .map {id, meta, bam, report ->
         meta.putAll(report)
         tuple(meta, bam)
@@ -127,7 +127,7 @@ workflow {
         no_subtyping_ch: true
       }
       .set {qc_metrics_out_ch}
-    
+
     // 5.3 - do SCOV2 subtyping
     if (params.do_scov2_subtyping == true){
       qc_metrics_out_ch.scv2_subtyping_workflow_in_ch

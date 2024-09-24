@@ -1,8 +1,16 @@
 process run_k2r_sort_reads {
-
     /*
-    Run Kraken2Ref and write a report
+    * Parse kraken report and write tax_to_reads_json
+    *
+    * This process runs Kraken2Ref to parse Kraken 
+    * reports and sort reads by taxonomic classification.
+    * It generates JSON files that map taxonomic IDs to
+    * read IDs and performs sorting based on the 
+    * decomposed taxonomy tree if available.
+    *
+    * check docs/modules/run_kraken2ref_and_pre_report.md for more extensive documentation
     */
+
     tag "${meta.id} - ${task.attempt} - ${task.memory}"
     cache 'lenient'
     label 'kraken2ref'
@@ -32,7 +40,18 @@ process run_k2r_sort_reads {
 
 process run_k2r_dump_fastqs_and_pre_report {
     /*
+    * Write Individual Fastq Files and the Pre Report
+    *
+    * The run_k2r_dump_fastqs_and_pre_report process 
+    * uses Kraken2Ref to extract classified reads 
+    * into FASTQ files and generate a preliminary 
+    * report based on the taxonomic classification 
+    * data. It processes classified reads and produces
+    * a detailed report for further analysis.
+    *
+    * check docs/modules/run_kraken2ref_and_pre_report.md for more extensive documentation
     */
+
     tag "${meta.id} - ${task.attempt} - ${task.memory}"
     cache 'lenient'
     label 'kraken2ref'
@@ -69,6 +88,18 @@ process run_k2r_dump_fastqs_and_pre_report {
 }
 
 process concatenate_fqs_parts {
+    /*
+    * Concatenate splitted fastqs
+    *
+    * This process concatenates FASTQ files from
+    * multiple parts into final combined FASTQ 
+    * files for each taxonomic classification. 
+    * This process ensures that all parts 
+    * corresponding to the same taxonomic ID 
+    * are merged into single files.
+    *
+    * check docs/modules/run_kraken2ref_and_pre_report.md for more extensive documentation
+    */
 
     cache 'lenient'
 
