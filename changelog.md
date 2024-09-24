@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- **[improvement]**: Mpileup output retained by run_ivar & used by the QC script for calculating % genome coverage.
+- **[improvement]**: Removed unnecessary code from qc.py and run_qc.nf including the plot generation.
+- **[improvement]**: Modified qc.py to read input files from command line including using samtools flagstat for read counts.
+- **[improvement]**: Unit test files and snapshot files for run_ivar, run_qc_script, and GENERATE_CONSENSUS to account for changes
+
+### Added
+
+- **[added]**: Container for the run_qc process
+- **[added]**: Unit test for COMPUTE_QC_METRICS
+- **[added]**: Mpileup test data
 - **[improvement]**: implement k2r release new features
 - **[improvement]**: split fastq files if higher than a set numbers of reads per fq
 

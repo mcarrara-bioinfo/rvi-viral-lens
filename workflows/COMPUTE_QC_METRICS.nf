@@ -20,7 +20,9 @@ workflow COMPUTE_QC_METRICS {
             - id
             - taxid
             - sample_id
+            - bam_file
             - ref_files
+            - mpileup_file
 
         check docs/workflow/COMPUTE_QC_METRICS.md for a more extensive documentation
         */
@@ -32,7 +34,7 @@ workflow COMPUTE_QC_METRICS {
             | map {meta, fasta_file ->
                 // store fasta_files at meta
                 meta.consensus_fa = fasta_file
-                tuple(meta, meta.bam_file, fasta_file, meta.ref_files[0])
+                tuple(meta, meta.bam_file, fasta_file, meta.ref_files[0], meta.mpileup_file)
             }
             | set{qc_script_In_ch}
 
@@ -41,7 +43,7 @@ workflow COMPUTE_QC_METRICS {
         
         // populate meta with the qc values
         run_qc_script.out
-            | map {meta, qc_csv, qc_png, stdout_str -> 
+            | map {meta, qc_csv, stdout_str -> 
                 tokens_lst = stdout_str.tokenize(",")
                 meta.percentage_of_N_bases = tokens_lst[1]
                 meta.percentage_genome_coverage = tokens_lst[2]
@@ -55,6 +57,24 @@ workflow COMPUTE_QC_METRICS {
             | set {qc_Out_ch}
    emit:
         qc_Out_ch // (meta)
+
 }
 
 // DEV NOTES: We should consider to make reference files on the input channels
+
+workflow {
+    manifest_channel = Channel.fromPath(params.manifest_file)
+    | splitCsv(header: true, sep: ',')
+    | map { row ->
+        meta = [id:row.id,
+            taxid:row.taxid,
+            sample_id:row.sample_id,
+            bam_file:row.bam_file,
+            ref_files:[row.ref_files],
+            mpileup_file:row.mpileup_file
+        ]
+        [meta, row.fasta_file]
+    }
+    COMPUTE_QC_METRICS(manifest_channel)
+}
+>>>>>>> workflows/COMPUTE_QC_METRICS.nf

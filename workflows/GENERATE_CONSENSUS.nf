@@ -45,12 +45,15 @@ workflow GENERATE_CONSENSUS {
         // generate consensus
         run_ivar(ivar_in_ch)
 
-        // NOTE for now everything out of ivar is emitted by the process, as the pipeline evolves
-        //     we need to review to publish only whatever is used by the pipeline should be on the output channel.
-
+        // add mpileup output file to meta
+        run_ivar.out // tuple (meta, fasta_file, mpileup_file)
+            | map {meta, fasta_file, mpileup_file -> 
+                meta.mpileup_file = mpileup_file
+                tuple(meta, fasta_file)}
+            | set {out_ch}
 
     emit:
-        run_ivar.out // tuple (meta, fasta_file)
+        out_ch // tuple (meta, fasta_file)
 }
 
 def parse_consensus_mnf_meta(consensus_mnf) {
