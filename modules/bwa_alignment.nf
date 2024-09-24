@@ -10,7 +10,7 @@ process bwa_alignment_and_post_processing {
     * BAM files that are essential for consensus sequence 
     * generation.
     *
-    * check `docs/bwa_alignment.md` for more extensive documentation
+    * check `docs/modules/bwa_alignment.md` for more extensive documentation
     */
 
     publishDir "${params.results_dir}/${meta.sample_id}/${meta.taxid}/", overwrite: true, mode: "copy", pattern:"*.bam*"

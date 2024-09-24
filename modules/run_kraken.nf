@@ -11,7 +11,7 @@ process run_kraken {
     * reads, and a detailed report, organizing the
     * results by sample ID.
     *
-    * check docs/run_kraken.md for more extensive documentation
+    * check docs/modules/run_kraken.md for more extensive documentation
     */
 
     tag "${meta.id}"

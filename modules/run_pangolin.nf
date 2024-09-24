@@ -10,7 +10,7 @@ process run_pangolin {
     * SARS-CoV-2 genomes to determine the likely lineage
     * of the virus based on the consensus sequence.
     * 
-    * check docs/run_pangolin.nf for a more extensive documentation
+    * check docs/modules/run_pangolin.nf for a more extensive documentation
     */
 
     publishDir "${params.results_dir}/${meta.sample_id}/${meta.taxid}/", mode: "copy", pattern: "*.csv"

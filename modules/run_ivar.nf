@@ -14,7 +14,7 @@ process run_ivar{
   * resulting files are organized by sample and 
   * taxonomic ID in the specified results directory.
   *
-  * check docs/run_ivar.md for more extensive documentation
+  * check docs/modules/run_ivar.md for more extensive documentation
   */
 
   tag "${meta.id}"

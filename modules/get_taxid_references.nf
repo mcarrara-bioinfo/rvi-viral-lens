@@ -11,7 +11,7 @@ process get_taxid_reference_files{
     * is used to extract all the reference files from the Kraken database 
     * which were observed on that input batch.
     *
-    * check docs/get_taxid_references.md for more extensive documentation
+    * check docs/modules/get_taxid_references.md for more extensive documentation
     */
 
     tag "${taxid}"
