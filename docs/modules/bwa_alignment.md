@@ -12,7 +12,7 @@ This process aligns reads to a reference genome and outputs indexed BAM files. B
 
 - Tag: Not explicitly tagged in this process, but meta information is utilized for sample and taxonomic identifiers.
 
-- Label: No label is applied to this process, therefore, it is running on base container [Labels documentation[TODO]]().
+- Label: No label is applied to this process, therefore, it is running on base container.
 
 ### Input
 
