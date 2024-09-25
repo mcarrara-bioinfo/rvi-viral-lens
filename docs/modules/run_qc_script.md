@@ -2,7 +2,9 @@
 
 ## Overview
 
-This process iperforms quality control (QC) on sequence data using a custom Python QC script (available at `bin/` dir). This process generates a CSV file with QC metrics and a PNG image visualizing sequencing depth, which are essential for assessing the quality and reliability of the sequencing data. The script is a modified version of [the `qc.py` of the ARTIC pipeline approach](https://gitlab.internal.sanger.ac.uk/malariagen1/ncov2019-artic-nf/-/blob/main/bin/qc.py?ref_type=heads).
+This process performs quality control (QC) on sequence data using a custom Python QC script (available at `bin/` dir).
+It uses a set of input files (BAM, FASTA, and reference files) along with the results from samtools mpileup to generate a QC report in CSV format. The key steps include calculating statistics on the BAM file, parsing mpileup output, and running a custom QC script.
+This process generates a CSV file with QC metrics and a PNG image visualizing sequencing depth, which are essential for assessing the quality and reliability of the sequencing data. The script is a modified version of [the `qc.py` of the ARTIC pipeline approach](https://gitlab.internal.sanger.ac.uk/malariagen1/ncov2019-artic-nf/-/blob/main/bin/qc.py?ref_type=heads).
 
 ## Process
 
@@ -22,6 +24,7 @@ This process runs a QC analysis on the input BAM, FASTA, and reference files, ou
   - `bam`: Path to the BAM file containing aligned sequencing reads.
   - `fasta`: Path to the consensus FASTA file for the sample.
   - `ref`: Path to the reference file against which the reads are aligned.
+  - `samtools_mpileup`: Path to the output file from samtools mpileup that contains coverage information.
 
 ### Output
 
@@ -54,22 +57,27 @@ sed -n "2p" ${meta.id}.qc.csv
 
 ### Script Breakdown
 
-1. **QC Script Execution**:
+The script performs the following steps:
 
-- Command: `qc.py ${qcSetting} --outfile ${meta.id}.qc.csv --sample ${meta.id} --ref ${ref} --bam ${bam} --fasta ${fasta} --ivar_md ${params.ivar_min_depth}`
+1. **Generate flagstat report**: Runs samtools flagstat on the BAM file to generate summary statistics, outputting the result to a file (`.flagstat.out`).
 
-  - The command runs a custom Python script (`qc.py`) for QC analysis, with the following parameters:
-    - `--illumina`: A setting flag for the QC script, suggesting it is configured for Illumina sequencing data.
-    - `--outfile`: Specifies the output file name for QC metrics in CSV format.
-    - `--sample:` Specifies the sample ID for the analysis.
-    - `--ref`: Provides the path to the reference file.
-    - `--bam`: Supplies the BAM file with aligned reads.
-    - `--fasta`: Provides the path to the consensus FASTA file for the sample.
-    - `--ivar_md`: Sets the minimum depth threshold for ivar, passed as a parameter (`${params.ivar_min_depth}`).
+2. **Parse mpileup output**: Extracts key columns (reference sequence name, position, and depth) from the samtools mpileup file and saves them to a new file (`.depths.out`).
+
+3. **Run the custom QC script**: Executes the `qc.py` script, passing in the BAM, FASTA, reference, and depths files, along with sample metadata. The script generates the final QC report as a CSV file (`.qc.csv`). Key parameters include:
+
+   - `--outfile`: Path to the output CSV file.
+   - `--sample`: Sample ID.
+   - `--ref`: Reference file.
+   - `--bam`: BAM file.
+   - `--fasta`: FASTA file.
+   - `--depths_file`: Parsed mpileup depths file.
+   - `--flagstat_file`: Samtools flagstat output.
+   - `--minimum_depth`: Minimum depth required for quality evaluation (`params.qc_minimum_depth`).
+   - `--ivar_md`: Minimum depth threshold for ivar trimming (`params.ivar_min_depth`).
+
+4. **Print output**: The second row of the generated CSV file is printed to standard output using sed for logging purposes.
+
+   - Command: `sed -n "2p" ${meta.id}.qc.csv`
+     - This command prints the second line of the QC CSV file, the first row of data (excluding headers). It provides a quick check of the QC output for monitoring and verification purposes.
 
 For more details, check [bins DOCs [TODO])](TODO)
-
-1. **Extracting QC Results**:
-
-- Command: `sed -n "2p" ${meta.id}.qc.csv`
-  - This command prints the second line of the QC CSV file, the first row of data (excluding headers). It provides a quick check of the QC output for monitoring and verification purposes.
