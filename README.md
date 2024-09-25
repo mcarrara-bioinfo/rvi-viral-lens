@@ -215,10 +215,10 @@ The output file tree should look like the tree bellow:
   - `ivar`
     - `ivar_min_depth` [Default = `10`] : Minimum depth to call consensus
     - `ivar_freq_threshold` [Default = `0.75`] : Minimum frequency threshold(0 - 1) to call consensus.
+  - `qc`
+    - `qc_minimum_depth` [Default = `10`] : Minimum depth value to be used for filtering when counting the number of covered positions, optional.
 
 > NOTE: `Kraken2ref` have a escalation memory strategy based on linear regression, check [k2r_memory_escalation documentation](./docs/k2r_memory_escalation.md) for more details.
-
-> TODO: check if all pipeline parameters are covered and add missing ones
 
 ## Unit Tests
 ---
