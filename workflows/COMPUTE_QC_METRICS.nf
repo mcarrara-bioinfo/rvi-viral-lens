@@ -77,4 +77,3 @@ workflow {
     }
     COMPUTE_QC_METRICS(manifest_channel)
 }
->>>>>>> workflows/COMPUTE_QC_METRICS.nf
