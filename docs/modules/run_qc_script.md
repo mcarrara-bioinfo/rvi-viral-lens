@@ -41,17 +41,25 @@ This process runs a QC analysis on the input BAM, FASTA, and reference files, ou
 ### Script
 
 ```bash
-qcSetting="--illumina"
+# Generate required samtools flagstat file
+samtools flagstat ${bam} > ${samtools_flagstat}
 
-qc.py ${qcSetting} \
-    --outfile ${meta.id}.qc.csv \
-    --sample ${meta.id} \
-    --ref ${ref} \
-    --bam ${bam} \
-    --fasta ${fasta} \
-    --ivar_md ${params.ivar_min_depth}
+# Parse out the 3 key columns we need from mpileup output file
+cat ${samtools_mpileup} | cut -f 1,2,4 > ${mpileup_depths}
 
-# Print the first row of the QC CSV for quick verification
+# Run QC script
+qc.py \
+  --outfile ${meta.id}.qc.csv \
+  --sample ${meta.id} \
+  --ref ${ref} \
+  --bam ${bam} \
+  --fasta ${fasta} \
+  --depths_file ${mpileup_depths} \
+  --flagstat_file ${samtools_flagstat} \
+  --minimum_depth ${params.qc_minimum_depth} \
+  --ivar_md ${params.ivar_min_depth}
+
+# Print first row of output file to stdout
 sed -n "2p" ${meta.id}.qc.csv
 ```
 
@@ -80,4 +88,4 @@ The script performs the following steps:
    - Command: `sed -n "2p" ${meta.id}.qc.csv`
      - This command prints the second line of the QC CSV file, the first row of data (excluding headers). It provides a quick check of the QC output for monitoring and verification purposes.
 
-For more details, check [bins DOCs [TODO])](TODO)
+For more details, check [QC script documentation](../bin/qc.md)

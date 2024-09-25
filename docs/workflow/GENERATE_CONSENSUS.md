@@ -31,10 +31,7 @@ The workflow starts by preparing the input channel for BWA alignment:
 - It maps metadata and reads from the `sample_taxid_ch` channel.
 - The channel output format is a tuple containing metadata, reads, and reference genome paths (`bwa_input_ch`).
 
-> **DEV NOTE**: we get the reference files from `meta`, we should change that to have the files explicitly stated on the input channels. Make sense to get it from meta, if we start from a consensus manifest, but we should do that only under that condition.
-
 1. **BWA Alignment and Post-Processing**
-
 The `bwa_alignment_and_post_processing` process aligns reads to the reference genomes using BWA. It outputs:
 
 - A sorted BAM file and its corresponding index file (`.bai`).
@@ -44,8 +41,6 @@ The output from BWA alignment is further processed:
 
 - The BAM file is added to the metadata.
 - The channel is prepared for input into the iVar process (`ivar_in_ch`).
-
-> **DEV NOTE**: maybe we should consider to put `.bam` file explicitly in the emitted channel.
 
 4. Generate Consensus with iVar
 The `run_ivar` process takes the input channel (`ivar_in_ch`) containing metadata and aligned BAM files:
@@ -77,21 +72,6 @@ The manifest file should be a CSV with the following columns:
 
 - **Purpose**: Placeholder function for parameter checking. Currently, it does not perform any checks.
 - **Output**: Returns the number of errors found (currently always 0).
-
-> **DEV NOTE**: Maybe is time to add that functionality
-
-### Example Usage
-
-To run the workflow, provide the required parameters in a Nextflow run command:
-
-```bash
-nextflow run generate_consensus.nf \
-    --manifest <path_to_manifest.csv> \
-    --db_path <path_to_kraken_db> \
-    --db_library_fa_path <path_to_library_fasta>
-```
-
-Replace `<path_to_manifest.csv>`, `<path_to_kraken_db>`, and `<path_to_library_fasta>` with the appropriate paths for your analysis.
 
 ### Notes
 

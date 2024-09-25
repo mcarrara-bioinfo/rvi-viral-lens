@@ -18,6 +18,7 @@ The `COMPUTE_QC_METRICS` workflow is designed to compute quality control (QC) me
     - `taxid`: Taxonomic ID of the sample.
     - `sample_id`: Sample identifier.
     - `ref_files`: Paths to reference genome files.
+    - `mpileup_file`: Path to output file from `samtools mpileup`
 
 ### Outputs
 
