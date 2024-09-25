@@ -18,7 +18,7 @@ The `run_ivar` process generates a consensus sequence from a sorted BAM file usi
 
 - Tag: `meta.id` – This tag is used for tracking and logging purposes within the Nextflow pipeline, allowing identification of process runs by ID.
 
-- Label: `"ivar"` – This label is used for resource configuration, at current version this label only sets which container to be used. For more information check the [Labels documentation[TODO]]().
+- Label: `"ivar"` – This label is used for resource configuration, at current version this label only sets which container to be used.
 
 ## Input
 
@@ -32,9 +32,10 @@ The `run_ivar` process generates a consensus sequence from a sorted BAM file usi
 
 ## Output
 
-- Output Tuple: `tuple val(meta), path("${meta.id}.consensus.fa")`
+- Output Tuple: `tuple val(meta), path("${meta.id}.consensus.fa"), path(mpileup_output)`
   - `meta`: same metadata provided as the input
   - `${meta.id}.consensus.fa`: the path to the generated consensus FASTA file (`.fa`) for the given sample.
+  - `mpileup_output`: output file from `samtools mpileup`.
 
 ## Publish Directory
 
@@ -49,11 +50,11 @@ The `run_ivar` process generates a consensus sequence from a sorted BAM file usi
 The script section includes the commands executed within the process:
 
 ```bash
-set -e
-set -o pipefail
+  set -e
+  set -o pipefail
 
-samtools mpileup -aa -A -B -d 0 -Q0 ${sorted_bam} | \
-  ivar consensus -t ${params.ivar_freq_threshold} -m ${params.ivar_min_depth} -n N -p ${meta.id}.consensus
+  samtools mpileup -aa -A -B -d 0 -Q0 ${sorted_bam} > ${mpileup_output}
+  cat ${mpileup_output} | ivar consensus -t ${params.ivar_freq_threshold} -m ${params.ivar_min_depth} -n N -p ${meta.id}.consensus
 ```
 
 ## Command Breakdown
@@ -72,6 +73,7 @@ samtools mpileup -aa -A -B -d 0 -Q0 ${sorted_bam} | \
   - `-Q0`: Set the minimum base quality to 0.
     - equivalent to `--min-BQ`.
     - Minimum base quality for a base to be considered. Note base-quality 0 is used as a filtering mechanism for overlap removal which marks bases as having quality zero and lets the base quality filter remove them. Hence using `--min-BQ 0` will make the overlapping bases reappear, albeit with quality zero.
+  - The output is stored on a text file (`$mpileup_output`)
 
 - `ivar consensus`: This command creates a consensus sequence from the pileup data:
   - `-t ${params.ivar_freq_threshold}`: Sets the threshold for base frequency.

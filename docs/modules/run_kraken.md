@@ -11,7 +11,7 @@ The `run_kraken` process executes Kraken2 on paired-end FASTQ files, producing o
 ### Tags and Labels
 
 - Tag: `${meta.id}` – This tag helps track the execution of the process based on the sample ID, providing clear identification for logs and outputs.
-- Label: `"kraken"` – This label is used for resource configuration, at current version this label only sets which container to be used. For more information check the [Labels documentation[TODO]]().
+- Label: `"kraken"` – This label is used for resource configuration, at current version this label only sets which container to be used.
 
 ### Input
 

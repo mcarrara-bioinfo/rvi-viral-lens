@@ -11,7 +11,7 @@ The process runs the Pangolin tool on a consensus FASTA file to determine the SA
 ### Tags and Labels
 
 - Tag: `${meta.id}` – This tag identifies the process run by the sample ID, helping with tracking and logging within the pipeline.
-- Label: `"pangolin"` – This label is used for resource configuration, at current version this label only sets which container to be used. For more information check the [Labels documentation[TODO]]().
+- Label: `"pangolin"` – This label is used for resource configuration, at current version this label only sets which container to be used.
 
 ### Input
 
