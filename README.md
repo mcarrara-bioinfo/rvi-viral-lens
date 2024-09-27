@@ -7,7 +7,8 @@ The **VIRAL_PIPELINE** is a Nextflow pipeline developed under the context of the
 > [THE CURRENT LOGO IS A **PLACEHOLDER** AND MUST BE UPDATED TO THE FINAL ONE BEFORE OPEN SOURCE THIS]
 
 ---
-**Table of Contents**
+## Contents
+- [Contents](#contents)
 - [Pipeline Summary](#pipeline-summary)
 - [How to Cite](#how-to-cite)
 - [Quick Start](#quick-start)
@@ -20,6 +21,17 @@ The **VIRAL_PIPELINE** is a Nextflow pipeline developed under the context of the
 - [Parameters](#parameters)
 - [Unit Tests](#unit-tests)
 - [Pipeline components documentation](#pipeline-components-documentation)
+  - [Processes](#processes)
+      - [`run_kraken`](#run_kraken)
+      - [`run_k2r_sort_reads`](#run_k2r_sort_reads)
+      - [`run_k2r_dump_fastqs_and_pre_report`](#run_k2r_dump_fastqs_and_pre_report)
+      - [`concatenate_fqs_parts`](#concatenate_fqs_parts)
+      - [`get_taxid_references`](#get_taxid_references)
+      - [`bwa_alignment_and_post_processing`](#bwa_alignment_and_post_processing)
+      - [`run_ivar`](#run_ivar)
+      - [`run_pagolin`](#run_pagolin)
+      - [`run_qc_script`](#run_qc_script)
+      - [`write_classification_report`](#write_classification_report)
 - [Licence](#licence)
 
 ---
@@ -245,17 +257,50 @@ nf-test test tests/<modules or workflows>/<module_to_test>.nf.test
 
 For a more in depth technical documentation of all the processes and workflows can be found at `docs/` dir, here you will find documentation for:
 
-**Processes**
+### Processes
 
-- [bwa_alignment.nf](./docs/modules/bwa_alignment.md)
-- [get_taxid_references.nf](./docs/modules/get_taxid_references.md)
-- [run_ivar.nf](./docs/modules/run_ivar.md)
-- [run_kraken.nf](./docs/modules/run_kraken.md)
-- [run_kraken2ref_and_pre_report.nf](./docs/modules/run_kraken2ref_and_pre_report.md)
-- [run_pangolin.nf](./docs/modules/run_pangolin.md)
-- [run_qc_script](./docs/modules/run_qc_script.md)
-- [write_classification_report](./docs/modules/write_classification_report.md)
 
+##### `run_kraken`
+
+Executes Kraken2 on paired-end FASTQ files, producing outputs that include the classification results, classified and unclassified reads, and a summary report.
+
+##### `run_k2r_sort_reads`
+
+This process runs Kraken2Ref to parse Kraken reports and sort reads by taxonomic classification. It generates JSON files that map taxonomic IDs to read IDs and performs sorting based on the decomposed taxonomy tree if available.
+
+##### `run_k2r_dump_fastqs_and_pre_report`
+
+Extract classified reads into FASTQ files and generate a preliminary report based on the taxonomic classification data. It processes classified reads and produces a detailed report for further analysis.
+
+##### `concatenate_fqs_parts`
+This process concatenates FASTQ files from multiple parts into final combined FASTQ files for each taxonomic classification. This process ensures that all parts corresponding to the same taxonomic ID are merged into single files.
+
+##### `get_taxid_references`
+
+Retrieves sequences for a given taxid from a source FASTA file and indexes them for further analysis.
+
+##### `bwa_alignment_and_post_processing`
+
+Mapping sequencing reads to a reference genome using BWA (Burrows-Wheeler Aligner), followed by post-processing steps including conversion to BAM format, sorting, and indexing. At current version of this pipeline, this process generates high-quality, sorted BAM files that are essential for consensus sequence generation.
+
+##### `run_ivar`
+
+Generates a consensus sequence from a sorted BAM file using samtools mpileup and ivar consensus.
+
+
+##### `run_pagolin`
+
+The process runs the Pangolin tool on a consensus FASTA file to determine the SARS-CoV-2 lineage and extracts relevant metadata from the output.
+
+##### `run_qc_script`
+
+This process runs a QC analysis on the input BAM, FASTA, and reference files, outputting QC metrics.
+
+##### `write_classification_report`
+
+This process creates a classification report from provided report lines, ensuring the output is correctly formatted and free from common formatting issues such as unexpected character encodings.
+
+[**(&uarr;)**](#contents)
 **Workflow**
 
 - [SORT_READS_BY_REF.nf](./docs/workflow/SORT_READS_BY_REF.md)
