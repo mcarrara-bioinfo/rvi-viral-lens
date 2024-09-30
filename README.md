@@ -56,10 +56,14 @@ The pipeline takes a manifest containing  **fastq pairs file** paths and a **kra
 
 ---
 
+[**(&uarr;)**](#contents)
+
 
 ## How to Cite
 
 [ADD CITATION]
+
+[**(&uarr;)**](#contents)
 
 ---
 ## Quick Start
@@ -100,19 +104,49 @@ nextflow run ${PIPELINE_CODES}/main.nf --manifest ${MANIFEST} \
     -resume
 ```
 
+[**(&uarr;)**](#contents)
+
 ---
 ## Installation
 
 ### dependencies
 
-- [Nextflow](https://www.nextflow.io) (tested on v23.10.0)
-- [Singularity](https://docs.sylabs.io/guides/latest/user-guide/) (required to use Singularity Containers)
+- [Nextflow](https://www.nextflow.io) (tested on `23.10.1`)
+- [Singularity](https://docs.sylabs.io/guides/latest/user-guide/) (required to use Singularity Containers, tested on ``ce version 3.11.4``)
 
 > We strongly recommend to run the pipeline using the containers recipe provided at `containers/` subdir.
 
-If not using containers, all the software needs to be available at run time. A list of the requirement softwares needed can be found [Software Requirements documentation](./doc/requirements.md)
+If not using containers, all the software needs to be available at run time. Here is a list of all the softwares versions currently in use in the pipeline as set on each container.
 
-> TODO: add list of software versions in use
+- **Base container**
+
+  - Samtools = `1.8`
+  - BWA = `0.7.17`
+  - biopython = `1.79`
+  - pysam = `0.22.0`
+  - pandas = `1.1.5`
+  - matplotlib = `3.3.4`
+
+- **Ivar container**
+  - samtools = `1.11`
+  - BWA = `0.7.17`
+  - iVar = `1.4.3`
+
+- **Kraken2Ref cotainer**:
+  - pytest = `6.2.2`
+  - importlib-resources = `5.1.0`
+  - flake8 = `7.0.0`
+  - pandas = `2.1.4`
+  - cached-property = `1.5.2`
+  - scipy = `1.12.0`
+  - kraken2ref = `v2.0.0`
+
+- **Kraken containers**
+  - kraken2 = `v2.1.3`
+  - kraken_tools = `v1.2`
+  - biopython = `v1.81`
+
+> NOTE: If not running under the provided containers, is strongly recommended to use the same versions described here.
 
 ### build containers
 
@@ -127,12 +161,14 @@ sudo singularity build kraken.sif krakenContainer.sing
 sudo singularity build kraken2ref.sif kraken2ref.sing
 ```
 
-> NOTE: Currently we only support running on Singularity local containers, but we should add Docker container registries soon
+> NOTE: Currently we only support running on Singularity local containers. We should add Docker container registries.
+
+[**(&uarr;)**](#contents)
 
 ## Usage
 
 1. **Generate manifest**
-For convenience, a script to generate the manifest is provided on this repo
+For convenience, a script to generate the manifest is provided on this repo:
 
 ```{bash}
 python write_manifest.py ./path/to/my/fastqs_dir/ -fq1_ext my_r1_ext -fq2_ext my_r2_ext
@@ -158,6 +194,8 @@ nextflow run ${CHECKOUT}/main.nf --entry_point consensus_gen \
         -profile sanger_standard-resume -with-trace -with-report -with-timeline
 ```
 
+[**(&uarr;)**](#contents)
+
 ## Inputs
 
 - `manifest` : CSV Manifest of input fastq file pairs.
@@ -170,6 +208,7 @@ check [Input documentation](./docs/input.md) for more details.
 
 > **NOTE**: if using the `consensus_gen` entry point, the manifest must containing pair ended reads and genome reference files for each pair. must have `sample_id`, `taxid`, `ref_files`, `reads_1`, `reads_2`
 
+[**(&uarr;)**](#contents)
 
 ## Outputs
 
@@ -201,6 +240,7 @@ The output file tree should look like the tree bellow:
 ├── [...]
 ├── classification_report.csv
 ```
+[**(&uarr;)**](#contents)
 
 ## Parameters
 
@@ -232,6 +272,8 @@ The output file tree should look like the tree bellow:
 
 > NOTE: `Kraken2ref` have a escalation memory strategy based on linear regression, check [k2r_memory_escalation documentation](./docs/k2r_memory_escalation.md) for more details.
 
+[**(&uarr;)**](#contents)
+
 ## Unit Tests
 ---
 The workflow & process unit tests for this pipeline are written in the [nf-test](https://www.nf-test.com/) (`v0.8.4`) Nextflow testing framework.
@@ -251,6 +293,8 @@ nf-test test ./
 ```{bash}
 nf-test test tests/<modules or workflows>/<module_to_test>.nf.test
 ```
+
+[**(&uarr;)**](#contents)
 
 ---
 ## Pipeline components documentation
