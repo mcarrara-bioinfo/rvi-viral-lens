@@ -18,7 +18,22 @@ The **VIRAL_PIPELINE** is a Nextflow pipeline developed under the context of the
 - [Usage](#usage)
 - [Inputs](#inputs)
 - [Outputs](#outputs)
-- [Parameters](#parameters)
+- [Configuration Sections](#configuration-sections)
+  - [Parameters (`params`)](#parameters-params)
+    - [input](#input)
+    - [Pipeline flow controls](#pipeline-flow-controls)
+    - [Kraken Database Parameters\*\*](#kraken-database-parameters)
+    - [Kraken2Ref Handling\*\*](#kraken2ref-handling)
+    - [Kraken2ref Report Filter](#kraken2ref-report-filter)
+    - [iVar Parameters](#ivar-parameters)
+    - [Virus Subtyping](#virus-subtyping)
+    - [Consensus Generation](#consensus-generation)
+    - [Output Directory](#output-directory)
+    - [General](#general)
+  - [Containerization](#containerization)
+  - [Process Settings (`process`)](#process-settings-process)
+  - [Profiles](#profiles)
+    - [`sanger_standard` Profile](#sanger_standard-profile)
 - [Unit Tests](#unit-tests)
 - [Pipeline components documentation](#pipeline-components-documentation)
   - [Processes](#processes)
@@ -242,40 +257,149 @@ The output file tree should look like the tree bellow:
 ```
 [**(&uarr;)**](#contents)
 
-## Parameters
 
-- **General**
+## Configuration Sections
 
-  - `containers_dir` [DEFAULT =  `containers/` dir of this repository] : By default, the pipeline relies on Singularity containers and __assumes__ all containers are present on this directory and were named on a specific manner
-  - `results_dir` [DEFAULT = `$launchDir/output/`] : set where output files should be published. By default, it will write files to an `output/` dir (if not existent, it will be created) at pipeline launch directory.
+### Parameters (`params`)
 
-- **Pipeline flow controls**
+The `params` block defines key user-modifiable settings for the workflow.
 
-  - `entry_point` [Default = `"sort_reads"`] : Defines the entry point of the pipeline. The `sort_reads`
-  - `scv2_keyword` [Default = `"Severe acute respiratory syndrome coronavirus 2"`] : keyword to identified samples with SARS-CoV-2. This string is obtained from the kraken2 database, therefore, it should be in line with the database in use.
-  - `do_scov2_subtyping` [Default = `true`] : Switch SARS-CoV-2 on and off.
+#### input
+- `manifest`: Path to the manifest file (default: `null`).
 
-- **Specific processes**
+#### Pipeline flow controls
 
-  - `get_taxid_references`:
-    - `db_library_fa_path` [Default = `null`]: A fasta file containing reference sequences for the taxids present on the kraken database. It assumes there is a `$db_`
-  - `raken2ref`:
-    - `k2r_fq_load_mode` [Default = `"full"`] : kraken2ref load fastq into memory mode ["full"/"chunk"]
-    - `k2r_max_total_reads_per_fq` [Default = `10000000`] : set maximum number of reads to be accepted any classified fastq file pair. Files excedding that limit will be splitted before `run_k2r_dump_fastq`.
-    - `k2r_dump_fq_mem` [Default = `"6 GB"`] : Memory to be requested by `run_k2r_dump_fq`, adjust according to `k2r_max_total_reads_per_fq`.
-    - `min_reads_for_taxid` [Default = `100`] : min reads number to be considered.
-  - `ivar`
-    - `ivar_min_depth` [Default = `10`] : Minimum depth to call consensus
-    - `ivar_freq_threshold` [Default = `0.75`] : Minimum frequency threshold(0 - 1) to call consensus.
-  - `qc`
-    - `qc_minimum_depth` [Default = `10`] : Minimum depth value to be used for filtering when counting the number of covered positions, optional.
+- `entry_point` [Default = `"sort_reads"`]: Entry point for the workflow. It can be set to `"sort_reads"` or `"consensus_gen"`.
+- `do_scov2_subtyping` [Default = `true`] : Switch SARS-CoV-2 on and off.
+- `scv2_keyword` [Default = `"Severe acute respiratory syndrome coronavirus 2"`] : keyword to identified samples with SARS-CoV-2. This string is obtained from the kraken2 database, therefore, it should be in line with the database in use.
 
-> NOTE: `Kraken2ref` have a escalation memory strategy based on linear regression, check [k2r_memory_escalation documentation](./docs/k2r_memory_escalation.md) for more details.
+#### Kraken Database Parameters**
+
+- `db_path`: Path to the Kraken database.
+- `db_library_fa_path` (OPTIONAL): Path to the Kraken database library FASTA file.
+  - By default, it assumes there is a `${params.db_path}/library/library.fna`.
+
+#### Kraken2Ref Handling**
+
+- `k2r_fq_load_mode`: Loading mode for Kraken2 fastq files (either `full` or `chunks`).
+  - Default: `"full"`.
+- `k2r_max_total_reads_per_fq`: Maximum number of reads to process per fastq file.
+  - Default: `10,000,000`.
+- `k2r_dump_fq_mem`: Memory allocated for dumping fastq files.
+  - Default: `"6 GB"`.
+
+#### Kraken2ref Report Filter
+
+- `min_reads_for_taxid`: Minimum number of reads required to assign a taxonomic ID.
+  - Default: `100`.
+
+#### iVar Parameters
+
+- `ivar_min_depth`: Minimum depth for consensus calling.
+  - Default: `10`.
+- `ivar_freq_threshold`: Sets base frequency threshold for consensus calling.
+  - Default: `0.75`.
+
+#### Virus Subtyping
+
+- `scv2_keyword`: Keyword to identify SARS-CoV-2 sequences. Any taxid name equal to the string set by this parameter will be considered as SCOV2 and subjected to specific SARS-CoV-2 subtyping.
+  - Default: `"Severe acute respiratory syndrome coronavirus 2"`.
+
+- `do_scov2_subtyping`: Boolean flag to enable or disable SARS-CoV-2 subtyping via Pangolin. Check [SARS0COV2 documentation](./workflow/SCOV2_SUBTYPING.md) for more details
+  - Default: `true`.
+
+#### Consensus Generation
+
+- `consensus_mnf` [OPTIONAL]: Path to the consensus manifest file (default: `null`).
+
+#### Output Directory
+
+- `results_dir`: Directory where output files will be published.
+  - Default: `"$launchDir/output/"`.
+
+#### General
+
+- `containers_dir` [DEFAULT =  `containers/` dir of this repository] : By default, the pipeline relies on Singularity containers and __assumes__ all containers are present on this directory and were named on a specific manner
+- `results_dir` [DEFAULT = `$launchDir/output/`] : set where output files should be published. By default, it will write files to an `output/` dir (if not existent, it will be created) at pipeline launch directory.
+
+### Containerization
+
+Currently, the pipeline only provide Singularity containers.
+
+**Docker**
+
+- `enabled`: Flag to enable or disable Docker.
+  - Default: `false`.
+
+**Singularity**
+
+- `enabled`: Flag to enable or disable Singularity.
+  - Default: `true`.
+
+By default, the current version of the pipeline assumes all singularity containers are available on specific paths with specific names defined at `./conf/containers.config`.
+
+- Currently, `"$projectDir/containers/"` is the default location for the containers, it can be changed by the user using `containers_dir` parameter.
+
+All containers used by this pipeline recipes can be found at `./containers/` dir of this repository. The current containers in use are:
+
+- `base_container.sif`: the default container for all processes unless overridden.
+- `ivar.sif`: container to be used for processes using the `ivar` label
+- `kraken.sif`: container to be used for processes using the `kraken` label
+- `pangoling.sif`: container to be used for processes using the `pangolin` label
+- `kraken2ref.sif`: container to be used for processes using the `kraken2ref` label.
+
+### Process Settings (`process`)
+
+- `cache='lenient'`: Defines the cache behavior for processes, allowing cached results to be reused even when minor changes occur.
+- `executor='local'`: The default executor is set to local, meaning processes will run on the local machine unless otherwise specified.
+
+### Profiles
+
+Profiles define environment-specific configurations. Currently, there is a single predefined profile: `sanger_standard`. User should consider to write their own, check [profiles Nextflow documentation](https://www.nextflow.io/docs/latest/config.html#config-profiles) for more details
+
+#### `sanger_standard` Profile
+
+This profile is optimized for running jobs on the Sanger Institute's infrastructure and includes settings for using Singularity, job execution on the LSF scheduler, and handling of specific processes.
+
+**Singularity Settings**
+
+- `autoMounts`: Automatically mounts paths required for job execution.
+- `cacheDir`: Cache directory set to "`$PWD`" (the current working directory).
+- `runOptions`: Singularity run options to bind necessary paths (`/lustre`, `/nfs`, `/software`, `/data/`).
+
+**Process-Specific Settings**
+Inherited from the global process configuration
+- `cache='lenient'`: this makes `resume` more tolerant to changes in files attributes, such as timestamps. This is handy when using distributed file system which uses [Network File System protocols](https://en.wikipedia.org/wiki/Network_File_System), check [Nextflow documentation](https://www.nextflow.io/docs/latest/cache-and-resume.html#inconsistent-file-attributes) for more details.
+- `executor='local'`: Default executor is local unless overridden.
+
+**LSF Job Execution**
+Certain processes are configured to run on the LSF scheduler with specific resource allocations:
+
+- `run_k2r_sort_reads`:
+  - Executor: `lsf`
+  - CPU cores: `1`
+
+- `run_k2r_dump_fastqs_and_pre_report`:
+  - Executor: `lsf`
+  - CPU cores: `1`
+
+- `run_kraken`:
+  - Executor: `lsf`
+  - CPU cores: `16`
+  - Memory: `1 GB`
+
+**Job Naming and Memory Management**
+
+- `jobName`: Custom job name format for LSF jobs, based on the task name and tag (`"RVI-preprocess - $task.name - $task.tag"`).
+
+- `perJobMemLimit=true`: Ensures that memory limits are set per job.
 
 [**(&uarr;)**](#contents)
 
-## Unit Tests
 ---
+
+## Unit Tests
+
 The workflow & process unit tests for this pipeline are written in the [nf-test](https://www.nf-test.com/) (`v0.8.4`) Nextflow testing framework.
 
 **Running Tests**
