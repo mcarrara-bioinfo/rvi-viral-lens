@@ -2,7 +2,7 @@
 
 ![](./docs/assets/vira_pipeline_logo_placeholder.png)
 
-The **VIRAL_PIPELINE** is a Nextflow pipeline developed under the context of the [RVI project]() by [GSU]() and its main goal is to identify the presence of Flu, SARS-CoV-2 and RSV and obtain, if possible, high quality consensus sequences for those virus. For more details, check the [[ADD REFERENCE PAPER]]()
+The **VIRAL_PIPELINE** is a Nextflow pipeline developed under the context of the [RVI project[add link]]() by [GSU[add link]]() and its main goal is to identify the presence of Flu, SARS-CoV-2 and RSV and obtain, if possible, high quality consensus sequences for those virus. For more details, check the [[ADD REFERENCE PAPER]]()
 
 > [THE CURRENT LOGO IS A **PLACEHOLDER** AND MUST BE UPDATED TO THE FINAL ONE BEFORE OPEN SOURCE THIS]
 
@@ -693,8 +693,12 @@ The script generates a CSV file containing various QC metrics for the sample. Th
 
 This command processes the provided files and generates a QC summary report in `sample123.qc.csv`. The minimum depth for coverage calculations is set to 10, and ivar was run with a minimum depth of 5.
 
+[**(&uarr;)**](#contents)
+
 ---
 
 ## Licence
 
 [ADD LICENSE]
+
+[**(&uarr;)**](#contents)
