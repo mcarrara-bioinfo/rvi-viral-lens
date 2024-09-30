@@ -10,9 +10,20 @@ def get_args():
     parser.add_argument("-r", "--report", type = str, required = True, help = "The kraken2 taxonomic report.")
     parser.add_argument("-out_suffix", type = str, required=False, default = ".viral_pipe.report.tsv", 
         help="report filname suffix (default: '.viral_pipe.report.tsv'")
+
     return parser
 
 def regex_subtyping(regex, search_string):
+    """
+    Searches for the first occurrence of the given regular expression in the provided string.
+
+    Args:
+        regex (str): The regular expression to be searched.
+        search_string (str): The string to be searched.
+
+    Returns:
+        str: The matched group if found, otherwise None.
+    """
     pattern = re.compile(regex)
     found = pattern.search(search_string)
     if found:
@@ -22,6 +33,43 @@ def regex_subtyping(regex, search_string):
 
 
 def get_report(in_file, report_file, out_suffix=".viral_pipe.report.tsv"):
+
+    """
+    Generate a viral report by processing data from a Kraken report and a reference JSON file.
+
+    This function reads a Kraken classification report and a JSON file containing metadata and taxonomic 
+    information. It processes the data to extract information about selected reference taxa, including their 
+    species, virus names, subtypes (for influenza), and the number of reads per taxon. The processed data is 
+    output as a tab-separated values (TSV) file, which contains detailed information about each selected 
+    reference taxon.
+
+    Args:
+        in_file (str): Path to the input JSON file containing reference taxonomic metadata and results.
+        report_file (str): Path to the Kraken report file in TSV format.
+        out_suffix (str, optional): The suffix for the output report file. Defaults to ".viral_pipe.report.tsv".
+
+    Returns:
+        None: The function writes the output report to a TSV file in the current working directory. The file name 
+              is generated using the sample ID from the input JSON file and the `out_suffix`.
+
+    Output Structure:
+        The generated report includes the following fields for each selected reference:
+        - sample_id: The ID of the sample being processed.
+        - virus: The source taxonomic ID of the virus species.
+        - virus_name: Human-readable name of the virus species.
+        - selected_taxid: Taxonomic ID of the selected reference.
+        - ref_selected: Name of the selected reference.
+        - sample_subtype: Influenza subtype if identified from the sample (specific to Flu Segments 4 and 6).
+        - flu_segment: Segment number for influenza viruses if subtype data is available.
+        - virus_subtype: General influenza subtype (if applicable).
+        - parent_selected: Taxonomic ID of the parent taxon selected in the reference JSON.
+        - num_reads: Number of reads assigned to the selected taxon.
+        - report_name: General name for the virus (e.g., "Influenza A Virus" for Alphainfluenzavirus).
+
+    The function handles influenza-specific logic to extract subtype information based on virus segment 
+    identifiers (for H and N subtypes). The report will include influenza subtype information if it is relevant 
+    to the selected reference taxa.
+    """
 
     ## read in kraken report and kraken2ref JSON
     report_df = pd.read_csv(report_file, sep = "\t", header = None)
@@ -111,6 +159,7 @@ def get_report(in_file, report_file, out_suffix=".viral_pipe.report.tsv"):
     # if empty, write a csv file
     else:
         output_df.to_csv(f"{sample_id}{out_suffix}", sep = "\t", header=True, index = False)
+
 def main():
     args = get_args().parse_args()
     get_report(args.input_json, args.report, out_suffix=args.out_suffix)
