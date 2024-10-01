@@ -16,6 +16,8 @@ process run_qc_script {
     is a modified version of [the `qc.py` of the ARTIC pipeline approach]
     (https://gitlab.internal.sanger.ac.uk/malariagen1/ncov2019-artic-nf/-/blob/main/bin/qc.py?ref_type=heads).
 
+    NOTE: the gitlab for the ARTIC pipeline is currently only availabe
+    at SANGER internal gitlab.
     * ---------------------------------------------------------------
     * Input
         - `meta`: Metadata associated with the sample, assumes the following keys  are available: 

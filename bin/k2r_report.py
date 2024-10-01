@@ -25,7 +25,7 @@ def regex_subtyping(regex, search_string):
         str: The entire matched string if found, otherwise None.
 
     ---------------------------------------------------------------------------
-    DEV NOTES:
+    TODOs:
       - either replace this with a function that returns subtype or remove it
       and replace the code that calls it with a single regex that uses
       capture groups to parse subtype and segment data from isolate name. This
@@ -79,7 +79,7 @@ def get_report(in_file, report_file, out_suffix=".viral_pipe.report.tsv"):
     to the selected reference taxa.
 
     ---------------------------------------------------------------------------
-    Dev Notes:
+    TODOs:
         - This function has an unfortunate name. It would be far clearer what it
           does if it would be called write_report. I would expect a get_report
           function to return data but it doesn't.

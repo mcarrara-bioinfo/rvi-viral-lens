@@ -26,7 +26,7 @@ process run_kraken {
     - A summary report `(*.report.txt)`.
     * ---------------------------------------------------------------
 
-    > DEV NOTE: We should consider add multithreading options 
+    > TODO: We should consider add multithreading options 
         (`--threads ${params.kraken2_threads}`). This add control for
         the user to set the amount of cpus to be allocated.
     * ---------------------------------------------------------------

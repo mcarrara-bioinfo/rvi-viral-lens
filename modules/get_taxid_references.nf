@@ -29,7 +29,7 @@ process get_taxid_reference_files{
     *      specified taxids.
     
     * --------------------------------------------------------------
-    * > DEV NOTE: we need to either remove the optional or, at least,
+    * > TODO: we need to either remove the optional or, at least,
     *            raise a warning when that happens.
     *
     * --------------------------------------------------------------

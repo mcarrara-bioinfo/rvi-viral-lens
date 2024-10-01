@@ -54,7 +54,7 @@ workflow GENERATE_CONSENSUS {
         // set ivar input channel
         bams_ch
             | map {meta, bams ->
-                // store bam file on meta (check Dev Note) 
+                // store bam file on meta (check TODO) 
                 meta.bam_file = bams[0]
                 tuple(meta, bams)}
             | set {ivar_in_ch}
@@ -73,7 +73,7 @@ workflow GENERATE_CONSENSUS {
         out_ch // tuple (meta, fasta_file)
 
 //-------------------------------------------------------------------
-// DEV NOTES: We should consider output bam files explicitly instead 
+// TODO: We should consider output bam files explicitly instead 
 //           of implictily stored on meta.
 //-------------------------------------------------------------------
 }

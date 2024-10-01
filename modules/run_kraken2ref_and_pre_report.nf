@@ -73,7 +73,7 @@ process run_k2r_sort_reads {
     taxonomy tree structure. If the decomposed JSON file is missing,
     sorting is skipped with a warning message.
 
-> **DEV NOTE**: we check for decomposed json file, at this point 
+> **TODO**: we check for decomposed json file, at this point 
 there should not be empty fastq files, so I think we should let the
 pipeline brake if this is the case.
 */

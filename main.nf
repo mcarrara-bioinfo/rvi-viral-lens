@@ -97,7 +97,7 @@ workflow {
     // === 5 - branching output from QC for viral specific subtyping
 
     // 5.1 - process pre_report files
-    // DEV NOTE: if the consensus_gen entry point is removed,
+    // NOTE: if the consensus_gen entry point is removed,
     //           this processing should be moved back to 
     //           SORT_READS_BY_REF workflow
     sample_pre_report_ch

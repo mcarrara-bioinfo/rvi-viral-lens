@@ -91,7 +91,7 @@ process run_pangolin {
 
 ---------------------------------------------------------------------
 
-> Dev Note: 
+> TODO: 
     -The `Taxon` and `Conflict` values are echoed in order to
 have those value within easy access on the `.command.log` files, it
 was usefull for debugging during development, but may be not necessary

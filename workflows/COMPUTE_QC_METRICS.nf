@@ -95,5 +95,5 @@ workflow {
 }
 
 //-------------------------------------------------------------------
-// DEV NOTES: We should consider to make reference and bam files
+// TODO: We should consider to make reference and bam files
 //           explicitly on the input channels.

@@ -206,7 +206,6 @@ workflow SORT_READS_BY_REF {
 
         // prepare channel to be emitted
 
-        //run_k2r_dump_fastqs_and_pre_report.out.fq_files // tuple (meta, [id_taxid_R{1,2}.fq])
         per_taxid_fqs_Ch 
             | map {meta, reads ->
                 // group pairs of fastqs based on file names, and add new info to meta
