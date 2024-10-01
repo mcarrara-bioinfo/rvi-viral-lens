@@ -13,6 +13,9 @@ process run_ivar{
    are organized by sample and taxonomic ID in the specified
    results directory.
   
+  The ARTIC Pipeline can be found at:
+  https://gitlab.internal.sanger.ac.uk/malariagen1/ncov2019-artic-nf/-/tree/main?ref_type=heads
+
   * ----------------------------------------------------------------
   * Input:
    - `meta`: Metadata associated with the sample, the process 
@@ -115,6 +118,4 @@ Information about parameters were obtained from
   - [samtools mpileup documentation](http://www.htslib.org/doc/samtools-mpileup.html)
   - [ivar documentation](https://andersen-lab.github.io/ivar/html/manualpage.html#**autotoc_md19)
 
-The original script of the artic pipeline can be found at:
-https://gitlab.internal.sanger.ac.uk/malariagen1/ncov2019-artic-nf/-/blob/main/bin/qc.py?ref_type=heads
 */
