@@ -23,7 +23,14 @@ def regex_subtyping(regex, search_string):
 
     Returns:
         str: The matched group if found, otherwise None.
+    ---------------------------------------------------------------------------
+    DEV NOTES:
+      - either replace this with a function that returns subtype or remove it
+      and replace the code that calls it with a single regex that uses
+      capture groups to parse subtype and segment data from isolate name. This
+      can be taken from kraken-flu utils for example.
     """
+
     pattern = re.compile(regex)
     found = pattern.search(search_string)
     if found:
