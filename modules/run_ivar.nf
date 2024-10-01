@@ -84,7 +84,6 @@ process run_ivar{
       reference sequences and zero depth.
 
     - `-A`: Do not skip anomalous read pairs in variant calling. 
-      - equiavelent to `--count-orphans`
       - Anomalous read pairs are those marked in the FLAG field as 
         paired in sequencing but without the properly-paired flag set.
 
@@ -99,11 +98,10 @@ process run_ivar{
         limit.
 
     - `-Q0`: Set the minimum base quality to 0.
-      - equivalent to `--min-BQ`.
       - Minimum base quality for a base to be considered. Note base-quality
         0 is used as a filtering mechanism for overlap removal which marks 
         bases as having quality zero and lets the base quality filter remove
-        them. Hence using `--min-BQ 0` will make the overlapping bases
+        them. Hence using `-Q0` will make the overlapping bases
         reappear, albeit with quality zero.
 
     - The output is stored on a text file (`$mpileup_output`)
