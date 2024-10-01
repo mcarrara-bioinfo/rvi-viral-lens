@@ -8,6 +8,9 @@ process run_pangolin {
     LINeages) is a tool widely used in the analysis of SARS-CoV-2 
     genomes to determine the likely lineage of the virus based on the
     consensus sequence.
+    
+    Pangolin documentation:
+    https://cov-lineages.org/resources/pangolin.html
 
     * ---------------------------------------------------------------
     * Input
