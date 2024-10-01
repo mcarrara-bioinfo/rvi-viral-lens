@@ -5,7 +5,7 @@ process run_k2r_sort_reads {
     This process runs Kraken2Ref to parse Kraken reports and sort 
     reads by taxonomic classification. It generates JSON files that
     map taxonomic IDs to read IDs and performs sorting based on the 
-    decomposed taxonomy tree if available.
+    reference-selection output JSON if available.
 
     * --------------------------------------------------------------
     * Input
@@ -18,8 +18,8 @@ process run_k2r_sort_reads {
         - JSON files mapping taxonomic IDs to read IDs
             (`${meta.id}_tax_to_reads.json`)
         - decomposed JSON file (`${meta.id}_decomposed.json`). The 
-            decomposed JSON file is optional and only generated if
-            applicable.
+            reference-selection output JSON is optional and only
+            generated if applicable.
 
     * --------------------------------------------------------------
     */
@@ -98,8 +98,8 @@ process run_k2r_dump_fastqs_and_pre_report {
             classified reads.
         - `json_tax_to_readsid`: JSON file mapping taxonomic IDs to
             read IDs.
-        - `decomposed_json`: Decomposed JSON file representing 
-            detailed taxonomic hierarchy.
+        - `decomposed_json`: The reference-selection output JSON
+            file representing detailed taxonomic hierarchy.
         - `kraken_report`: Kraken report summarizing classification
             data.
 
@@ -167,7 +167,7 @@ Parameters:
     - `--tax_to_readsid_path !{json_tax_to_readsid}`: Provides the path to the JSON file that maps taxonomic IDs to read IDs, guiding which reads to extract.
     - `-o ./`: Sets the output directory to the current directory (`./`).
     - `--fq_load_mode !{params.k2r_fq_load_mode}`: Specifies the mode for loading FASTQ files, defined by the parameter `params.k2r_fq_load_mode`.
-    - `-r !{decomposed_json}`: Uses the decomposed JSON file to provide detailed taxonomic structure for sorting reads.
+    - `-r !{decomposed_json}`: Uses the reference-selection output JSON file to provide detailed taxonomic structure for sorting reads.
 
 3. **Generate preliminary report**
 Purpose: Produce a preliminary report in TSV format summarizing the classification data.
