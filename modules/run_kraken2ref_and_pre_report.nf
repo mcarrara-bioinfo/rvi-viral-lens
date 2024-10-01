@@ -69,9 +69,9 @@ process run_k2r_sort_reads {
     -r ./${meta.id}_decomposed.json -m tree -u
     ```
 
-    Sorts reads using the decomposed JSON if available, based on a
-    taxonomy tree structure. If the decomposed JSON file is missing,
-    sorting is skipped with a warning message.
+    Sorts reads using the reference-selection output JSON  if available,
+    based on a taxonomy tree structure. If the decomposed JSON file is
+    missing, sorting is skipped with a warning message.
 
 > **TODO**: we check for decomposed json file, at this point 
 there should not be empty fastq files, so I think we should let the
