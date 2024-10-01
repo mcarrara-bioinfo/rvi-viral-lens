@@ -91,9 +91,15 @@ process run_pangolin {
 
 ---------------------------------------------------------------------
 
-> Dev Note: The `Taxon` and `Conflict` values are echoed in order to
+> Dev Note: 
+    -The `Taxon` and `Conflict` values are echoed in order to
 have those value within easy access on the `.command.log` files, it
 was usefull for debugging during development, but may be not necessary
 to keep it anymore. We should remove it.
+    - If for any reason the consensus fasta have more than one sequence,
+we would be able to get results for the first sequence only. At current
+implementation, this should never happen because ivar only output one 
+consensus sequences per taxid sample combination. If this ever change,
+we will need to adapt this process.
 */
 }
