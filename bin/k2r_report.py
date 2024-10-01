@@ -22,7 +22,8 @@ def regex_subtyping(regex, search_string):
         search_string (str): The string to be searched.
 
     Returns:
-        str: The matched group if found, otherwise None.
+        str: The entire matched string if found, otherwise None.
+
     ---------------------------------------------------------------------------
     DEV NOTES:
       - either replace this with a function that returns subtype or remove it
@@ -76,6 +77,16 @@ def get_report(in_file, report_file, out_suffix=".viral_pipe.report.tsv"):
     The function handles influenza-specific logic to extract subtype information based on virus segment 
     identifiers (for H and N subtypes). The report will include influenza subtype information if it is relevant 
     to the selected reference taxa.
+
+    ---------------------------------------------------------------------------
+    Dev Notes:
+        - This function has an unfortunate name. It would be far clearer what it
+          does if it would be called write_report. I would expect a get_report
+          function to return data but it doesn't.
+        - we should return data rather than write straight to file whenever
+          possible. The function is hard to test if it writes to file because
+          the test would need to read and parse the file instead of working 
+          with data.
     """
 
     ## read in kraken report and kraken2ref JSON
