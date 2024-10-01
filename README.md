@@ -535,8 +535,6 @@ nf-test test tests/<modules or workflows>/<module_to_test>.nf.test
 ---
 ## Pipeline components documentation
 
-For a more in depth technical documentation of all the processes and workflows can be found at `docs/` dir, here you will find documentation for:
-
 ### Processes
 
 
