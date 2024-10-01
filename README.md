@@ -618,7 +618,7 @@ Customizable Output: Users can specify the output file suffix, giving flexibilit
 **Example Command**
 
 ```bash
-./kraken2ref_to_tsv.py -i kraken2ref_output.json -r kraken2_report.txt --out_suffix ".custom_report.tsv"
+<path/to/viral_pipeline>/bin/kraken2ref_to_tsv.py -i kraken2ref_output.json -r kraken2_report.txt --out_suffix ".custom_report.tsv"
 ```
 
 This command reads the JSON and report files, processes the data, and outputs a report named `<sample_id>.custom_report.tsv`.
@@ -686,7 +686,7 @@ The script generates a CSV file containing various QC metrics for the sample. Th
 **Example Command**
 
 ```bash
-./generate_qc.py --outfile sample123.qc.csv --sample sample123 --ref ref.fasta --bam sample123.bam --fasta sample123.consensus.fasta --depths_file sample123.depths.txt --flagstat_file sample123.flagstat.txt --minimum_depth 10 --ivar_md 5
+<path/to/viral_pipeline>/bin/generate_qc.py --outfile sample123.qc.csv --sample sample123 --ref ref.fasta --bam sample123.bam --fasta sample123.consensus.fasta --depths_file sample123.depths.txt --flagstat_file sample123.flagstat.txt --minimum_depth 10 --ivar_md 5
 ```
 
 This command processes the provided files and generates a QC summary report in `sample123.qc.csv`. The minimum depth for coverage calculations is set to 10, and ivar was run with a minimum depth of 5.
