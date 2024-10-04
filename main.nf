@@ -84,7 +84,7 @@ workflow {
     if (params.entry_point == "consensus_gen"){
         // process manifest
         sample_taxid_ch = parse_consensus_mnf_meta(params.consensus_mnf)
-        // TODO add pre_report as input
+        // TODO we need to add pre_report
     }
 
     GENERATE_CONSENSUS(sample_taxid_ch)
