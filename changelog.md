@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- **[improvement]**: Update container of kraken2ref from v2.0.0 to v2.1.0
 - **[added]**: Container for the run_qc process
 - **[added]**: Unit test for COMPUTE_QC_METRICS
 - **[added]**: Mpileup test data
