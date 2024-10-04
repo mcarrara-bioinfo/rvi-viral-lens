@@ -77,10 +77,9 @@ process run_pangolin {
     parse the CSV output file from Pangolin, extracting values from
     each column into environment variables.
 
-    - The script assumes that there is only one row of data 
-    (excluding the header) in the lineage report and reads this data
-    into variables such as taxon, lineage, conflict, ambiguity_score,
-    and others.
+    - The script expects only one row of data (excluding the header)
+    in the lineage report and reads this data into variables such 
+    as taxon, lineage, conflict, ambiguity_score, and others.
 
 3. **Log Lineage Details**:
 
