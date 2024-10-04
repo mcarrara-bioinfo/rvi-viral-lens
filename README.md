@@ -167,7 +167,7 @@ If not using containers, all the software needs to be available at run time. Her
   - pandas = `2.1.4`
   - cached-property = `1.5.2`
   - scipy = `1.12.0`
-  - kraken2ref = `v2.0.0`
+  - kraken2ref = `v2.1.0`
 
 - **Kraken containers**
   - kraken2 = `v2.1.3`
@@ -515,6 +515,12 @@ Certain processes are configured to run on the LSF scheduler with specific resou
 The workflow & process unit tests for this pipeline are written in the [nf-test](https://www.nf-test.com/) (`v0.8.4`) Nextflow testing framework.
 
 **Running Tests**
+
+The `nf-test` looks for an environment variable (`CONTAINER_DIR`) to set the containers directory. Therefore, set this variable before running `nf-test`.
+
+```{bash}
+export CONTAINER_DIR=<my/container/dir/path>
+```
 
 The following command if entered from the repository top-level directory can be used to execute all of the per-process & per-workflow unit tests:
 
