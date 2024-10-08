@@ -81,6 +81,13 @@ process run_pangolin {
     in the lineage report and reads this data into variables such 
     as taxon, lineage, conflict, ambiguity_score, and others.
 
+    - If for any reason the consensus fasta has more than one 
+    sequence, we would be able to get results for the first sequence
+    only. At current implementation, this should never happen because
+    ivar only outputs one consensus sequence per taxid sample 
+    combination. If this ever changes, we will need to adapt this
+    process.
+
 3. **Log Lineage Details**:
 
     - Lineage details such as taxon, lineage, and conflict are echoed 
@@ -95,10 +102,5 @@ process run_pangolin {
 have those value within easy access on the `.command.log` files, it
 was usefull for debugging during development, but may be not necessary
 to keep it anymore. We should remove it.
-    - If for any reason the consensus fasta have more than one sequence,
-we would be able to get results for the first sequence only. At current
-implementation, this should never happen because ivar only output one 
-consensus sequences per taxid sample combination. If this ever change,
-we will need to adapt this process.
 */
 }
