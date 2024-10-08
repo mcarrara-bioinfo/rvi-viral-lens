@@ -41,7 +41,7 @@ def get_pct_N_bases(fasta: SeqIO) -> float:
 
 def get_largest_N_gap(fasta: SeqIO) -> list:
     """
-    Returns the largest a list of all 'n' positions in a FASTA SeqIO object
+    Returns the largest list of all 'n' positions in a FASTA SeqIO object
     """
     # List of all 'n' positions in the FASTA
     n_pos = get_N_positions(fasta)
