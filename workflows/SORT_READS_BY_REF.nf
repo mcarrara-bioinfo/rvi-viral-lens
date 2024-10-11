@@ -3,7 +3,21 @@ include {get_taxid_reference_files} from '../modules/get_taxid_references.nf'
 include {run_k2r_sort_reads; run_k2r_dump_fastqs_and_pre_report; concatenate_fqs_parts} from '../modules/run_kraken2ref_and_pre_report.nf'
 
 def parse_mnf(consensus_mnf) {
+    /*
+    -----------------------------------------------------------------
+    Parses the manifest file to create a channel of metadata and 
+    FASTQ file pairs.
 
+    -----------------------------------------------------------------
+
+    - **Input**:
+        consensus_mnf (path to the manifest file)
+
+    - **Output**: 
+        Channel with tuples of metadata and FASTQ file pairs.
+
+    -----------------------------------------------------------------
+    */
     def mnf_ch = Channel.fromPath(consensus_mnf)
                     | splitCsv(header: true, sep: ',')
                     | map {row -> 
@@ -14,12 +28,54 @@ def parse_mnf(consensus_mnf) {
                         // declare channel shape
                         tuple(meta, reads)
                     }
-    return mnf_ch // tuple(sample_id, [fastq_pairs])
+    return mnf_ch // tuple(meta, [fastq_pairs])
 }
 
 workflow SORT_READS_BY_REF {
-    take:
+    /*
+    -----------------------------------------------------------------
+    Sort Reads to A Given Reference
 
+    The SORT_READS_BY_REF workflow processes paired-end sequencing
+    reads by sorting them according to taxonomic classifications 
+    obtained from Kraken2. This workflow uses a manifest file to
+    process multiple samples and produces sorted by taxid FASTQ files
+    for each sample and classification reports.
+
+    -----------------------------------------------------------------
+    # Inputs
+
+    - **Manifest File**: A CSV file containing sample metadata and
+    paths to paired-end FASTQ files.
+    - **Kraken Database Path**: Path to the Kraken database.
+    - **Kraken2Ref Library Fasta**: Optional. Path to the Kraken2Ref
+    library fasta file. If none is provided, it assumes there
+    is a `${params.db_path}/library/library.fna`.
+
+    -----------------------------------------------------------------
+    # Key Processes
+
+    1. **Run Kraken**: Classifies reads using Kraken2 against a
+    specified database.
+    
+    2. **Sort Reads**: Uses Kraken2Ref to sort reads by taxonomic ID
+    and extracts them into separate FASTQ files.
+    
+    3. **Merge FASTQ Parts**: Merges split FASTQ parts if necessary.
+    
+    4. **Collect Reference Files**: Retrieves reference sequences 
+    based on taxonomic IDs for downstream analysis.
+
+    -----------------------------------------------------------------
+    # Outputs
+    - `sample_taxid_ch`: Channel containing tuples of metadata and
+    sorted reads per taxonomic ID.
+    - `sample_pre_report_ch`: Channel containing pre-reports with 
+    sample-level summaries.
+
+    */
+
+    take:
         mnf_path // path to manifest
 
     main:
@@ -57,9 +113,8 @@ workflow SORT_READS_BY_REF {
         // drop unclassified fq filepair and store kraken2 files on meta 
         run_kraken.out // tuple (meta, kraken_output, [classified_fq_filepair], [unclassified_fq_filepair], kraken_report)
             | map {it -> tuple(it[0], it[1], it[2], it[4])} // tuple (meta, kraken_output, [classified_fq_filepair], kraken_report)
-            | map {meta, kraken_output, classified_fq_filepair, kraken_report -> 
+            | map {meta, kraken_output, classified_fq_filepair, kraken_report -> //tuple(meta, kraken_output,classified_fq_filepair,kraken_report) 
 
-                //tuple(meta, kraken_output,classified_fq_filepair,kraken_report)
                 // store kraken2 outputs on meta to simplify channel gymnastics
                 meta.kraken_output = kraken_output
                 meta.kraken_report = kraken_report
@@ -72,11 +127,10 @@ workflow SORT_READS_BY_REF {
                 return tuple (meta, kraken_output, kraken_report)
             }
             | set {sort_reads_in_ch}
-        
+
         // run sort reads (meta, kraken_report, kraken_output)
         run_k2r_sort_reads(sort_reads_in_ch)
-        
-        
+
         // 3.2 - prepare chanel for k2r dump fqs
         // find which samples needs splitting
         run_k2r_sort_reads.out.json_files // meta, tax_to_reads_json, decomposed_json
@@ -135,6 +189,7 @@ workflow SORT_READS_BY_REF {
                 tuple(id, taxid_fastqs_list.flatten())
             }
             | set {concatenate_fqs_In_ch}
+
         // concatenate parts
         concatenate_fqs_parts(concatenate_fqs_In_ch)
 
@@ -151,7 +206,6 @@ workflow SORT_READS_BY_REF {
 
         // prepare channel to be emitted
 
-        //run_k2r_dump_fastqs_and_pre_report.out.fq_files // tuple (meta, [id_taxid_R{1,2}.fq])
         per_taxid_fqs_Ch 
             | map {meta, reads ->
                 // group pairs of fastqs based on file names, and add new info to meta
@@ -204,6 +258,17 @@ workflow SORT_READS_BY_REF {
 }
 
 def check_sort_reads_params(){
+    /*
+    -----------------------------------------------------------------
+    Checks for necessary parameters and validates paths to ensure 
+    they exist. Logs errors if any required parameters are missing.
+    -----------------------------------------------------------------
+
+    - **Output**: Number of errors encountered during the checks.
+
+    -----------------------------------------------------------------
+
+    */
     def errors = 0
     // was the kraken database provided?
     if (params.db_path == null){
@@ -218,17 +283,14 @@ def check_sort_reads_params(){
         log.error("No manifest provided")
         errors +=1
     }
-    // if yes, is it a file which exists? 
+    // if yes, is it a file which exists?
     if (params.manifest){
         manifest_file = file(params.manifest)
         if (!manifest_file.exists()){
             log.error("The manifest provided (${params.manifest}) does not exist.")
             errors += 1
         }
-        //TODO
-        //else {
-        //    validate_manifest(params.manifest)
-        //}
+        //TODO: validate manifest
     }
 
     return errors
