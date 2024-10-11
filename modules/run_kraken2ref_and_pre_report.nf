@@ -1,3 +1,5 @@
+params.k2r_pooling_mode = "kmeans" // [kmeans or max]
+
 process run_k2r_sort_reads {
 
     /*
@@ -18,7 +20,8 @@ process run_k2r_sort_reads {
 
 
     """
-    kraken2ref -s ${meta.id} parse_report -i ${kraken_report} -o ./ -t ${params.min_reads_for_taxid}
+    kraken2ref -s ${meta.id} parse_report -i ${kraken_report} -o ./ \
+               -t ${params.min_reads_for_taxid} -m ${params.k2r_pooling_mode}
     
     # if empty file, no decomposed json file will be generated
     if [ -e "${meta.id}_decomposed.json" ]; then
@@ -37,6 +40,7 @@ process run_k2r_dump_fastqs_and_pre_report {
     cache 'lenient'
     label 'kraken2ref'
     memory params.k2r_dump_fq_mem//'mem_k2r_escalate'
+    publishDir "${params.results_dir}/${meta.id}/reads_by_taxon/", mode: 'copy', pattern: "*.{fq,tsv}"
 
     input:
         tuple val(meta), path(classified_fqs), path(json_tax_to_readsid), path(decomposed_json), path(kraken_report)
