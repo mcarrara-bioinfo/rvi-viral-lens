@@ -25,7 +25,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- **[improvement]**: Ivar module now follows Artic pipeline standards
+- **[improvement]**: The ivar module has been updated to adhere to the ARTIC pipeline standards
 
 ### Added
 
