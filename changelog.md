@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- **[add]**: update and added extensive documentation
 - **[improvement]**: Update container of kraken2ref from v2.0.0 to v2.1.0
 - **[added]**: add a paramter to set the pooling method for kraken to ref (default kmeans)
 - **[added]**: Container for the run_qc process
