@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file.
 
 - **[added]**: update and added extensive documentation
 - **[improvement]**: Update container of kraken2ref from v2.0.0 to v2.1.0
-- **[added]**: add a paramter to set the pooling method for kraken to ref (default kmeans)
+- **[added]**: Add a parameter to set the polling method for kraken2ref (default method set to kmeans)
 - **[added]**: Container for the run_qc process
 - **[added]**: Unit test for COMPUTE_QC_METRICS
 - **[added]**: Mpileup test data
