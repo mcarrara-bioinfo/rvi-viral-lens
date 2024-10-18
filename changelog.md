@@ -29,7 +29,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- **[added]**: add LSF memory escalation strategy for kraken2ref 
+- **[added]**: LSF memory escalation strategy for kraken2ref 
 - **[added]**: Columns Virus_Taxon_ID, Virus, Species, Reference_Taxon_ID, Selected_Reference added/populated to classification report
 
 ## [0.2.1] - 2024-06-20
