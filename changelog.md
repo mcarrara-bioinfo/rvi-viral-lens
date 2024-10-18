@@ -16,7 +16,7 @@ All notable changes to this project will be documented in this file.
 - **[improvement]**: Update container of kraken2ref from v2.0.0 to v2.1.0
 - **[added]**: Add a parameter to set the polling method for kraken2ref (default method set to kmeans)
 - **[added]**: Container for the run_qc process
-- **[added]**: Unit test for COMPUTE_QC_METRICS
+- **[added]**: Unit test for COMPUTE_QC_METRICS workflow
 - **[added]**: Mpileup test data
 - **[improvement]**: implement k2r release new features
 - **[improvement]**: split fastq files if higher than a set numbers of reads per fq
