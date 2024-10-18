@@ -12,9 +12,11 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- **[add]**: update and added extensive documentation
+- **[added]**: update and added extensive documentation
+- **[improvement]**: Update container of kraken2ref from v2.0.0 to v2.1.0
+- **[added]**: Add a parameter to set the polling method for kraken2ref (default method set to kmeans)
 - **[added]**: Container for the run_qc process
-- **[added]**: Unit test for COMPUTE_QC_METRICS
+- **[added]**: Unit test for COMPUTE_QC_METRICS workflow
 - **[added]**: Mpileup test data
 - **[improvement]**: implement k2r release new features
 - **[improvement]**: split fastq files if higher than a set numbers of reads per fq
@@ -22,15 +24,18 @@ All notable changes to this project will be documented in this file.
 ## [0.2.2] - 2024-08-02
 
 ### Changed
-- **[improvement]**: Ivar module now follows Artic pipeline standards
+
+- **[improvement]**: The ivar module has been updated to adhere to the ARTIC pipeline standards
 
 ### Added
-- **[added]**: add LSF memory escalation strategy for kraken2ref 
+
+- **[added]**: LSF memory escalation strategy for kraken2ref 
 - **[added]**: Columns Virus_Taxon_ID, Virus, Species, Reference_Taxon_ID, Selected_Reference added/populated to classification report
 
 ## [0.2.1] - 2024-06-20
 
 ### Fixed
+
 - **[bug]**: Classification report generation would crash if ' was present in output report file lines
 - **[bug]**: Independent workflow stanza for GENERATE_CLASSIFICATION_REPORT.nf was outdated / broken
 
