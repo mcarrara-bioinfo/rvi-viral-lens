@@ -42,7 +42,7 @@ process run_k2r_sort_reads {
 
     """
     kraken2ref -s ${meta.id} parse_report -i ${kraken_report} -o ./ \
-               -t ${params.min_reads_for_taxid} -m ${params.k2r_pooling_mode}
+               -t ${params.min_reads_for_taxid} -m ${params.k2r_polling_mode}
     
     # if empty file, no decomposed json file will be generated
     if [ -e "${meta.id}_decomposed.json" ]; then
