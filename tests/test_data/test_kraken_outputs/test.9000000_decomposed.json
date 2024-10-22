@@ -1,0 +1,111 @@
+{
+    "metadata": {
+        "k2r_version": "0.1.dev168+g037bdaa.d20240902",
+        "sample": "test.9000000",
+        "timestamp": "2024-09-03 13:59:52",
+        "threshold": 100,
+        "selected": [
+            2697049,
+            9000019
+        ],
+        "summary": {
+            "info": {
+                "time_updated": "2024-09-03 13:59:55",
+                "sort_mode": "tree",
+                "total_input_reads": 16179,
+                "total_classified_reads": 16159,
+                "unclasified_reads": 20
+            },
+            "per_taxon": {
+                "2697049": 11928,
+                "9000019": 4231
+            },
+            "condense": {
+                "condense_by_root": false
+            }
+        }
+    },
+    "outputs": {
+        "2697049": {
+            "graph_idx": 13,
+            "source": [
+                13,
+                "S"
+            ],
+            "source_taxid": 694009,
+            "target": [
+                14,
+                "S1"
+            ],
+            "parent_selected": false,
+            "all_taxa": [
+                694009,
+                2697049
+            ],
+            "path": [
+                [
+                    13,
+                    "S"
+                ],
+                [
+                    14,
+                    "S1"
+                ]
+            ],
+            "path_as_taxids": [
+                694009,
+                2697049
+            ]
+        },
+        "9000019": {
+            "graph_idx": 21,
+            "source": [
+                21,
+                "S"
+            ],
+            "source_taxid": 2955291,
+            "target": [
+                25,
+                "S3"
+            ],
+            "parent_selected": false,
+            "all_taxa": [
+                2955291,
+                11320,
+                114727,
+                9000016,
+                9000019,
+                9000018,
+                9000017,
+                9000022,
+                9000020,
+                9000021,
+                9000023
+            ],
+            "path": [
+                [
+                    21,
+                    "S"
+                ],
+                [
+                    22,
+                    "S1"
+                ],
+                [
+                    23,
+                    "S2"
+                ],
+                [
+                    25,
+                    "S3"
+                ]
+            ],
+            "path_as_taxids": [
+                2955291,
+                11320,
+                114727,
+                9000019
+            ]
+        }
+    }
+}

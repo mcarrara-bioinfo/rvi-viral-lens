@@ -10,7 +10,6 @@
                             "sample_id": "test"
                         },
                         "test.9000000.qc.csv:md5,ed7eb07a9964c8e5e4a430ff9ece7c85",
-                        "test.9000000.depth.png:md5,81848422ba9ec3bb5447faa89cbfe9ae",
                         "test.9000000,0.42,0.00,2360,32358,test.9000000.fa,test.9000000.sorted.bam,TRUE,0,10,0\r\n"
                     ]
                 ]
@@ -18,8 +17,8 @@
         ],
         "meta": {
             "nf-test": "0.8.4",
-            "nextflow": "23.10.1"
+            "nextflow": "23.10.0"
         },
-        "timestamp": "2024-07-31T14:32:27.336007"
+        "timestamp": "2024-09-17T13:27:20.902697473"
     }
 }

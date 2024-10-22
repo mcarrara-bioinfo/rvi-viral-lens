@@ -1,9 +1,23 @@
 include {run_kraken} from '../modules/run_kraken.nf'
 include {get_taxid_reference_files} from '../modules/get_taxid_references.nf'
-include {run_kraken2ref_and_pre_report} from '../modules/run_kraken2ref_and_pre_report.nf'
+include {run_k2r_sort_reads; run_k2r_dump_fastqs_and_pre_report; concatenate_fqs_parts} from '../modules/run_kraken2ref_and_pre_report.nf'
 
 def parse_mnf(consensus_mnf) {
+    /*
+    -----------------------------------------------------------------
+    Parses the manifest file to create a channel of metadata and 
+    FASTQ file pairs.
 
+    -----------------------------------------------------------------
+
+    - **Input**:
+        consensus_mnf (path to the manifest file)
+
+    - **Output**: 
+        Channel with tuples of metadata and FASTQ file pairs.
+
+    -----------------------------------------------------------------
+    */
     def mnf_ch = Channel.fromPath(consensus_mnf)
                     | splitCsv(header: true, sep: ',')
                     | map {row -> 
@@ -14,12 +28,54 @@ def parse_mnf(consensus_mnf) {
                         // declare channel shape
                         tuple(meta, reads)
                     }
-    return mnf_ch // tuple(sample_id, [fastq_pairs])
+    return mnf_ch // tuple(meta, [fastq_pairs])
 }
 
 workflow SORT_READS_BY_REF {
-    take:
+    /*
+    -----------------------------------------------------------------
+    Sort Reads to A Given Reference
 
+    The SORT_READS_BY_REF workflow processes paired-end sequencing
+    reads by sorting them according to taxonomic classifications 
+    obtained from Kraken2. This workflow uses a manifest file to
+    process multiple samples and produces sorted by taxid FASTQ files
+    for each sample and classification reports.
+
+    -----------------------------------------------------------------
+    # Inputs
+
+    - **Manifest File**: A CSV file containing sample metadata and
+    paths to paired-end FASTQ files.
+    - **Kraken Database Path**: Path to the Kraken database.
+    - **Kraken2Ref Library Fasta**: Optional. Path to the Kraken2Ref
+    library fasta file. If none is provided, it assumes there
+    is a `${params.db_path}/library/library.fna`.
+
+    -----------------------------------------------------------------
+    # Key Processes
+
+    1. **Run Kraken**: Classifies reads using Kraken2 against a
+    specified database.
+    
+    2. **Sort Reads**: Uses Kraken2Ref to sort reads by taxonomic ID
+    and extracts them into separate FASTQ files.
+    
+    3. **Merge FASTQ Parts**: Merges split FASTQ parts if necessary.
+    
+    4. **Collect Reference Files**: Retrieves reference sequences 
+    based on taxonomic IDs for downstream analysis.
+
+    -----------------------------------------------------------------
+    # Outputs
+    - `sample_taxid_ch`: Channel containing tuples of metadata and
+    sorted reads per taxonomic ID.
+    - `sample_pre_report_ch`: Channel containing pre-reports with 
+    sample-level summaries.
+
+    */
+
+    take:
         mnf_path // path to manifest
 
     main:
@@ -38,7 +94,7 @@ workflow SORT_READS_BY_REF {
         // 1 - run kraken and get outputs
         run_kraken(filtered_mnf_ch, params.db_path)
         // -------------------------------------------------//
-        
+
         // 2 - obtain unique taxid reference fasta file and metadata from kraken db 
 
         // check if library fasta was set, 
@@ -51,29 +107,106 @@ workflow SORT_READS_BY_REF {
         }
         // -------------------------------------------------//
 
-        // 3 - reads per taxid on fastq file
+        // 3 - run Kraken2Ref
 
-        // drop unclassified fq filepair
+        // 3.1 - sort reads
+        // drop unclassified fq filepair and store kraken2 files on meta 
         run_kraken.out // tuple (meta, kraken_output, [classified_fq_filepair], [unclassified_fq_filepair], kraken_report)
             | map {it -> tuple(it[0], it[1], it[2], it[4])} // tuple (meta, kraken_output, [classified_fq_filepair], kraken_report)
-            | map {meta, kraken_output, classified_fq_filepair, kraken_report -> 
+            | map {meta, kraken_output, classified_fq_filepair, kraken_report -> //tuple(meta, kraken_output,classified_fq_filepair,kraken_report) 
+
+                // store kraken2 outputs on meta to simplify channel gymnastics
+                meta.kraken_output = kraken_output
+                meta.kraken_report = kraken_report
+                meta.classified_fq_filepair = classified_fq_filepair
+
                 // get input file sizes to estimate resources usage (cpu and mem) 
                 fq_1_size = classified_fq_filepair[0].size() // byte
                 fq_2_size = classified_fq_filepair[1].size() // byte
                 meta.fqs_total_size = fq_1_size + fq_2_size
-
-                tuple(meta, kraken_output,classified_fq_filepair,kraken_report)
+                return tuple (meta, kraken_output, kraken_report)
             }
             | set {sort_reads_in_ch}
+
+        // run sort reads (meta, kraken_report, kraken_output)
+        run_k2r_sort_reads(sort_reads_in_ch)
+
+        // 3.2 - prepare chanel for k2r dump fqs
+        // find which samples needs splitting
+        run_k2r_sort_reads.out.json_files // meta, tax_to_reads_json, decomposed_json
+            | branch {meta, tax_to_reads_json, decomposed_json -> 
+                // store json files on meta
+                meta.tax_to_reads_json = tax_to_reads_json
+                meta.decomposed_json = decomposed_json
+
+                // count reads
+                fq_1_n_reads = meta.classified_fq_filepair[0].countFastq()
+                fq_2_n_reads = meta.classified_fq_filepair[1].countFastq()
+
+                meta.fqs_total_size = fq_1_size + fq_2_size
+                assert(fq_1_n_reads == fq_2_n_reads)
+                meta.class_fq_n_reads = fq_1_n_reads
+                
+                // branch channels
+                needs_fq_spliting: meta.class_fq_n_reads > params.k2r_max_total_reads_per_fq
+                    meta.splitted = true
+                    return tuple (meta, meta.classified_fq_filepair[0], meta.classified_fq_filepair[1])
+
+                no_fq_spliting: meta.class_fq_n_reads <= params.k2r_max_total_reads_per_fq
+                    meta.splitted = false
+                    return tuple(meta, meta.classified_fq_filepair, meta.tax_to_reads_json, meta.decomposed_json, meta.kraken_report)
+            }
+            | set {k2r_sorted_read_Out_ch}
+
+        // split fq files
+        k2r_sorted_read_Out_ch.needs_fq_spliting // meta, fq_reads_1, fq_reads_2
+            | splitFastq(pe:true, by:params.k2r_max_total_reads_per_fq, file:true)
+            | map {meta, reads_1_part, reads_2_part ->
+                //meta.part = reads_1_part.name.tokenize(".")[-2]
+                tuple (meta, [reads_1_part, reads_2_part], meta.tax_to_reads_json, meta.decomposed_json, meta.kraken_report)
+            }
+            | concat(k2r_sorted_read_Out_ch.no_fq_spliting)
+            | set {k2r_dump_fq_In_ch}
+
+        run_k2r_dump_fastqs_and_pre_report(k2r_dump_fq_In_ch)
+
+        // 3.3 - merge per taxid fastq parts
+        // separate the item which needs to be concatenated
+        run_k2r_dump_fastqs_and_pre_report.out.fq_files // meta, taxid_fastqs_list
+            | branch { meta, taxid_fastqs_list ->
+                do_concatenate: meta.splitted == true
+                not_concatenate: meta.splitted == false
+            }
+            | set{k2r_dump_out_fqs}
+
+        // merge all parts into a single channel item
+        k2r_dump_out_fqs.do_concatenate
+            | map { meta, taxid_fastqs_list -> 
+                tuple(meta.id, taxid_fastqs_list)
+            }
+            | groupTuple()
+            | map {id, taxid_fastqs_list -> 
+                tuple(id, taxid_fastqs_list.flatten())
+            }
+            | set {concatenate_fqs_In_ch}
+
+        // concatenate parts
+        concatenate_fqs_parts(concatenate_fqs_In_ch)
+
+        // collect final fastqs on a single channel 
+        concatenate_fqs_parts.out
+            | concat(k2r_dump_out_fqs.not_concatenate)
+            | set{per_taxid_fqs_Ch}
 
         // -------------------------------------------------//
 
         // 4 - run kraken2ref and collect all per-sample per-taxon fq filepairs
-        run_kraken2ref_and_pre_report(sort_reads_in_ch)
-        sample_pre_report_ch = run_kraken2ref_and_pre_report.out.report_file
-        
+
+        sample_pre_report_ch = run_k2r_dump_fastqs_and_pre_report.out.report_file
+
         // prepare channel to be emitted
-        run_kraken2ref_and_pre_report.out.fq_files // tuple (meta, [id_taxid_R{1,2}.fq])
+
+        per_taxid_fqs_Ch 
             | map {meta, reads ->
                 // group pairs of fastqs based on file names, and add new info to meta
                 reads
@@ -117,13 +250,25 @@ workflow SORT_READS_BY_REF {
                 tuple(meta, reads)
             }
             | set {sample_taxid_ch}
-
+    
     emit:
         sample_taxid_ch // tuple (meta, reads)
         sample_pre_report_ch // pre_report
+
 }
 
 def check_sort_reads_params(){
+    /*
+    -----------------------------------------------------------------
+    Checks for necessary parameters and validates paths to ensure 
+    they exist. Logs errors if any required parameters are missing.
+    -----------------------------------------------------------------
+
+    - **Output**: Number of errors encountered during the checks.
+
+    -----------------------------------------------------------------
+
+    */
     def errors = 0
     // was the kraken database provided?
     if (params.db_path == null){
@@ -138,17 +283,14 @@ def check_sort_reads_params(){
         log.error("No manifest provided")
         errors +=1
     }
-    // if yes, is it a file which exists? 
+    // if yes, is it a file which exists?
     if (params.manifest){
         manifest_file = file(params.manifest)
         if (!manifest_file.exists()){
             log.error("The manifest provided (${params.manifest}) does not exist.")
             errors += 1
         }
-        //TODO
-        //else {
-        //    validate_manifest(params.manifest)
-        //}
+        //TODO: validate manifest
     }
 
     return errors

@@ -22,7 +22,7 @@ ANSI_BOLD = "\033[1m"
 
 log.info """${ANSI_RESET}
   ===========================================
-  Viral Pipeline [v0.2.2]
+  Viral Pipeline [v0.3.0]
   Used parameters:
   -------------------------------------------
   --> general pipeline parameters:
@@ -32,15 +32,17 @@ log.info """${ANSI_RESET}
     --results_dir              : ${params.results_dir}
 
   --> SORT_READS_BY_REF workflow parameters:
-    --manifest                 : ${params.manifest}
-    --db_path                  : ${params.db_path}
-    --db_library_fa_path       : ${params.db_library_fa_path}
-    --min_reads_for_taxid      : ${params.min_reads_for_taxid}
+    --manifest                   : ${params.manifest}
+    --db_path                    : ${params.db_path}
+    --db_library_fa_path         : ${params.db_library_fa_path}
+    --min_reads_for_taxid        : ${params.min_reads_for_taxid}
+    --k2r_max_total_reads_per_fq : ${params.max_total_reads_per_fq}
+    --k2r_dump_fq_mem            : ${params.k2r_dump_fq_mem}
 
   --> GENERATE_CONSENSUS workflow parameters:
     --consensus_mnf            : ${params.consensus_mnf}
-    --ivar_min_depth      : ${params.ivar_min_depth}
-    --ivar_freq_threshold   : ${params.ivar_freq_threshold}
+    --ivar_min_depth           : ${params.ivar_min_depth}
+    --ivar_freq_threshold      : ${params.ivar_freq_threshold}
 
   --> viral subtyping branching parameters:
     --scv2_keyword             : ${params.scv2_keyword}
@@ -70,8 +72,7 @@ workflow {
     check_main_params()
     // ==========================
 
-    // === 2 - Map reads to virus
-    // sort reads by taxon
+    // === 2 - Map reads to taxid
     if (params.entry_point == "sort_reads"){
         // check if 
         SORT_READS_BY_REF(params.manifest)
@@ -79,11 +80,11 @@ workflow {
         sample_pre_report_ch = SORT_READS_BY_REF.out.sample_pre_report_ch
     }
 
-    // === 3 - Generate consensus
+    // === 3 - Generate consensus ==
     if (params.entry_point == "consensus_gen"){
         // process manifest
         sample_taxid_ch = parse_consensus_mnf_meta(params.consensus_mnf)
-        // TODO add pre_report as input
+        // TODO we need to add pre_report
     }
 
     GENERATE_CONSENSUS(sample_taxid_ch)
@@ -93,11 +94,12 @@ workflow {
     COMPUTE_QC_METRICS(GENERATE_CONSENSUS.out)
     
     
-    // === 5 - branching output from QC for viral specofoc subtyping
+    // === 5 - branching output from QC for viral specific subtyping
 
     // 5.1 - process pre_report files
     // NOTE: if the consensus_gen entry point is removed,
-    //       this processing should be moved back to SORT_READS_BY_REF workflow
+    //           this processing should be moved back to 
+    //           SORT_READS_BY_REF workflow
     sample_pre_report_ch
       .filter{it -> (it.size() > 1)} // remove empty pre_reports
       .splitCsv(header: true, sep:"\t")
@@ -112,10 +114,10 @@ workflow {
       .filter{it -> (it.size() <= 1)}
       .view(it -> log.warn("Excluding ${it} as input due to small size ( < 1 byte)"))
 
-    // 5.2 - add report infor to out qc metric chanel
-    COMPUTE_QC_METRICS.out
+    // 5.2 - add report info to out qc metric chanel and branch for SCOV2 subtyping
+    COMPUTE_QC_METRICS.out // tuple (meta, bam)
       .map { meta, bam -> tuple(meta.id, meta, bam)}
-      .join(sample_report_ch)//, by: 0)
+      .join(sample_report_ch)//, by: 0) // tuple (id, meta, bam, report)
       .map {id, meta, bam, report ->
         meta.putAll(report)
         tuple(meta, bam)
@@ -125,7 +127,7 @@ workflow {
         no_subtyping_ch: true
       }
       .set {qc_metrics_out_ch}
-    
+
     // 5.3 - do SCOV2 subtyping
     if (params.do_scov2_subtyping == true){
       qc_metrics_out_ch.scv2_subtyping_workflow_in_ch

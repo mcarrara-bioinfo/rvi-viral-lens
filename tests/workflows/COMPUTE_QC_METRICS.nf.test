@@ -1,0 +1,44 @@
+nextflow_workflow {
+
+    name "Test Workflow COMPUTE_QC_METRICS"
+    script "workflows/COMPUTE_QC_METRICS.nf"
+    workflow "COMPUTE_QC_METRICS"
+
+    test("Should run without failures") {
+
+        when {
+            params {
+                meta = [
+                    id:"test.9000000",
+                    sample_id:"test",
+                    taxid:9000000,
+                    bam_file:"${projectDir}/tests/test_data/test_alignments/test.9000000.sorted.bam",
+                    ref_files:[
+                        "${projectDir}/tests/test_data/test_references/9000000.fa",
+                        "${projectDir}/tests/test_data/test_references/9000000.fa.amb",
+                        "${projectDir}/tests/test_data/test_references/9000000.fa.ann",
+                        "${projectDir}/tests/test_data/test_references/9000000.fa.bwt",
+                        "${projectDir}/tests/test_data/test_references/9000000.fa.pac",
+                        "${projectDir}/tests/test_data/test_references/9000000.fa.sa"
+                    ],
+                    mpileup_file:"${projectDir}/tests/test_data/test_mpileup_out/9000000.mpileup.out"
+                ]
+                fasta_file ="${projectDir}/tests/test_data/test_consensuses/test.9000000.fa"
+            }
+            workflow {
+                """
+                // define inputs of the workflow here. Example:
+                input[0] = Channel.of(tuple(params.meta, params.fasta_file))
+                """
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert snapshot(workflow.out).match()
+        }
+
+    }
+
+}
+          

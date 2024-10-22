@@ -2,10 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2024-10-21
+
+### Changed
+
+- **[improvement]**: Mpileup output retained by run_ivar & used by the QC script for calculating % genome coverage.
+- **[improvement]**: Removed unnecessary code from qc.py and run_qc.nf including the plot generation.
+- **[improvement]**: Modified qc.py to read input files from command line including using samtools flagstat for read counts.
+- **[improvement]**: Unit test files and snapshot files for run_ivar, run_qc_script, and GENERATE_CONSENSUS to account for changes
+
+### Added
+
+- **[added]**: update and added extensive documentation
+- **[improvement]**: Update container of kraken2ref from v2.0.0 to v2.1.0
+- **[added]**: Add a parameter to set the polling method for kraken2ref (default method set to max)
+- **[added]**: Container for the run_qc process
+- **[added]**: Unit test for COMPUTE_QC_METRICS workflow
+- **[added]**: Mpileup test data
+- **[improvement]**: implement k2r release new features
+- **[improvement]**: split fastq files if higher than a set numbers of reads per fq
+
 ## [0.2.2] - 2024-08-02
 
 ### Changed
-- **[improvement]**: Ivar module now follows Artic pipeline standards
+
+- **[improvement]**: The ivar module has been updated to adhere to the ARTIC pipeline standards
+
+### Added
+
+- **[added]**: LSF memory escalation strategy for kraken2ref 
+- **[added]**: Columns Virus_Taxon_ID, Virus, Species, Reference_Taxon_ID, Selected_Reference added/populated to classification report
 
 ### Added
 - **[added]**: add LSF memory escalation strategy for kraken2ref 
@@ -14,6 +40,7 @@ All notable changes to this project will be documented in this file.
 ## [0.2.1] - 2024-06-20
 
 ### Fixed
+
 - **[bug]**: Classification report generation would crash if ' was present in output report file lines
 - **[bug]**: Independent workflow stanza for GENERATE_CLASSIFICATION_REPORT.nf was outdated / broken
 

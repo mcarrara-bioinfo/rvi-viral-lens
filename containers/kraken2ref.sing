@@ -9,7 +9,7 @@ Stage: spython-base
     TEAM ARD/DAE
     JIRA_TICKET DT-1998
     REPO https://gitlab.internal.sanger.ac.uk/malariagen1/viral/viral_pipeline.git
- 
+
 %post
  
 # //--- STAGING ---//
@@ -23,7 +23,8 @@ CACHED_PROPERTY_VER="1.5.2"
 SCIPY_VER="1.12.0"
 BIOPYTHON_VER="1.83"
 
-KRAKEN2REF_RELEASE="v2.0.0"
+KRAKEN2REF_RELEASE="v2.1.0"
+
 # enables the "exit on error" mode
 set -e
 set -u
