@@ -137,7 +137,7 @@ process run_k2r_dump_fastqs_and_pre_report {
     fq_2 = classified_fqs[1]
     
     '''
-    if [ "!{meta.splitted}" == "true"]; then
+    if [ "!{meta.splitted}" = "true" ]; then
         part=$(echo !{fq_1}| awk -F'[.]' '{print $(NF-1)}')
         prefix="${part}-!{meta.id}"
     else
