@@ -26,7 +26,43 @@ def modifyPathsAndWriteCsv(String inputFile) {
 }
 
 modifyPathsAndWriteCsv("tests/test_data/test_manifests/test_input_manifest.csv")
+modifyPathsAndWriteCsv("tests/test_data/test_manifest_checks/consecutive_underscore_mnf.csv")
 
+
+nextflow_workflow {
+
+    name "Test Workflow SORT_READS_BY_REF manifest checks"
+    script "workflows/SORT_READS_BY_REF.nf"
+    workflow "SORT_READS_BY_REF"
+
+    test("Should fail") {
+
+        when {
+            params {
+                test_loc="${projectDir}/tests/test_data"
+                db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
+            }
+            workflow {
+                """
+                // define inputs of the workflow here. Example:
+                input[0] = file("${params.test_loc}/test_manifest_checks/consecutive_underscore_mnf_located.csv")
+                """
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.exitStatus == 1
+            assert workflow.stdout.contains('ERROR ~ Non alphanumeric sample id sample__04 [\'_\' is permitted]')
+        }
+
+    }
+
+}
+
+
+
+/*
 nextflow_workflow {
 
     name "Test Workflow SORT_READS_BY_REF"
@@ -56,3 +92,5 @@ nextflow_workflow {
     }
 
 }
+
+*/

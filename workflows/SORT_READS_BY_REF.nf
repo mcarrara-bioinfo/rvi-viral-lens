@@ -44,7 +44,7 @@ def parse_mnf(consensus_mnf) {
         
         // Check if sample_id is alphanumeric, allows underscores but not consecutive
         if (!sample_id.matches(/^(?!.*__)[A-Za-z0-9_]+$/)) {
-            log.error("ilegal chararcter at ${sample_id}")
+            log.error("Non alphanumeric sample id ${sample_id} ['_' is permitted]")
             errors += 1
         }
         return errors
