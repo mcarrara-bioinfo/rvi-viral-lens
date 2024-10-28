@@ -2,11 +2,16 @@ include {run_kraken} from '../modules/run_kraken.nf'
 include {get_taxid_reference_files} from '../modules/get_taxid_references.nf'
 include {run_k2r_sort_reads; run_k2r_dump_fastqs_and_pre_report; concatenate_fqs_parts} from '../modules/run_kraken2ref_and_pre_report.nf'
 
+
 def parse_mnf(consensus_mnf) {
     /*
     -----------------------------------------------------------------
     Parses the manifest file to create a channel of metadata and 
     FASTQ file pairs.
+
+    Also, checks if there are sample_id duplicated and/or containing
+    non alphanumeric characters. Only exception accepted is "_", as
+    long as it is not two consecutives "__".
 
     -----------------------------------------------------------------
 
@@ -18,16 +23,59 @@ def parse_mnf(consensus_mnf) {
 
     -----------------------------------------------------------------
     */
-    def mnf_ch = Channel.fromPath(consensus_mnf)
-                    | splitCsv(header: true, sep: ',')
-                    | map {row -> 
-                        // set meta
-                        meta = [id: row.sample_id]
-                        // set files
-                        reads = [row.reads_1, row.reads_2]
-                        // declare channel shape
-                        tuple(meta, reads)
-                    }
+    // Read manifest file into a list of rows
+    def mnf_rows = Channel.fromPath(consensus_mnf)
+                          | splitCsv(header: true, sep: ',')
+
+    // Collect sample IDs and validate
+    def sample_ids = []
+    def errors = 0
+    
+    def errors_ch = mnf_rows.map { row ->
+        def sample_id = row.sample_id
+
+        // Check for unique sample IDs
+        if (sample_ids.contains(sample_id)) {
+            log.error("${sample_id} is duplicated")
+            errors += 1
+        } else {
+            sample_ids << sample_id
+        }
+        
+        // Check if sample_id is alphanumeric, allows underscores but not consecutive
+        if (!sample_id.matches(/^(?!.*__)[A-Za-z0-9_]+$/)) {
+            log.error("ilegal chararcter at ${sample_id}")
+            errors += 1
+        }
+        return errors
+        }
+        // be sure that the number of errors is evaluated after all rows are processed 
+        .collect()
+        // ----------------------------------------------------------------------------
+        // NOTE:Ideal solution would be sum all the errors found and report at the end 
+        //      before kill the pipeline if any errors were found.
+        //      However, For some reason .sum() after collect doesn't return the sum of
+        //      errors values found.
+        //      That's why subscribe was implemented.
+        // ----------------------------------------------------------------------------
+        // kill the pipeline if errors are found
+        .subscribe{ v -> 
+        if (errors > 0) {
+            log.error("${errors} critical errors in the manifest were detected. Please check README for more details.")
+            exit 1
+        }
+    }
+
+    // If validation passed, create the channel as before
+    def mnf_ch = mnf_rows.map { row -> 
+                    // set meta
+                    def meta = [id: row.sample_id]
+                    // set files
+                    def reads = [row.reads_1, row.reads_2]
+                    // declare channel shape
+                    tuple(meta, reads)
+                 }
+
     return mnf_ch // tuple(meta, [fastq_pairs])
 }
 
@@ -82,7 +130,6 @@ workflow SORT_READS_BY_REF {
 
         // 0 - create channel from input per-sample manifest
         mnf_ch = parse_mnf(mnf_path)
-
         // drop channel tuples where 1 or more FASTQ files are empty
         mnf_ch.branch {
             empty: file(it[1][0]).size() < 5000 || file(it[1][1]).size() < 5000
