@@ -34,32 +34,31 @@ def parse_mnf(consensus_mnf) {
     def errors_ch = mnf_rows.map { row ->
         def sample_id = row.sample_id
 
-        // Check for unique sample IDs
-        if (sample_ids.contains(sample_id)) {
-            log.error("${sample_id} is duplicated")
+        // Check if sample_id is empty
+        if (!sample_id) {
+            log.error("Empty sample_id detected.")
             errors += 1
         } else {
-            sample_ids << sample_id
-        }
+            // Check for unique sample IDs
+            if (sample_ids.contains(sample_id)) {
+                log.error("${sample_id} is duplicated")
+                errors += 1
+            } else {
+                sample_ids << sample_id
+            }
         
-        // Check if sample_id is alphanumeric, allows underscores but not consecutive
-        if (!sample_id.matches(/^(?!.*__)[A-Za-z0-9_]+$/)) {
-            log.error("Non alphanumeric sample id ${sample_id} ['_' is permitted]")
-            errors += 1
+            // Check if sample_id is alphanumeric, allows underscores but not consecutive
+            if (!sample_id.matches(/^(?!.*__)[A-Za-z0-9_]+$/)) {
+                log.error("Non alphanumeric sample id ${sample_id} ['_' is permitted]")
+                errors += 1
+            }
+            return errors
         }
-        return errors
         }
-        // be sure that the number of errors is evaluated after all rows are processed 
-        .collect()
-        // ----------------------------------------------------------------------------
-        // NOTE:Ideal solution would be sum all the errors found and report at the end 
-        //      before kill the pipeline if any errors were found.
-        //      However, For some reason .sum() after collect doesn't return the sum of
-        //      errors values found.
-        //      That's why subscribe was implemented.
-        // ----------------------------------------------------------------------------
+        // be sure that the number of errors is evaluated after all rows are processed
+        .collect() 
         // kill the pipeline if errors are found
-        .subscribe{ v -> 
+        .subscribe{ v ->
         if (errors > 0) {
             log.error("${errors} critical errors in the manifest were detected. Please check README for more details.")
             exit 1
