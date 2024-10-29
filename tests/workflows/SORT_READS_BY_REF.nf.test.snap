@@ -1,4 +1,219 @@
 {
+    "Workflow Should run end to end without failures, no changes on snapshot expected": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "sample_id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1",
+                            "taxid": "2697049",
+                            "id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049",
+                            "ref_files": [
+                                "2697049.fa:md5,7ca8f77fb20a6bcb1eb0ce45d2504268",
+                                "2697049.fa.amb:md5,80f653e5d4e35ada77d0a10eb91e4d2d",
+                                "2697049.fa.ann:md5,60df9428892d946d9723a235b7e9346b",
+                                "2697049.fa.bwt:md5,88f3909bc7c2f9196bd5b1f1dd5d54a6",
+                                "2697049.fa.pac:md5,f631387e31f59214b85a8a80f63155f6",
+                                "2697049.fa.sa:md5,5bf62e5242a3b6889cb64a38049c6586"
+                            ]
+                        },
+                        [
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_2697049_R1.fq:md5,8bcd96733f6e9c5fac417d76012f06cf",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_2697049_R2.fq:md5,7379101db73756bc92027d7b704aefca"
+                        ]
+                    ],
+                    [
+                        {
+                            "sample_id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1",
+                            "taxid": "9000016",
+                            "id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000016",
+                            "ref_files": [
+                                "9000016.fa:md5,71cde01231f0c71b5f77b8b6710c697d",
+                                "9000016.fa.amb:md5,be1cb7424ad94cdb4ce7fdfe71297425",
+                                "9000016.fa.ann:md5,f72c27e667804d28f8436b1a3527d775",
+                                "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
+                                "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
+                                "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
+                            ]
+                        },
+                        [
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000016_R1.fq:md5,9c3a99344dd54c1605674c3b00e5e312",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000016_R2.fq:md5,27e5cd33de4116d17b47f25c988b28ff"
+                        ]
+                    ],
+                    [
+                        {
+                            "sample_id": "SARSCoV2_FluH1N1_50K_each_P1",
+                            "taxid": "2697049",
+                            "id": "SARSCoV2_FluH1N1_50K_each_P1.2697049",
+                            "ref_files": [
+                                "2697049.fa:md5,7ca8f77fb20a6bcb1eb0ce45d2504268",
+                                "2697049.fa.amb:md5,80f653e5d4e35ada77d0a10eb91e4d2d",
+                                "2697049.fa.ann:md5,60df9428892d946d9723a235b7e9346b",
+                                "2697049.fa.bwt:md5,88f3909bc7c2f9196bd5b1f1dd5d54a6",
+                                "2697049.fa.pac:md5,f631387e31f59214b85a8a80f63155f6",
+                                "2697049.fa.sa:md5,5bf62e5242a3b6889cb64a38049c6586"
+                            ]
+                        },
+                        [
+                            "SARSCoV2_FluH1N1_50K_each_P1_2697049_R1.fq:md5,487c4688192a8580bae7a72019340396",
+                            "SARSCoV2_FluH1N1_50K_each_P1_2697049_R2.fq:md5,b3f2833cd0baf71d0fd951521bd9d985"
+                        ]
+                    ],
+                    [
+                        {
+                            "sample_id": "SARSCoV2_FluH1N1_50K_each_P1",
+                            "taxid": "9000016",
+                            "id": "SARSCoV2_FluH1N1_50K_each_P1.9000016",
+                            "ref_files": [
+                                "9000016.fa:md5,71cde01231f0c71b5f77b8b6710c697d",
+                                "9000016.fa.amb:md5,be1cb7424ad94cdb4ce7fdfe71297425",
+                                "9000016.fa.ann:md5,f72c27e667804d28f8436b1a3527d775",
+                                "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
+                                "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
+                                "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
+                            ]
+                        },
+                        [
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000016_R1.fq:md5,950b70ee147656de34f46886771e8fcb",
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000016_R2.fq:md5,86a4947fe317f68d3de79488e326889e"
+                        ]
+                    ],
+                    [
+                        {
+                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
+                            "taxid": "9000016",
+                            "id": "Zeptometrix_Panel_2_1_Control1_P1.9000016",
+                            "ref_files": [
+                                "9000016.fa:md5,71cde01231f0c71b5f77b8b6710c697d",
+                                "9000016.fa.amb:md5,be1cb7424ad94cdb4ce7fdfe71297425",
+                                "9000016.fa.ann:md5,f72c27e667804d28f8436b1a3527d775",
+                                "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
+                                "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
+                                "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
+                            ]
+                        },
+                        [
+                            "Zeptometrix_Panel_2_1_Control1_P1_9000016_R1.fq:md5,bdbf8277c83689146886c8b3aa5e90e2",
+                            "Zeptometrix_Panel_2_1_Control1_P1_9000016_R2.fq:md5,1628ed7ad60c2627076b6ac6754895c5"
+                        ]
+                    ]
+                ],
+                "1": [
+                    "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_pre_report.tsv:md5,312f38c88b658d9e2a9122ad50591c5e",
+                    "SARSCoV2_FluH1N1_50K_each_P1_pre_report.tsv:md5,e7a79768d4094cc274a0383a4bf5b2f4",
+                    "Zeptometrix_Panel_2_1_Control1_P1_pre_report.tsv:md5,d4bb882ba9b08e16542cb7c86ed941dc"
+                ],
+                "sample_pre_report_ch": [
+                    "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_pre_report.tsv:md5,312f38c88b658d9e2a9122ad50591c5e",
+                    "SARSCoV2_FluH1N1_50K_each_P1_pre_report.tsv:md5,e7a79768d4094cc274a0383a4bf5b2f4",
+                    "Zeptometrix_Panel_2_1_Control1_P1_pre_report.tsv:md5,d4bb882ba9b08e16542cb7c86ed941dc"
+                ],
+                "sample_taxid_ch": [
+                    [
+                        {
+                            "sample_id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1",
+                            "taxid": "2697049",
+                            "id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049",
+                            "ref_files": [
+                                "2697049.fa:md5,7ca8f77fb20a6bcb1eb0ce45d2504268",
+                                "2697049.fa.amb:md5,80f653e5d4e35ada77d0a10eb91e4d2d",
+                                "2697049.fa.ann:md5,60df9428892d946d9723a235b7e9346b",
+                                "2697049.fa.bwt:md5,88f3909bc7c2f9196bd5b1f1dd5d54a6",
+                                "2697049.fa.pac:md5,f631387e31f59214b85a8a80f63155f6",
+                                "2697049.fa.sa:md5,5bf62e5242a3b6889cb64a38049c6586"
+                            ]
+                        },
+                        [
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_2697049_R1.fq:md5,8bcd96733f6e9c5fac417d76012f06cf",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_2697049_R2.fq:md5,7379101db73756bc92027d7b704aefca"
+                        ]
+                    ],
+                    [
+                        {
+                            "sample_id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1",
+                            "taxid": "9000016",
+                            "id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000016",
+                            "ref_files": [
+                                "9000016.fa:md5,71cde01231f0c71b5f77b8b6710c697d",
+                                "9000016.fa.amb:md5,be1cb7424ad94cdb4ce7fdfe71297425",
+                                "9000016.fa.ann:md5,f72c27e667804d28f8436b1a3527d775",
+                                "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
+                                "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
+                                "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
+                            ]
+                        },
+                        [
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000016_R1.fq:md5,9c3a99344dd54c1605674c3b00e5e312",
+                            "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_9000016_R2.fq:md5,27e5cd33de4116d17b47f25c988b28ff"
+                        ]
+                    ],
+                    [
+                        {
+                            "sample_id": "SARSCoV2_FluH1N1_50K_each_P1",
+                            "taxid": "2697049",
+                            "id": "SARSCoV2_FluH1N1_50K_each_P1.2697049",
+                            "ref_files": [
+                                "2697049.fa:md5,7ca8f77fb20a6bcb1eb0ce45d2504268",
+                                "2697049.fa.amb:md5,80f653e5d4e35ada77d0a10eb91e4d2d",
+                                "2697049.fa.ann:md5,60df9428892d946d9723a235b7e9346b",
+                                "2697049.fa.bwt:md5,88f3909bc7c2f9196bd5b1f1dd5d54a6",
+                                "2697049.fa.pac:md5,f631387e31f59214b85a8a80f63155f6",
+                                "2697049.fa.sa:md5,5bf62e5242a3b6889cb64a38049c6586"
+                            ]
+                        },
+                        [
+                            "SARSCoV2_FluH1N1_50K_each_P1_2697049_R1.fq:md5,487c4688192a8580bae7a72019340396",
+                            "SARSCoV2_FluH1N1_50K_each_P1_2697049_R2.fq:md5,b3f2833cd0baf71d0fd951521bd9d985"
+                        ]
+                    ],
+                    [
+                        {
+                            "sample_id": "SARSCoV2_FluH1N1_50K_each_P1",
+                            "taxid": "9000016",
+                            "id": "SARSCoV2_FluH1N1_50K_each_P1.9000016",
+                            "ref_files": [
+                                "9000016.fa:md5,71cde01231f0c71b5f77b8b6710c697d",
+                                "9000016.fa.amb:md5,be1cb7424ad94cdb4ce7fdfe71297425",
+                                "9000016.fa.ann:md5,f72c27e667804d28f8436b1a3527d775",
+                                "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
+                                "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
+                                "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
+                            ]
+                        },
+                        [
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000016_R1.fq:md5,950b70ee147656de34f46886771e8fcb",
+                            "SARSCoV2_FluH1N1_50K_each_P1_9000016_R2.fq:md5,86a4947fe317f68d3de79488e326889e"
+                        ]
+                    ],
+                    [
+                        {
+                            "sample_id": "Zeptometrix_Panel_2_1_Control1_P1",
+                            "taxid": "9000016",
+                            "id": "Zeptometrix_Panel_2_1_Control1_P1.9000016",
+                            "ref_files": [
+                                "9000016.fa:md5,71cde01231f0c71b5f77b8b6710c697d",
+                                "9000016.fa.amb:md5,be1cb7424ad94cdb4ce7fdfe71297425",
+                                "9000016.fa.ann:md5,f72c27e667804d28f8436b1a3527d775",
+                                "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
+                                "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
+                                "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
+                            ]
+                        },
+                        [
+                            "Zeptometrix_Panel_2_1_Control1_P1_9000016_R1.fq:md5,bdbf8277c83689146886c8b3aa5e90e2",
+                            "Zeptometrix_Panel_2_1_Control1_P1_9000016_R2.fq:md5,1628ed7ad60c2627076b6ac6754895c5"
+                        ]
+                    ]
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-10-29T12:35:54.533889"
+    },
     "Should run without failures": {
         "content": [
             {

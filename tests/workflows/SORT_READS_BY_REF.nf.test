@@ -27,7 +27,9 @@ def modifyPathsAndWriteCsv(String inputFile) {
 
 modifyPathsAndWriteCsv("tests/test_data/test_manifests/test_input_manifest.csv")
 modifyPathsAndWriteCsv("tests/test_data/test_manifest_checks/consecutive_underscore_mnf.csv")
-
+modifyPathsAndWriteCsv("tests/test_data/test_manifest_checks/duplicated_sample_id_mnf.csv")
+modifyPathsAndWriteCsv("tests/test_data/test_manifest_checks/empty_sample_id_mnf.csv")
+modifyPathsAndWriteCsv("tests/test_data/test_manifest_checks/mixed_errors_mnf.csv")
 
 nextflow_workflow {
 
@@ -35,7 +37,7 @@ nextflow_workflow {
     script "workflows/SORT_READS_BY_REF.nf"
     workflow "SORT_READS_BY_REF"
 
-    test("Should fail") {
+    test("Should fail on consecutive underscore") {
 
         when {
             params {
@@ -55,21 +57,79 @@ nextflow_workflow {
             assert workflow.exitStatus == 1
             assert workflow.stdout.contains('ERROR ~ Non alphanumeric sample id sample__04 [\'_\' is permitted]')
         }
+    }
+    
+    test("Should fail on duplicated sample id") {
 
+        when {
+            params {
+                test_loc="${projectDir}/tests/test_data"
+                db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
+            }
+            workflow {
+                """
+                // define inputs of the workflow here. Example:
+                input[0] = file("${params.test_loc}/test_manifest_checks/duplicated_sample_id_mnf_located.csv")
+                """
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.exitStatus == 1
+            assert workflow.stdout.contains('ERROR ~ sample01 is duplicated')
+        }
     }
 
-}
+    test("Should fail if sample id is empty") {
 
+        when {
+            params {
+                test_loc="${projectDir}/tests/test_data"
+                db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
+            }
+            workflow {
+                """
+                // define inputs of the workflow here. Example:
+                input[0] = file("${params.test_loc}/test_manifest_checks/empty_sample_id_mnf_located.csv")
+                """
+            }
+        }
 
+        then {
+            assert workflow.failed
+            assert workflow.exitStatus == 1
+            assert workflow.stdout.contains('ERROR ~ Empty sample_id detected.')
+        }
+    }
 
-/*
-nextflow_workflow {
+    test("Should fail on multiple errors") {
 
-    name "Test Workflow SORT_READS_BY_REF"
-    script "workflows/SORT_READS_BY_REF.nf"
-    workflow "SORT_READS_BY_REF"
+        when {
+            params {
+                test_loc="${projectDir}/tests/test_data"
+                db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
+            }
+            workflow {
+                """
+                // define inputs of the workflow here. Example:
+                input[0] = file("${params.test_loc}/test_manifest_checks/mixed_errors_mnf_located.csv")
+                """
+            }
+        }
 
-    test("Should run without failures") {
+        then {
+            assert workflow.failed
+            assert workflow.exitStatus == 1
+            assert workflow.stdout.contains('ERROR ~ Non alphanumeric sample id sample__04 [\'_\' is permitted]')
+            assert workflow.stdout.contains('ERROR ~ sample01 is duplicated')
+            assert workflow.stdout.contains('ERROR ~ Non alphanumeric sample id sample#03 [\'_\' is permitted]')
+            assert workflow.stdout.contains('ERROR ~ 3 critical errors in the manifest were detected. Please check README for more details.')
+
+        }
+    }
+
+    test("Workflow Should run end to end without failures, no changes on snapshot expected") {
 
         when {
             params {
@@ -92,5 +152,3 @@ nextflow_workflow {
     }
 
 }
-
-*/
