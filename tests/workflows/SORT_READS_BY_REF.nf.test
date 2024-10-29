@@ -37,7 +37,7 @@ nextflow_workflow {
     script "workflows/SORT_READS_BY_REF.nf"
     workflow "SORT_READS_BY_REF"
 
-    test("Should fail on consecutive underscore") {
+    test("Should fail on consecutive underscore on sample id") {
 
         when {
             params {
@@ -81,7 +81,7 @@ nextflow_workflow {
         }
     }
 
-    test("Should fail if sample id is empty") {
+    test("Should fail on empty sample id") {
 
         when {
             params {
@@ -103,7 +103,7 @@ nextflow_workflow {
         }
     }
 
-    test("Should fail on multiple errors") {
+    test("Should fail and report on multiple errors on the manifest sample id") {
 
         when {
             params {
