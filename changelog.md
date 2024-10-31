@@ -1,6 +1,9 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## [UNRELEASED]
+
+- **[added]**: `sample_id` collumns now is checked for duplicated, non-alphanumeric or empty row values.
 
 ## [0.3.1] - 2024-10-24
 

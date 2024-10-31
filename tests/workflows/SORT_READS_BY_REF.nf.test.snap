@@ -1,5 +1,5 @@
 {
-    "Should run without failures": {
+    "Workflow Should run end to end without failures, no changes on snapshot expected": {
         "content": [
             {
                 "0": [
@@ -212,6 +212,6 @@
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-10-16T16:50:49.465606"
+        "timestamp": "2024-10-29T12:50:01.444004"
     }
 }
