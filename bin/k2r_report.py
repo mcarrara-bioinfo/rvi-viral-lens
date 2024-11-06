@@ -127,18 +127,30 @@ def get_report(in_file, report_file, out_suffix=".viral_pipe.report.tsv"):
         ## if selected_ref is ANY flu segment, collect its subtype info
         ## THIS IS THE SUBTYPE OF THE CHOSEN REFERENCE ONLY
         ## THIS MAY NOT BE THE SAME AS THE SUBTYOE OF THE SAMPLE ITSELF
-        generic_subtype = regex_subtyping("H[0-9]+N[0-9]+", ref_name)
-
-        ## if selected_ref is Flu Segment 4 or 6, collect subtype info
-        ## THIS WILL BE THE SUBTYPE OF THE SAMPLE
         subtype = "None"
         segment = "None"
-        if generic_subtype is not None:
-            segment = regex_subtyping("(?<=segment )[0-9]", ref_name)
-        if segment in [4, "4"]:
-            subtype = regex_subtyping("H[0-9]+", ref_name)
-        if segment in [6, "6"]:
-            subtype = regex_subtyping("N[0-9]+", ref_name)
+        generic_subtype = "None"
+        # if flu A, get segment and subtype
+        if ref_name.startswith("A/"):
+            ## if selected_ref is Flu Segment 4 or 6, collect subtype info
+            ## THIS WILL BE THE SUBTYPE OF THE SAMPLE
+            generic_subtype = regex_subtyping("H[0-9]+N[0-9]+", ref_name)
+
+            if generic_subtype is not None:
+                segment = regex_subtyping("(?<=segment )[0-9]", ref_name)
+            if segment in [4, "4"]:
+                subtype = regex_subtyping("H[0-9]+", ref_name)
+            if segment in [6, "6"]:
+                subtype = regex_subtyping("N[0-9]+", ref_name)
+
+        # if flu B, get segment number, but not subtype
+        # NOTE:
+        #  This part of the code assumes flu B refname will ALWAYS
+        #  have the structure bellow:
+        #    > B/Yamagata/16/1988 segment 2
+
+        if ref_name.startswith("B/"):
+            segment = int(ref_name.split(" ")[-1])
 
         ## collect number of reads written to each fastq filepair
         if "per_taxon" in ref_json["metadata"]["summary"].keys():
