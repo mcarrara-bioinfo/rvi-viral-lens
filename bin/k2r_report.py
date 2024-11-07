@@ -129,9 +129,18 @@ def get_report(in_file, report_file, out_suffix=".viral_pipe.report.tsv"):
         ## THIS MAY NOT BE THE SAME AS THE SUBTYOE OF THE SAMPLE ITSELF
         subtype = "None"
         segment = "None"
-        generic_subtype = "None"
-        # if flu A, get segment and subtype
-        if ref_name.startswith("A/"):
+        generic_subtype = None
+
+        # if flu B, get segment number, but not subtype
+        # NOTE:
+        #  This part of the code assumes flu B refname will ALWAYS
+        #  have the structure bellow:
+        #    > B/Yamagata/16/1988 segment 2
+
+        if ref_name.startswith("B/"):
+            segment = int(ref_name.split(" ")[-1])
+        else:
+            # if flu A, generic subtypy will not be None, get segment and subtype
             ## if selected_ref is Flu Segment 4 or 6, collect subtype info
             ## THIS WILL BE THE SUBTYPE OF THE SAMPLE
             generic_subtype = regex_subtyping("H[0-9]+N[0-9]+", ref_name)
@@ -142,15 +151,6 @@ def get_report(in_file, report_file, out_suffix=".viral_pipe.report.tsv"):
                 subtype = regex_subtyping("H[0-9]+", ref_name)
             if segment in [6, "6"]:
                 subtype = regex_subtyping("N[0-9]+", ref_name)
-
-        # if flu B, get segment number, but not subtype
-        # NOTE:
-        #  This part of the code assumes flu B refname will ALWAYS
-        #  have the structure bellow:
-        #    > B/Yamagata/16/1988 segment 2
-
-        if ref_name.startswith("B/"):
-            segment = int(ref_name.split(" ")[-1])
 
         ## collect number of reads written to each fastq filepair
         if "per_taxon" in ref_json["metadata"]["summary"].keys():
