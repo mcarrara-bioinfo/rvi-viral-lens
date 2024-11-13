@@ -134,11 +134,11 @@ def get_report(in_file, report_file, out_suffix=".viral_pipe.report.tsv"):
         # if flu B, get segment number, but not subtype
         # NOTE:
         #  This part of the code assumes flu B refname will ALWAYS
-        #  have the structure bellow:
-        #    > B/Yamagata/16/1988 segment 2
+        #  have the the term "segment <int>" in its header 
 
         if ref_name.startswith("B/"):
-            segment = int(ref_name.split(" ")[-1])
+            segment = regex_subtyping("(?<=segment )[0-9]", ref_name)
+
         else:
             # if flu A, generic subtypy will not be None, get segment and subtype
             ## if selected_ref is Flu Segment 4 or 6, collect subtype info

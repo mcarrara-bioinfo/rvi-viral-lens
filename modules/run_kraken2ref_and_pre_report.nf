@@ -130,7 +130,7 @@ process run_k2r_dump_fastqs_and_pre_report {
 
     output:
         tuple val(meta), path("*_R{1,2}.fq"), optional: true, emit:fq_files // tuple(meta, [id.tax_id.extracted_{1,2}.fq])
-        path("${meta.id}_pre_report.tsv"), optional: true, emit: report_file //tuple (meta, log, unwritten_reads_log)
+        path("${meta.id}_pre_report.tsv"), optional: true, emit: report_file // pre_report.tsv
 
     shell:
     fq_1 = classified_fqs[0]
