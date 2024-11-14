@@ -1,0 +1,5 @@
+sample_id,reads_1,reads_2
+sample01,sample01_R1.fastq,sample01_R2.fastq
+sample@02,sample02_R1.fastq,sample02_R2.fastq
+sample_03,sample_03_R1.fastq,sample_03_R2.fastq
+sample#04,sample04_R1.fastq,sample04_R2.fastq

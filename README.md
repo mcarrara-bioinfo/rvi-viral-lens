@@ -246,6 +246,8 @@ sample2,/path/to/output/sample2_R1.fq,/path/to/output/sample2_R2.fq
 sample3,/path/to/output/sample3_R1.fq,/path/to/output/sample3_R2.fq
 ```
 
+> NOTE: The collumn **`sample_id`** must be **unique, alphanumerics (non consecutive "_" are accepted) and cannot be empty**. Pipeline will fail if any of these conditions are not met.
+
 **Write Manifest Script**
 
 For user convenience, a script to write a manifest (`write_manifest.py`). This script generates a CSV manifest file from a directory of FASTQ files.
