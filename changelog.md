@@ -1,6 +1,11 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## [UNRELEASED]
+
+- **[improvement]**: new container for ivar, without anaconda.
+
 ## [0.3.2]
 
 - **[added]**: obtain flu B segment number
