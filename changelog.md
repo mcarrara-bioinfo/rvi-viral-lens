@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [UNRELEASED]
 
-- **[improvement]**: new container for ivar, without anaconda.
+- **[improvement]**: new container for ivar, without conda.
 
 ## [0.3.2]
 
