@@ -117,5 +117,10 @@ Stage: spython-base
     echo " ------------ "
     exec /bin/bash "$@"
 
+%test
+    ivar version
+    bwa
+    samtools --version
+
 %startscript
     exec /bin/bash "$@"
