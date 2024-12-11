@@ -1,0 +1,28 @@
+FROM ubuntu:22.04 AS spython-base
+LABEL kraken2 v2.1.3
+LABEL kraken_tools v1.2
+LABEL biopython v1.81
+RUN set -e &&\
+    set -u &&\
+    apt update &&\
+    apt upgrade -y &&\
+    apt install -y python-is-python3 python3-pip wget
+
+RUN pip3 install biopython==1.81
+RUN mkdir /app/ &&\
+    cd /app/ &&\ 
+    wget -O kraken2_2.1.3.tar.gz "https://github.com/DerrickWood/kraken2/archive/refs/tags/v2.1.3.tar.gz" &&\
+    tar -xzf kraken2_2.1.3.tar.gz &&\
+    cd kraken2-2.1.3 &&\
+    mkdir kraken_bin &&\
+    ./install_kraken2.sh ./kraken_bin &&\
+    mv kraken_bin/* /usr/local/bin/ &&\
+    cd ../ && rm kraken2_2.1.3.tar.gz
+RUN cd /app/ &&\
+    wget -O kraken_tools1.2.tar.gz "https://github.com/jenniferlu717/KrakenTools/archive/refs/tags/v1.2.tar.gz" &&\
+    cd /app/ &&\
+    tar -xzf kraken_tools1.2.tar.gz && rm kraken_tools1.2.tar.gz 
+RUN echo "kraken2 --version" >> /tests.sh &&\
+    echo "extract_kraken_reads.py -h" >> /tests.sh
+RUN chmod u+x /tests.sh
+HEALTHCHECK CMD /bin/bash /tests.sh
