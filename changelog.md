@@ -1,9 +1,12 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
-## Unreleased
+
+
+## [UNRELEASED]
 
 - **[added]**: add docker recipes for all containers
+- **[improvement]**: new container for ivar, without conda.
 
 ## [0.3.2]
 
