@@ -1,6 +1,10 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## Unreleased
+
+- **[added]**: add docker recipes for all containers
+
 ## [0.3.2]
 
 - **[added]**: obtain flu B segment number
