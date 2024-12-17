@@ -1,4 +1,4 @@
-process fastq_to_fasta {
+process run_fastq2fasta {
     /*
     *             Process: fastq_to_fasta
 
