@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import argparse
 
+# This script is essentially a modified version of the function provided in kneaddata, check the link bellow:
+# https://github.com/biobakery/kneaddata/blob/master/kneaddata/db_preprocessing/fastq_to_fasta.py#L4
+
 def fastq_to_fasta(fastq_in, fasta_out=None):
     """
     Converts a FASTQ file to a FASTA file.
