@@ -32,6 +32,7 @@ process run_fastq2fasta {
 
     * --------------------------------------------------------------
     */
+    tag {meta.id}
 
     input:
         tuple val(meta), path(fastq_1), path(fastq_2) 
