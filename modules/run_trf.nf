@@ -5,7 +5,6 @@ process run_trf {
     tag "${meta.id}"
     label 'mem_1'
     label 'time_1'
-    cpus params.trimmomatic_threads
     label "trf"
 
     input:
