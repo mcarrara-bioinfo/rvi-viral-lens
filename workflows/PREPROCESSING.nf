@@ -2,6 +2,7 @@ include {run_trimmomatic} from "../modules/run_trimmomatic.nf"
 include {run_fastq2fasta} from "../modules/run_fastq2fasta.nf"
 include {run_trf} from "../modules/run_trf.nf"
 include {run_rmRepeatFromFq} from "../modules/run_rmRepeatFromFq.nf"
+include {run_sra_human_scrubber} from "../modules/run_scrubber.nf"
 
 workflow PREPROCESSING {
     /*
@@ -63,15 +64,17 @@ workflow PREPROCESSING {
             run_rmRepeatFromFq.out
                 | set {reads_ch} // tuple (meta, trf_fq_1, trf_fq_2)
         }
-        reads_ch.view()
-        /*
+
         // run human-sra-scrubble
-        if (params.sra-scrubble){
-            run
+        if (params.run_scrubble){
+            run_sra_human_scrubber(reads_ch)
+            reads_ch = run_sra_human_scrubber.out
         }
+        reads_ch.view()
+
     emit:
-        out_ch // tuple (meta, fastq_pair)
-    */
+        reads_ch // tuple (meta, fastq_pair)
+
 }
 
 def parse_mnf_meta(preprocessing_mnf) {
