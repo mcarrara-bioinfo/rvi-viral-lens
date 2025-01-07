@@ -1,7 +1,7 @@
 process run_sra_human_scrubber {
     tag "${meta.id}"
     label "rsa_human_scrubber"
-    publishDir "${params.results_dir}/${meta.sample_id}/", mode: "copy"
+    publishDir "${params.results_dir}/${meta.id}/preprocessing/", mode: "copy"
 
     input:
         tuple val(meta), path(fastq_1), path(fastq_2)
