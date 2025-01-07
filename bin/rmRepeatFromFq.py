@@ -82,8 +82,10 @@ def remove_repeats_from_fastq(input_fastq, trf_output, output_fastq):
         with open(output_fastq, "w") as file_handle_write:
             for lines in read_file_n_lines(input_fastq, 4):
                 sequence_id = lines[0].strip().replace(">", "@")
+                # skip reads if present in the TRF file
                 if sequence_id in sequences_with_repeats:
                     removed_sequences += 1
+                # write read if not
                 else:
                     file_handle_write.write("".join(lines))
     except FileNotFoundError:
