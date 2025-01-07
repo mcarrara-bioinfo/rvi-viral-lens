@@ -61,7 +61,7 @@ workflow PREPROCESSING {
                 | map {id, meta, fqs, trfs -> tuple(meta, fqs[0], fqs[1], trfs[0], trfs[1])}
                 | set {rmTRFfromFq_In_ch}
             run_rmRepeatFromFq(rmTRFfromFq_In_ch)
-            run_rmRepeatFromFq.out
+            run_rmRepeatFromFq.out.fastqs
                 | set {reads_ch} // tuple (meta, trf_fq_1, trf_fq_2)
         }
 
@@ -70,10 +70,11 @@ workflow PREPROCESSING {
             run_sra_human_scrubber(reads_ch)
             reads_ch = run_sra_human_scrubber.out
         }
-        reads_ch.view()
-
+    reads_ch
+      .map{meta, reads_1, reads_2 -> tuple(meta, [reads_1, reads_2])}
+      .set {out_ch}
     emit:
-        reads_ch // tuple (meta, fastq_pair)
+        out_ch // tuple (meta, fastq_pair)
 
 }
 
