@@ -2,13 +2,12 @@
 
 ![](./docs/assets/vira_pipeline_logo_placeholder.png)
 
-The **VIRAL_PIPELINE** is a Nextflow pipeline developed under the context of the [RVI project[add link]]() by [GSU[add link]]() and its main goal is to identify the presence of Flu, SARS-CoV-2 and RSV and obtain, if possible, high quality consensus sequences for those virus. For more details, check the [[ADD REFERENCE PAPER]]()
+The **VIRAL_PIPELINE** is a Nextflow pipeline developed under the context of the [RVI project](https://www.sanger.ac.uk/group/respiratory-virus-and-microbiome-initiative/) by [GSU](https://www.sanger.ac.uk/collaboration/genomic-surveillance-unit/) and its main goal is to identify the presence of Flu, SARS-CoV-2 and RSV and obtain, if possible, high quality consensus sequences for those virus. For more details, check the [[ADD REFERENCE PAPER]]()
 
 > [THE CURRENT LOGO IS A **PLACEHOLDER** AND MUST BE UPDATED TO THE FINAL ONE BEFORE OPEN SOURCE THIS]
 
 ---
 ## Contents
-- [Contents](#contents)
 - [Pipeline Summary](#pipeline-summary)
 - [How to Cite](#how-to-cite)
 - [Quick Start](#quick-start)
@@ -66,7 +65,9 @@ The **VIRAL_PIPELINE** is a Nextflow pipeline developed under the context of the
 
 ## Pipeline Summary
 
-The pipeline takes a manifest containing  **fastq pairs file** paths and a **kraken detabase** as inputs (check [Inputs section](#inputs) for more details) and outputs a **classification report**, **consensus sequences** and a **collection of intermediate files** (check [[ADD OUTPUT DOCUMENTATION LINK]]() for more details). Here is an broad overview of the pipeline logic
+The pipeline takes a manifest containing  **fastq pairs file** paths and a **kraken detabase** as inputs (check [Inputs section](#inputs) for more details) and outputs a **classification report**, **consensus sequences** and a **collection of intermediate files**. Here is an broad overview of the pipeline logic
+
+0. **Preprocessing** (Optional): An optional preprocessing workflow is provided on this pipeline. The Preprocessing pipeline remove adapters (via `trimmomatic`), tandem repeats (via `TRF`) and remove human reads (via `sra-human-scrubber`) from fastq files.
 
 1. **Sort Reads**: The initial step is sort reads using `kraken2` for each fastq pairs according to the database provided. The classified reads is used as input to `kraken2ref` which will generate one pair of fastq files per taxid found.
    - An option to split big files is provided (check [Parameter section](#parameters)).
@@ -77,6 +78,8 @@ The pipeline takes a manifest containing  **fastq pairs file** paths and a **kra
 
 
 4. **SARS-CoV-2 Subtyping**: SARS-CoV-2 subtyping can be done if present on the sample
+
+>**NOTE**: An optional preprocessing workflow is provided 
 
 ![](./docs/assets/metro_map.png)
 
