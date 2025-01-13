@@ -6,6 +6,7 @@ nextflow.enable.dsl = 2
 // --- import modules ---------------------------------------------------------
 include {check_generate_consensus_params; parse_consensus_mnf_meta} from './workflows/GENERATE_CONSENSUS.nf'
 include {check_sort_reads_params} from './workflows/SORT_READS_BY_REF.nf'
+include { validateParameters; paramsSummaryLog} from 'plugin/nf-schema'
 
 include {SORT_READS_BY_REF} from './workflows/SORT_READS_BY_REF.nf'
 include {GENERATE_CONSENSUS} from './workflows/GENERATE_CONSENSUS.nf'
@@ -13,6 +14,7 @@ include {SCOV2_SUBTYPING} from './workflows/SCOV2_SUBTYPING.nf'
 include {COMPUTE_QC_METRICS} from './workflows/COMPUTE_QC_METRICS.nf'
 include {GENERATE_CLASSIFICATION_REPORT} from './workflows/GENERATE_CLASSIFICATION_REPORT.nf'
 include {PREPROCESSING} from './rvi_toolbox/subworkflows/PREPROCESSING.nf'
+
 
 /*
 * ANSI escape codes to color output messages
@@ -68,8 +70,14 @@ log.info """${ANSI_RESET}
   ------------------------------------------
 """.stripIndent()
 
+// Validate input parameters
+validateParameters()
+// Print summary of supplied parameters
+log.info paramsSummaryLog(workflow)
+
 // Main entry-point workflow
 workflow {
+
     // === 1 - Process input ===
     check_main_params()
     // ==========================

@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gitlab.internal.sanger.ac.uk/malariagen1/viral/viral_pipeline",
+  "title": "Viral Pipeline pipeline parameters",
+  "description": "identify the presence of Flu, SARS-CoV-2 and RSV and obtain, if possible, high quality consensus sequences for those virus.",
+  "type": "object",
+  "properties": {
+    "containers_dir": {
+      "type": "string",
+      "default": "/lustre/scratch126/gsu/team112/personal/ad45/rvi_box/DT-3028_add_preprocessing_to_VP/viral_pipeline/containers/"
+    },
+    "run_trimmomatic": {
+      "type": "boolean",
+      "default": true
+    },
+    "trimmomatic_threads": {
+      "type": "integer",
+      "default": 4
+    },
+    "publish_trimmed_reads": {
+      "type": "boolean",
+      "default": true
+    },
+    "adapter_fasta": {
+      "type": "string",
+      "default": "/data/pam/software/trimmomatic/adapter_fasta/solexa-with-nextseqPR-adapters.fasta"
+    },
+    "trimmomatic_options": {
+      "type": "string",
+      "default": "ILLUMINACLIP:/data/pam/software/trimmomatic/adapter_fasta/solexa-with-nextseqPR-adapters.fasta:2:10:7:1 CROP:151 SLIDINGWINDOW:4:20 MINLEN:70"
+    },
+    "run_trf": {
+      "type": "boolean",
+      "default": true
+    },
+    "trf_cli_options": {
+      "type": "string",
+      "default": "2 7 7 80 10 50 500 -h -ngs"
+    },
+    "run_scrubble": {
+      "type": "boolean",
+      "default": true
+    },
+    "entry_point": {
+      "type": "string",
+      "default": "sort_reads"
+    },
+    "manifest": {
+      "type": "string"
+    },
+    "db_path": {
+      "type": "string"
+    },
+    "db_library_fa_path": {
+      "type": "string"
+    },
+    "results_dir": {
+      "type": "string",
+      "default": "/lustre/scratch126/gsu/team112/personal/ad45/rvi_box/DT-3028_add_preprocessing_to_VP/viral_pipeline/output/"
+    },
+    "do_scov2_subtyping": {
+      "type": "boolean",
+      "default": true
+    },
+    "consensus_mnf": {
+      "type": "string"
+    },
+    "scv2_keyword": {
+      "type": "string",
+      "default": "Severe acute respiratory syndrome coronavirus 2"
+    },
+    "kraken2_mem": {
+      "type": "string",
+      "default": "1 GB"
+    },
+    "kraken2_cpus": {
+      "type": "integer",
+      "default": 16
+    },
+    "k2r_fq_load_mode": {
+      "type": "string",
+      "default": "full"
+    },
+    "k2r_polling_mode": {
+      "type": "string",
+      "default": "max"
+    },
+    "min_reads_for_taxid": {
+      "type": "integer",
+      "default": 100
+    },
+    "k2r_max_total_reads_per_fq": {
+      "type": "integer",
+      "default": 10000000
+    },
+    "k2r_dump_fq_mem": {
+      "type": "string",
+      "default": "6 GB"
+    },
+    "ivar_min_depth": {
+      "type": "integer",
+      "default": 10
+    },
+    "ivar_freq_threshold": {
+      "type": "number",
+      "default": 0.75
+    },
+    "max_attempts": {
+      "type": "integer",
+      "default": 3
+    },
+    "default_error_strategy": {
+      "type": "string",
+      "default": "terminate"
+    },
+    "mem_k2r_b0_offset": {
+      "type": "integer",
+      "default": 2
+    },
+    "mem_k2r_b0": {
+      "type": "number",
+      "default": 1.23932729
+    },
+    "mem_k2r_b0_final": {
+      "type": "number",
+      "default": 3.23932729
+    },
+    "mem_k2r_b1": {
+      "type": "number",
+      "default": 3.57231124
+    },
+    "mem_k2r_f1": {
+      "type": "number",
+      "default": 1.5
+    },
+    "mem_k2r_a2": {
+      "type": "integer",
+      "default": 2
+    },
+    "do_preprocessing": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}
