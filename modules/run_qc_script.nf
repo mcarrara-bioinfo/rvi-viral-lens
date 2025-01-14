@@ -37,7 +37,7 @@ process run_qc_script {
     */
     tag {meta.id}
 
-    publishDir "${params.results_dir}/${meta.sample_id}/${meta.taxid}/preprocessing/", mode: 'copy', pattern: "${meta.id}.qc.csv"
+    publishDir "${params.results_dir}/${meta.sample_id}/${meta.taxid}/", mode: 'copy', pattern: "${meta.id}.qc.csv"
 
     label "qc"
 
