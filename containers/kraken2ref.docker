@@ -1,0 +1,39 @@
+FROM ubuntu:22.04 AS spython-base
+LABEL NAME kraken2ref
+LABEL AUTHOR Antonio Marinho
+LABEL ID ad45
+LABEL TEAM ARD/DAE
+LABEL JIRA_TICKET DT-1998
+LABEL REPO https://gitlab.internal.sanger.ac.uk/malariagen1/viral/viral_pipeline.git
+ENV PATH=$PATH:/app/ \
+    PATH=$PATH:/app/bin/ \
+    PYTEST_VER="6.2.2" \
+    IMPORTLIB_RSRC_VER="5.1.0" \
+    FLAKE8_VER="7.0.0" \
+    PANDAS_VER="2.1.4" \
+    CACHED_PROPERTY_VER="1.5.2" \
+    SCIPY_VER="1.12.0" \
+    BIOPYTHON_VER="1.83" \
+    KRAKEN2REF_RELEASE="v2.1.0"
+RUN set -e &&\
+    set -u &&\
+    DEBIAN_FRONTEND=noninteractive &&\
+    apt update &&\
+    apt-get install -y --no-install-recommends build-essential &&\
+    apt install -y git python3 python3-pip
+
+RUN pip3 install --upgrade pip &&\
+    pip3 install pytest==6.2.2 importlib-resources==5.1.0 flake8==7.0.0 \
+        pandas==2.1.4 cached-property==1.5.2 scipy==1.12.0
+
+RUN mkdir /app/ &&\
+    cd /app/
+
+# Set working directory in the container
+WORKDIR /app
+# Copy the local code into the image
+COPY . .
+RUN pip install .
+RUN echo "kraken2ref -v" >> /tests.sh &&\
+    chmod u+x /tests.sh
+HEALTHCHECK CMD /bin/bash /tests.sh
