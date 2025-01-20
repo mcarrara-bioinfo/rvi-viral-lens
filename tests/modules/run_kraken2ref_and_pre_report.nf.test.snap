@@ -9,8 +9,8 @@
                             "taxid": 9000000,
                             "sample_id": "test"
                         },
-                        "test.9000000_tax_to_reads.json:md5,b7eac600e8a6e0ea03dfd04b577535f0",
-                        "test.9000000_decomposed.json:md5,d7bc61bd3ad19e86352140fb90a6c6a6"
+                        "test.9000000_tax_to_reads.json:md5,2e80bd3fe33676daed6854a9093ebdb8",
+                        "test.9000000_decomposed.json:md5,cc6f87a42369e2f801bed0704e198b3d"
                     ]
                 ],
                 "json_files": [
@@ -20,16 +20,16 @@
                             "taxid": 9000000,
                             "sample_id": "test"
                         },
-                        "test.9000000_tax_to_reads.json:md5,b7eac600e8a6e0ea03dfd04b577535f0",
-                        "test.9000000_decomposed.json:md5,d7bc61bd3ad19e86352140fb90a6c6a6"
+                        "test.9000000_tax_to_reads.json:md5,2e80bd3fe33676daed6854a9093ebdb8",
+                        "test.9000000_decomposed.json:md5,cc6f87a42369e2f801bed0704e198b3d"
                     ]
                 ]
             }
         ],
         "meta": {
             "nf-test": "0.8.4",
-            "nextflow": "23.10.1"
+            "nextflow": "24.10.3"
         },
-        "timestamp": "2024-09-03T21:02:09.867488"
+        "timestamp": "2025-01-20T14:01:43.675223"
     }
 }
