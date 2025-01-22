@@ -17,7 +17,7 @@
                             "taxid": "2697049",
                             "sample_id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1",
                             "bam_file": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.sorted.bam:md5,d89eb0b1974e11136558a1ba9533649f",
-                            "mpileup_file": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.mpileup.out:md5,f684647fb3c764179cb9cc8924b19cef"
+                            "mpileup_file": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.mpileup.out:md5,38435f8db02661c15c494822a70a18ec"
                         },
                         "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.consensus.fa:md5,35582ae1636c2b51a7ee183e8df0bfba"
                     ]
@@ -37,7 +37,7 @@
                             "taxid": "2697049",
                             "sample_id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1",
                             "bam_file": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.sorted.bam:md5,d89eb0b1974e11136558a1ba9533649f",
-                            "mpileup_file": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.mpileup.out:md5,f684647fb3c764179cb9cc8924b19cef"
+                            "mpileup_file": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.mpileup.out:md5,38435f8db02661c15c494822a70a18ec"
                         },
                         "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.2697049.consensus.fa:md5,35582ae1636c2b51a7ee183e8df0bfba"
                     ]
@@ -46,8 +46,8 @@
         ],
         "meta": {
             "nf-test": "0.8.4",
-            "nextflow": "23.10.0"
+            "nextflow": "24.10.3"
         },
-        "timestamp": "2024-09-17T15:22:22.278346727"
+        "timestamp": "2025-01-22T11:56:45.162824"
     }
 }
