@@ -1,35 +1,3 @@
-def modifyPathsAndWriteCsv(String inputFile) {
-    def projectDir = System.getProperty("user.dir") + "/tests/test_data" // Current working directory
-
-    // Read CSV file
-    def lines = new File(inputFile).readLines()
-
-    // Modify paths and write to a new file
-    def outputFile = new File(inputFile.replaceAll("\\.csv", "_located.csv"))
-    def writer = new FileWriter(outputFile)
-
-    lines.each { line ->
-        def columns = line.split(',')
-        if (columns.size() == 3) {
-            // Modify reads_1 and reads_2 paths
-            if (columns[1]!="reads_1") {
-                columns[1] = "${projectDir}/${columns[1]}"
-                columns[2] = "${projectDir}/${columns[2]}"
-            }
-        }
-        writer.write(columns.join(',')+"\n")
-    }
-
-    writer.close()
-
-    println("CSV file with located paths written to: ${outputFile}")
-}
-
-modifyPathsAndWriteCsv("tests/test_data/test_manifests/test_input_manifest.csv")
-modifyPathsAndWriteCsv("tests/test_data/test_manifest_checks/consecutive_underscore_mnf.csv")
-modifyPathsAndWriteCsv("tests/test_data/test_manifest_checks/duplicated_sample_id_mnf.csv")
-modifyPathsAndWriteCsv("tests/test_data/test_manifest_checks/empty_sample_id_mnf.csv")
-modifyPathsAndWriteCsv("tests/test_data/test_manifest_checks/mixed_errors_mnf.csv")
 
 nextflow_workflow {
 
@@ -37,109 +5,53 @@ nextflow_workflow {
     script "workflows/SORT_READS_BY_REF.nf"
     workflow "SORT_READS_BY_REF"
 
-    test("Should fail on consecutive underscore on sample id") {
-
-        when {
-            params {
-                test_loc="${projectDir}/tests/test_data"
-                db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
-            }
-            workflow {
-                """
-                // define inputs of the workflow here. Example:
-                input[0] = file("${params.test_loc}/test_manifest_checks/consecutive_underscore_mnf_located.csv")
-                """
-            }
-        }
-
-        then {
-            assert workflow.failed
-            assert workflow.exitStatus == 1
-            assert workflow.stdout.contains('ERROR ~ Non alphanumeric sample id sample__04 [\'_\' is permitted]')
-        }
-    }
-    
-    test("Should fail on duplicated sample id") {
-
-        when {
-            params {
-                test_loc="${projectDir}/tests/test_data"
-                db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
-            }
-            workflow {
-                """
-                // define inputs of the workflow here. Example:
-                input[0] = file("${params.test_loc}/test_manifest_checks/duplicated_sample_id_mnf_located.csv")
-                """
-            }
-        }
-
-        then {
-            assert workflow.failed
-            assert workflow.exitStatus == 1
-            assert workflow.stdout.contains('ERROR ~ sample01 is duplicated')
-        }
-    }
-
-    test("Should fail on empty sample id") {
-
-        when {
-            params {
-                test_loc="${projectDir}/tests/test_data"
-                db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
-            }
-            workflow {
-                """
-                // define inputs of the workflow here. Example:
-                input[0] = file("${params.test_loc}/test_manifest_checks/empty_sample_id_mnf_located.csv")
-                """
-            }
-        }
-
-        then {
-            assert workflow.failed
-            assert workflow.exitStatus == 1
-            assert workflow.stdout.contains('ERROR ~ Empty sample_id detected.')
-        }
-    }
-
-    test("Should fail and report on multiple errors on the manifest sample id") {
-
-        when {
-            params {
-                test_loc="${projectDir}/tests/test_data"
-                db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
-            }
-            workflow {
-                """
-                // define inputs of the workflow here. Example:
-                input[0] = file("${params.test_loc}/test_manifest_checks/mixed_errors_mnf_located.csv")
-                """
-            }
-        }
-
-        then {
-            assert workflow.failed
-            assert workflow.exitStatus == 1
-            assert workflow.stdout.contains('ERROR ~ Non alphanumeric sample id sample__04 [\'_\' is permitted]')
-            assert workflow.stdout.contains('ERROR ~ sample01 is duplicated')
-            assert workflow.stdout.contains('ERROR ~ Non alphanumeric sample id sample#03 [\'_\' is permitted]')
-            assert workflow.stdout.contains('ERROR ~ 3 critical errors in the manifest were detected. Please check README for more details.')
-
-        }
-    }
-
     test("Workflow Should run end to end without failures, no changes on snapshot expected") {
 
         when {
             params {
                 test_loc="${projectDir}/tests/test_data"
                 db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
+
+                meta_1 = [
+                    id: "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1",
+                ]
+                reads_1 = [
+                    "${projectDir}/tests/test_data/downsampled_10000reads_fastqs/FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_10000reads_1.fastq.gz", 
+                    "${projectDir}/tests/test_data/downsampled_10000reads_fastqs/FluH1N1_SARSCoV2_hPIV1_33K_ea_P1_10000reads_2.fastq.gz"
+                ]
+            
+                meta_2 = [
+                    id: "SARSCoV2_FluH1N1_50K_each_P1",
+                ]
+                reads_2 = [
+                    "${projectDir}/tests/test_data/downsampled_10000reads_fastqs/SARSCoV2_FluH1N1_50K_each_P1_10000reads_1.fastq.gz", 
+                    "${projectDir}/tests/test_data/downsampled_10000reads_fastqs/SARSCoV2_FluH1N1_50K_each_P1_10000reads_2.fastq.gz"
+                ]
+            
+                meta_3 = [
+                    id: "Zeptometrix_Panel_2_1_Control1_P1",
+                ]
+                reads_3 = [
+                    "${projectDir}/tests/test_data/downsampled_10000reads_fastqs/Zeptometrix_Panel_2.1_Control1_P1_10000reads_1.fastq.gz", 
+                    "${projectDir}/tests/test_data/downsampled_10000reads_fastqs/Zeptometrix_Panel_2.1_Control1_P1_10000reads_2.fastq.gz"
+                ]
+
+                meta_4 = [
+                    id: "empty",
+                ]
+                reads_4 = [
+                    "${projectDir}/tests/test_data/downsampled_10000reads_fastqs/empty_1.fastq.gz", 
+                    "${projectDir}/tests/test_data/downsampled_10000reads_fastqs/empty_2.fastq.gz"
+                ]
             }
             workflow {
                 """
                 // define inputs of the workflow here. Example:
-                input[0] = file("${params.test_loc}/test_manifests/test_input_manifest_located.csv")
+                input[0] = Channel.of(tuple(params.meta_1, params.reads_1),
+                                     tuple(params.meta_2, params.reads_2),
+                                     tuple(params.meta_3, params.reads_3),
+                                     tuple(params.meta_4, params.reads_4))
+
                 """
             }
         }
@@ -150,5 +62,4 @@ nextflow_workflow {
         }
 
     }
-
 }

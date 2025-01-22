@@ -6,12 +6,16 @@ nextflow.enable.dsl = 2
 // --- import modules ---------------------------------------------------------
 include {check_generate_consensus_params; parse_consensus_mnf_meta} from './workflows/GENERATE_CONSENSUS.nf'
 include {check_sort_reads_params} from './workflows/SORT_READS_BY_REF.nf'
+include { validateParameters; paramsSummaryLog} from 'plugin/nf-schema'
 
 include {SORT_READS_BY_REF} from './workflows/SORT_READS_BY_REF.nf'
 include {GENERATE_CONSENSUS} from './workflows/GENERATE_CONSENSUS.nf'
 include {SCOV2_SUBTYPING} from './workflows/SCOV2_SUBTYPING.nf'
 include {COMPUTE_QC_METRICS} from './workflows/COMPUTE_QC_METRICS.nf'
 include {GENERATE_CLASSIFICATION_REPORT} from './workflows/GENERATE_CLASSIFICATION_REPORT.nf'
+include {PREPROCESSING} from './rvi_toolbox/subworkflows/PREPROCESSING.nf'
+
+
 /*
 * ANSI escape codes to color output messages
 */
@@ -30,6 +34,12 @@ log.info """${ANSI_RESET}
     --entry_point              : ${params.entry_point}
     --containers_dir           : ${params.containers_dir}
     --results_dir              : ${params.results_dir}
+    --run_preprocessing         : ${params.run_preprocessing}
+
+  --> PREPROCESSING workflow parameters:
+    --run_trimmomatic          : ${params.run_trimmomatic}
+    --run_trf                  : ${params.run_trf}
+    --run_hrr                  : ${params.run_hrr}
 
   --> SORT_READS_BY_REF workflow parameters:
     --manifest                   : ${params.manifest}
@@ -66,16 +76,29 @@ log.info """${ANSI_RESET}
   ------------------------------------------
 """.stripIndent()
 
+// Validate input parameters
+validateParameters()
+// Print summary of supplied parameters
+log.info paramsSummaryLog(workflow)
+
 // Main entry-point workflow
 workflow {
+
     // === 1 - Process input ===
     check_main_params()
     // ==========================
+    reads_ch = parse_mnf(params.manifest)
 
+    // === 1 - PREPROCESSING ===
+    if (params.run_preprocessing){
+      PREPROCESSING(reads_ch)
+      reads_ch = PREPROCESSING.out
+    }
+    // ==========================
     // === 2 - Map reads to taxid
     if (params.entry_point == "sort_reads"){
         // check if 
-        SORT_READS_BY_REF(params.manifest)
+        SORT_READS_BY_REF(reads_ch)
         sample_taxid_ch = SORT_READS_BY_REF.out.sample_taxid_ch // tuple (meta, reads)
         sample_pre_report_ch = SORT_READS_BY_REF.out.sample_pre_report_ch
     }
@@ -212,4 +235,79 @@ workflow.onComplete {
   Exit status  : ${ANSI_GREEN}${workflow.exitStatus}${ANSI_RESET}
   Error report : ${ANSI_GREEN}${workflow.errorReport ?: '-'}${ANSI_RESET}
   """.stripIndent()
+}
+
+def parse_mnf(consensus_mnf) {
+    /*
+    -----------------------------------------------------------------
+    Parses the manifest file to create a channel of metadata and 
+    FASTQ file pairs.
+
+    Also, checks if there are sample_id duplicated and/or containing
+    non alphanumeric characters. Only exception accepted is "_", as
+    long as it is not two consecutives "__".
+
+    -----------------------------------------------------------------
+
+    - **Input**:
+        consensus_mnf (path to the manifest file)
+
+    - **Output**: 
+        Channel with tuples of metadata and FASTQ file pairs.
+
+    -----------------------------------------------------------------
+    */
+    // Read manifest file into a list of rows
+    def mnf_rows = Channel.fromPath(consensus_mnf)
+                          | splitCsv(header: true, sep: ',')
+
+    // Collect sample IDs and validate
+    def sample_ids = []
+    def errors = 0
+    
+    def errors_ch = mnf_rows.map { row ->
+        def sample_id = row.sample_id
+
+        // Check if sample_id is empty
+        if (!sample_id) {
+            log.error("Empty sample_id detected.")
+            errors += 1
+        } else {
+            // Check for unique sample IDs
+            if (sample_ids.contains(sample_id)) {
+                log.error("${sample_id} is duplicated")
+                errors += 1
+            } else {
+                sample_ids << sample_id
+            }
+        
+            // Check if sample_id is alphanumeric, allows underscores but not consecutive
+            if (!sample_id.matches(/^(?!.*__)[A-Za-z0-9_]+$/)) {
+                log.error("Non alphanumeric sample id ${sample_id} ['_' is permitted]")
+                errors += 1
+            }
+            return errors
+        }
+        }
+        // be sure that the number of errors is evaluated after all rows are processed
+        .collect() 
+        // kill the pipeline if errors are found
+        .subscribe{ v ->
+        if (errors > 0) {
+            log.error("${errors} critical errors in the manifest were detected. Please check README for more details.")
+            exit 1
+        }
+    }
+
+    // If validation passed, create the channel as before
+    def mnf_ch = mnf_rows.map { row -> 
+                    // set meta
+                    def meta = [id: row.sample_id]
+                    // set files
+                    def reads = [row.reads_1, row.reads_2]
+                    // declare channel shape
+                    tuple(meta, reads)
+                 }
+
+    return mnf_ch // tuple(meta, [fastq_pairs])
 }

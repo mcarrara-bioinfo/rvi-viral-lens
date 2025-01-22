@@ -1,0 +1,20 @@
+Bootstrap: docker
+From: ubuntu:22.04
+
+%post
+mkdir /app/
+cd /app/
+
+apt update
+apt install -y git curl python3
+
+git clone https://github.com/ncbi/sra-human-scrubber.git
+cd sra-human-scrubber
+# download DB
+./init_db.sh
+
+%environment
+    export PATH="/usr/bin:/app/sra-human-scrubber/bin:/app/sra-human-scrubber/scripts:${PATH}"
+
+%test
+scrub.sh -t
