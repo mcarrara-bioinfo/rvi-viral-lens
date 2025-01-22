@@ -34,6 +34,12 @@ log.info """${ANSI_RESET}
     --entry_point              : ${params.entry_point}
     --containers_dir           : ${params.containers_dir}
     --results_dir              : ${params.results_dir}
+    --run_preprocessing         : ${params.run_preprocessing}
+
+  --> PREPROCESSING workflow parameters:
+    --run_trimmomatic          : ${params.run_trimmomatic}
+    --run_trf                  : ${params.run_trf}
+    --run_scrubber             : ${params.run_scrubber}
 
   --> SORT_READS_BY_REF workflow parameters:
     --manifest                   : ${params.manifest}
@@ -84,7 +90,7 @@ workflow {
     reads_ch = parse_mnf(params.manifest)
 
     // === 1 - PREPROCESSING ===
-    if (params.do_preprocessing){
+    if (params.run_preprocessing){
       PREPROCESSING(reads_ch)
       reads_ch = PREPROCESSING.out
     }

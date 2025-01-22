@@ -94,7 +94,7 @@ nextflow_pipeline {
 
         when {
             params {
-                do_preprocessing=false
+                run_preprocessing=false
                 test_loc="${projectDir}/tests/test_data"
                 db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
                 manifest="${params.test_loc}/test_manifest_checks/mixed_errors_mnf_located.csv"
@@ -118,7 +118,7 @@ nextflow_pipeline {
             params {
                 // define parameters here. Example: 
                 // outdir = "tests/results"
-                do_preprocessing=false
+                run_preprocessing=false
                 db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
                 manifest="${projectDir}/tests/test_data/test_manifests/test_input_manifest_located.csv"
             }
