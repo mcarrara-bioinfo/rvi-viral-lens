@@ -39,7 +39,7 @@ log.info """${ANSI_RESET}
   --> PREPROCESSING workflow parameters:
     --run_trimmomatic          : ${params.run_trimmomatic}
     --run_trf                  : ${params.run_trf}
-    --run_scrubber             : ${params.run_scrubber}
+    --run_hrr                  : ${params.run_hrr}
 
   --> SORT_READS_BY_REF workflow parameters:
     --manifest                   : ${params.manifest}
