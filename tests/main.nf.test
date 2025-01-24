@@ -112,6 +112,30 @@ nextflow_pipeline {
         }
     }
 
+    test("Should fail if wrong PREPROCESSING params") {
+
+        when {
+            params {
+                // define parameters here. Example: 
+                // outdir = "tests/results"
+                run_preprocessing=true
+                adapter_fasta=null
+                run_hrr=false
+                run_trf=false
+                run_trimmomatic=false
+                db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
+                manifest="${projectDir}/tests/test_data/test_manifests/test_input_manifest_located.csv"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.exitStatus == 1
+            assert workflow.stdout.contains('ERROR ~ No adapter_fasta path provided')
+            assert workflow.stdout.contains('ERROR ~ All PREPROCESSING process switchs are off (run_trimmomatic = false; run_trf = false ; run_hrr = false).')
+        }
+    }
+
     test("Should run without failures") {
 
         when {

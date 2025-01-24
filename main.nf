@@ -6,7 +6,9 @@ nextflow.enable.dsl = 2
 // --- import modules ---------------------------------------------------------
 include {check_generate_consensus_params; parse_consensus_mnf_meta} from './workflows/GENERATE_CONSENSUS.nf'
 include {check_sort_reads_params} from './workflows/SORT_READS_BY_REF.nf'
-include { validateParameters; paramsSummaryLog} from 'plugin/nf-schema'
+include {validateParameters; paramsSummaryLog} from 'plugin/nf-schema'
+include {check_preprocessing_params} from './rvi_toolbox/subworkflows/PREPROCESSING.nf'
+
 
 include {SORT_READS_BY_REF} from './workflows/SORT_READS_BY_REF.nf'
 include {GENERATE_CONSENSUS} from './workflows/GENERATE_CONSENSUS.nf'
@@ -205,9 +207,11 @@ def check_main_params(){
         errors += __check_if_params_file_exist("consensus_mnf", params.consensus_mnf)
     }
 
-    if (params.do_preprocessing==true){
-
+    if (params.run_preprocessing){
+        // check if manifest was provided
+        errors += check_preprocessing_params()
     }
+
     //errors += check_generate_consensus_params()
 
     if (errors > 0) {
