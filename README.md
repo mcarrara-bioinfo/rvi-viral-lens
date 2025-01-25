@@ -179,7 +179,7 @@ If not using containers, all the software needs to be available at run time. Her
 
 ### build containers
 
-By default, the pipeline will use the containers provided at (quay.io gsu-pipeline)[https://quay.io/organization/gsu-pipelines].
+By default, the pipeline will use the containers provided at [quay.io gsu-pipeline](https://quay.io/organization/gsu-pipelines).
 
 Singularity and Docker recipes for the containers used on this pipeline are available on this repository at `containers/` dir. To build the containers, run the commands bellow.
 
