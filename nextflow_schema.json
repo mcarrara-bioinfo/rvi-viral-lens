@@ -7,7 +7,7 @@
   "properties": {
     "containers_dir": {
       "type": "string",
-      "default": "/lustre/scratch126/gsu/team112/personal/ad45/rvi_box/DT-3028_add_preprocessing_to_VP/viral_pipeline/containers/"
+      "default": ""
     },
     "run_trimmomatic": {
       "type": "boolean",
@@ -23,11 +23,11 @@
     },
     "adapter_fasta": {
       "type": "string",
-      "default": "/data/pam/software/trimmomatic/adapter_fasta/solexa-with-nextseqPR-adapters.fasta"
+      "default": ""
     },
     "trimmomatic_options": {
       "type": "string",
-      "default": "ILLUMINACLIP:/data/pam/software/trimmomatic/adapter_fasta/solexa-with-nextseqPR-adapters.fasta:2:10:7:1 CROP:151 SLIDINGWINDOW:4:20 MINLEN:70"
+      "default": "ILLUMINACLIP:${params.adapter_fasta}:2:10:7:1 CROP:151 SLIDINGWINDOW:4:20 MINLEN:70"
     },
     "run_trf": {
       "type": "boolean",
@@ -56,7 +56,7 @@
     },
     "results_dir": {
       "type": "string",
-      "default": "/lustre/scratch126/gsu/team112/personal/ad45/rvi_box/DT-3028_add_preprocessing_to_VP/viral_pipeline/output/"
+      "default": ""
     },
     "do_scov2_subtyping": {
       "type": "boolean",
