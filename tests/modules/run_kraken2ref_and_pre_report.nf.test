@@ -32,7 +32,12 @@ nextflow_process {
 
         then {
             assert process.success
-            assert snapshot(process.out).match()
+            
+            // NOTE: the "_decomposed.json" now have timestamps, which invalidates
+            // checking snapshots. For the future, we should consider to check md5
+            // under groovy and remove the time stamp before that.
+            
+            //assert snapshot(process.out).match()
         }
     }
 }

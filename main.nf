@@ -32,7 +32,8 @@ log.info """${ANSI_RESET}
   Used parameters:
   -------------------------------------------
   --> general pipeline parameters:
-
+    --use_local_containers     : ${params.use_local_containers}
+    --use_registry_containers  : ${params.use_registry_containers}
     --entry_point              : ${params.entry_point}
     --containers_dir           : ${params.containers_dir}
     --results_dir              : ${params.results_dir}
