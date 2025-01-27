@@ -37,10 +37,6 @@
       "type": "string",
       "default": "2 7 7 80 10 50 500 -h -ngs"
     },
-    "run_scrubber": {
-      "type": "boolean",
-      "default": true
-    },
     "entry_point": {
       "type": "string",
       "default": "sort_reads"
@@ -54,9 +50,9 @@
     "db_library_fa_path": {
       "type": "string"
     },
-    "results_dir": {
+    "outdir": {
       "type": "string",
-      "default": ""
+      "default": "$launchDir/output/"
     },
     "do_scov2_subtyping": {
       "type": "boolean",
@@ -140,6 +136,47 @@
     "do_preprocessing": {
       "type": "boolean",
       "default": true
+    },
+    "use_local_containers": {
+      "type": "boolean"
+    },
+    "use_registry_containers": {
+      "type": "boolean",
+      "default": true
+    },
+    "run_hrr": {
+      "type": "boolean",
+      "default": true
+    },
+    "tracedir": {
+      "type": "string",
+      "default": "./results/pipeline_info"
+    },
+    "max_memory": {
+      "type": "string",
+      "default": "2.9 TB"
+    },
+    "max_cpus": {
+      "type": "integer",
+      "default": 256
+    },
+    "max_time": {
+      "type": "string",
+      "default": "30d"
+    },
+    "max_retries": {
+      "type": "integer",
+      "default": 2
+    },
+    "retry_strategy": {
+      "type": "string",
+      "default": "ignore"
+    },
+    "queue_size": {
+      "type": "string"
+    },
+    "submit_rate_limit": {
+      "type": "string"
     }
   }
 }
