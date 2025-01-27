@@ -35,7 +35,7 @@ process run_kraken {
     tag "${meta.id}"
     label "kraken"
 
-    publishDir "${params.results_dir}/${meta.id}", mode: 'copy'
+    publishDir "${params.outdir}/${meta.id}", mode: 'copy'
 
     input:
         tuple val(meta), path(fastqs) // tuple(sample_id, [fastq_pairs])
