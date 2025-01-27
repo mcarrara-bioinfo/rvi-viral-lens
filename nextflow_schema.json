@@ -148,10 +148,6 @@
       "type": "boolean",
       "default": true
     },
-    "run_hrr": {
-      "type": "boolean",
-      "default": true
-    },
     "tracedir": {
       "type": "string",
       "default": "./results/pipeline_info"
