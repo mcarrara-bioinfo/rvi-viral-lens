@@ -36,7 +36,7 @@ log.info """${ANSI_RESET}
     --use_registry_containers  : ${params.use_registry_containers}
     --entry_point              : ${params.entry_point}
     --containers_dir           : ${params.containers_dir}
-    --outdir              : ${params.outdir}
+    --outdir                   : ${params.outdir}
 
   --> SORT_READS_BY_REF workflow parameters:
     --manifest                   : ${params.manifest}
