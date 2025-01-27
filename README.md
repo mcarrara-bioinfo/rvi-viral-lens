@@ -208,7 +208,7 @@ python write_manifest.py ./path/to/my/fastqs_dir/ -fq1_ext my_r1_ext -fq2_ext my
 ```{bash}
 nextflow run /path/to/rvi_consensus_gen/main.nf --manifest /path/to/my/manifest.csv \
         --db_path /path/to/my/kraken_db \
-        --results_dir outputs/ \
+        --outdir outputs/ \
         --containers_dir /path/to/my/containers_dir/ \
         -profile sanger_stantard -resume -with-trace -with-report -with-timeline
 ```
@@ -218,7 +218,7 @@ Optionally is possible to start the pipeline from **GENERATE_CONSENSUS**
 ```{bash}
 nextflow run ${CHECKOUT}/main.nf --entry_point consensus_gen \
         --consensus_mnf sorted_manifest.csv
-        --results_dir $LAUNCHDIR/outputs/ \
+        --outdir $LAUNCHDIR/outputs/ \
         --containers_dir /path/to/containers_dir/ \
         -profile sanger_standard-resume -with-trace -with-report -with-timeline
 ```
@@ -429,13 +429,13 @@ The `params` block defines key user-modifiable settings for the workflow.
 
 #### Output Directory
 
-- `results_dir`: Directory where output files will be published.
+- `outdir`: Directory where output files will be published.
   - Default: `"$launchDir/output/"`.
 
 #### General
 
 - `containers_dir` [DEFAULT =  `containers/` dir of this repository] : By default, the pipeline relies on Singularity containers and __assumes__ all containers are present on this directory and were named on a specific manner
-- `results_dir` [DEFAULT = `$launchDir/output/`] : set where output files should be published. By default, it will write files to an `output/` dir (if not existent, it will be created) at pipeline launch directory.
+- `outdir` [DEFAULT = `$launchDir/output/`] : set where output files should be published. By default, it will write files to an `output/` dir (if not existent, it will be created) at pipeline launch directory.
 
 ### Containerization
 

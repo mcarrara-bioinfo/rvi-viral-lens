@@ -30,7 +30,7 @@ process bwa_alignment_and_post_processing {
     * 
     */
 
-    publishDir "${params.results_dir}/${meta.sample_id}/${meta.taxid}/", overwrite: true, mode: "copy", pattern:"*.bam*"
+    publishDir "${params.outdir}/${meta.sample_id}/${meta.taxid}/", overwrite: true, mode: "copy", pattern:"*.bam*"
 
     input:
         tuple val(meta), path(fastq), path(ref_files)

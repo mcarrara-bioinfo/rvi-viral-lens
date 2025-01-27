@@ -36,7 +36,7 @@ log.info """${ANSI_RESET}
     --use_registry_containers  : ${params.use_registry_containers}
     --entry_point              : ${params.entry_point}
     --containers_dir           : ${params.containers_dir}
-    --results_dir              : ${params.results_dir}
+    --outdir              : ${params.outdir}
 
   --> SORT_READS_BY_REF workflow parameters:
     --manifest                   : ${params.manifest}
@@ -232,7 +232,7 @@ workflow.onComplete {
   Completed at : ${ANSI_GREEN}${workflow.complete}${ANSI_RESET}
   Duration     : ${ANSI_GREEN}${workflow.duration}${ANSI_RESET}
   Success      : ${workflow.success ? ANSI_GREEN : ANSI_RED}${workflow.success}${ANSI_RESET}
-  Results Dir  : ${ANSI_GREEN}${file(params.results_dir)}${ANSI_RESET}
+  Results Dir  : ${ANSI_GREEN}${file(params.outdir)}${ANSI_RESET}
   Work Dir     : ${ANSI_GREEN}${workflow.workDir}${ANSI_RESET}
   Exit status  : ${ANSI_GREEN}${workflow.exitStatus}${ANSI_RESET}
   Error report : ${ANSI_GREEN}${workflow.errorReport ?: '-'}${ANSI_RESET}
