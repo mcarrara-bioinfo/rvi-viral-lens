@@ -32,8 +32,10 @@ process run_kraken {
     * ---------------------------------------------------------------
     */
 
-    tag "${meta.id}"
+    tag "${meta.id}[c=${task.cpus};m=${task.memory}]"
     label "kraken"
+    label 'mem_2'
+    label "cpu_16"
 
     publishDir "${params.outdir}/${meta.id}", mode: 'copy'
 
@@ -58,6 +60,7 @@ process run_kraken {
         --classified-out ${meta.id}.class_seqs#.fq \
         --unclassified-out ${meta.id}.unclass_seqs#.fq \
         --report ${meta.id}.report.txt \
+        --threads 16 \
         ${fastqs}
         """
 }
