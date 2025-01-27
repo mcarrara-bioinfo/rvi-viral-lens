@@ -34,7 +34,7 @@ log.info """${ANSI_RESET}
     --use_registry_containers  : ${params.use_registry_containers}
     --entry_point              : ${params.entry_point}
     --containers_dir           : ${params.containers_dir}
-    --outdir              : ${params.outdir}
+    --outdir                   : ${params.outdir}
     --run_preprocessing         : ${params.run_preprocessing}
 
   --> PREPROCESSING workflow parameters:
