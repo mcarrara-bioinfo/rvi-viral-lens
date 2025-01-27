@@ -179,7 +179,9 @@ If not using containers, all the software needs to be available at run time. Her
 
 ### build containers
 
-Recipes for the Singularity container used on this pipeline are available on this repository at `containers/` dir. To build the containers, run the commands bellow.
+By default, the pipeline will use the containers provided at [quay.io gsu-pipeline](https://quay.io/organization/gsu-pipelines).
+
+Singularity and Docker recipes for the containers used on this pipeline are available on this repository at `containers/` dir. To build the containers, run the commands bellow.
 
 ```{bash}
 cd containers/
@@ -190,7 +192,7 @@ sudo singularity build kraken.sif krakenContainer.sing
 sudo singularity build kraken2ref.sif kraken2ref.sing
 ```
 
-> NOTE: Currently we only support running on Singularity local containers. We should add Docker container registries.
+> NOTE: To use local containers on the pipeline set the parameters `use_local_containers` to `true` and `use_registry_containers` to `false`.
 
 [**(&uarr;)**](#contents)
 

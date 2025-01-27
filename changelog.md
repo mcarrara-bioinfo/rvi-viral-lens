@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 
 ## [UNRELEASED]
+- **[added]**: use quay.io containers by default
 - **[added]**: add preprocessing subworkflow (under rvi_toolbox)
 - **[added]**: add docker recipes for all containers
 - **[improvement]**: new container for ivar, without conda.

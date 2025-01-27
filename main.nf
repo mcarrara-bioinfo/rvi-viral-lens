@@ -30,7 +30,8 @@ log.info """${ANSI_RESET}
   Used parameters:
   -------------------------------------------
   --> general pipeline parameters:
-
+    --use_local_containers     : ${params.use_local_containers}
+    --use_registry_containers  : ${params.use_registry_containers}
     --entry_point              : ${params.entry_point}
     --containers_dir           : ${params.containers_dir}
     --results_dir              : ${params.results_dir}
@@ -210,6 +211,9 @@ def check_main_params(){
         errors += __check_if_params_file_exist("consensus_mnf", params.consensus_mnf)
     }
 
+    if (params.do_preprocessing==true){
+
+    }
     //errors += check_generate_consensus_params()
 
     if (errors > 0) {
