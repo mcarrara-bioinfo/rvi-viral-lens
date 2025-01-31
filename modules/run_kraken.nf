@@ -60,7 +60,7 @@ process run_kraken {
         --classified-out ${meta.id}.class_seqs#.fq \
         --unclassified-out ${meta.id}.unclass_seqs#.fq \
         --report ${meta.id}.report.txt \
-        --threads 16 \
+        --threads ${task.cpus} \
         ${fastqs}
         """
 }
