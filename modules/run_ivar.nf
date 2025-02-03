@@ -44,7 +44,7 @@ process run_ivar{
   */
 
   tag "${meta.id}"
-  publishDir "${params.results_dir}/${meta.sample_id}/${meta.taxid}/", mode: "copy", pattern: "*.{fa,tsv,txt}"
+  publishDir "${params.outdir}/${meta.sample_id}/${meta.taxid}/", mode: "copy", pattern: "*.{fa,tsv,txt}"
 
   label "ivar"
 

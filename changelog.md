@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 
 ## [UNRELEASED]
+
+- **[added]**: Implement PAM's nextflow commons retry strategy 
+- **[added]**: add sanger specific settings on sanger profile 
 - **[added]**: use quay.io containers by default
 - **[added]**: add preprocessing subworkflow (under rvi_toolbox)
 - **[added]**: add docker recipes for all containers

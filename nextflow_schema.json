@@ -7,7 +7,7 @@
   "properties": {
     "containers_dir": {
       "type": "string",
-      "default": "/lustre/scratch126/gsu/team112/personal/ad45/rvi_box/DT-3028_add_preprocessing_to_VP/viral_pipeline/containers/"
+      "default": ""
     },
     "run_trimmomatic": {
       "type": "boolean",
@@ -23,11 +23,11 @@
     },
     "adapter_fasta": {
       "type": "string",
-      "default": "/data/pam/software/trimmomatic/adapter_fasta/solexa-with-nextseqPR-adapters.fasta"
+      "default": ""
     },
     "trimmomatic_options": {
       "type": "string",
-      "default": "ILLUMINACLIP:/data/pam/software/trimmomatic/adapter_fasta/solexa-with-nextseqPR-adapters.fasta:2:10:7:1 CROP:151 SLIDINGWINDOW:4:20 MINLEN:70"
+      "default": "ILLUMINACLIP:${params.adapter_fasta}:2:10:7:1 CROP:151 SLIDINGWINDOW:4:20 MINLEN:70"
     },
     "run_trf": {
       "type": "boolean",
@@ -54,9 +54,9 @@
     "db_library_fa_path": {
       "type": "string"
     },
-    "results_dir": {
+    "outdir": {
       "type": "string",
-      "default": "/lustre/scratch126/gsu/team112/personal/ad45/rvi_box/DT-3028_add_preprocessing_to_VP/viral_pipeline/output/"
+      "default": "$launchDir/output/"
     },
     "do_scov2_subtyping": {
       "type": "boolean",
@@ -140,6 +140,43 @@
     "run_preprocessing": {
       "type": "boolean",
       "default": true
+    },
+    "use_local_containers": {
+      "type": "boolean"
+    },
+    "use_registry_containers": {
+      "type": "boolean",
+      "default": true
+    },
+    "tracedir": {
+      "type": "string",
+      "default": "./results/pipeline_info"
+    },
+    "max_memory": {
+      "type": "string",
+      "default": "2.9 TB"
+    },
+    "max_cpus": {
+      "type": "integer",
+      "default": 256
+    },
+    "max_time": {
+      "type": "string",
+      "default": "30d"
+    },
+    "max_retries": {
+      "type": "integer",
+      "default": 2
+    },
+    "retry_strategy": {
+      "type": "string",
+      "default": "ignore"
+    },
+    "queue_size": {
+      "type": "string"
+    },
+    "submit_rate_limit": {
+      "type": "string"
     }
   }
 }
