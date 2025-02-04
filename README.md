@@ -8,6 +8,7 @@ The **VIRAL_PIPELINE** is a Nextflow pipeline developed under the context of the
 
 ---
 ## Contents
+- [Contents](#contents)
 - [Pipeline Summary](#pipeline-summary)
 - [How to Cite](#how-to-cite)
 - [Quick Start](#quick-start)
@@ -103,7 +104,7 @@ Assuming [dependencies](#dependencies) are installed on the system:
 
 ```bash
 # clone the repo
-git clone https://gitlab.internal.sanger.ac.uk/malariagen1/viral/viral_pipeline.git
+git clone --recursive https://gitlab.internal.sanger.ac.uk/malariagen1/viral/viral_pipeline.git
 cd viral_pipeline/
 # build containers
 cd containers/
