@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 
-## [UNRELEASED]
+## [0.3.3]
 
 - **[added]**: Implement PAM's nextflow commons retry strategy 
 - **[added]**: add sanger specific settings on sanger profile 
