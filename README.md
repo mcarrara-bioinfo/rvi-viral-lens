@@ -192,7 +192,7 @@ sudo singularity build kraken.sif krakenContainer.sing
 sudo singularity build kraken2ref.sif kraken2ref.sing
 ```
 
-> NOTE: To use local containers on the pipeline set the parameters `use_local_containers` to `true` and `use_registry_containers` to `false`.
+> NOTE: To use local containers on the pipeline set the parameters `use_local_containers` to `true` and `use_registry_containers` to `false` either at the config file or at the CLI.
 
 [**(&uarr;)**](#contents)
 
