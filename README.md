@@ -2,7 +2,7 @@
 
 ![](./docs/assets/vira_pipeline_logo_placeholder.png)
 
-The **VIRAL_PIPELINE** is a Nextflow pipeline developed under the context of the [RVI project](https://www.sanger.ac.uk/group/respiratory-virus-and-microbiome-initiative/) by [GSU](https://www.sanger.ac.uk/collaboration/genomic-surveillance-unit/) and its main goal is to identify the presence of Flu, SARS-CoV-2 and RSV and obtain, if possible, high quality consensus sequences for those virus. For more details, check the [[ADD REFERENCE PAPER]]()
+The **VIRAL_PIPELINE** is a Nextflow pipeline developed under the context of the [RVI project](https://www.sanger.ac.uk/group/respiratory-virus-and-microbiome-initiative/) by [GSU](https://www.sanger.ac.uk/collaboration/genomic-surveillance-unit/) and its main goal is to identify the presence of Flu, SARS-CoV-2 and RSV and obtain, if possible, high quality consensus sequences for those virus.
 
 
 ---
