@@ -26,11 +26,91 @@ def modifyPathsAndWriteCsv(String inputFile) {
 }
 
 modifyPathsAndWriteCsv("tests/test_data/test_manifests/test_input_manifest.csv")
+modifyPathsAndWriteCsv("tests/test_data/test_manifests/test_input_manifest.csv")
+modifyPathsAndWriteCsv("tests/test_data/test_manifest_checks/consecutive_underscore_mnf.csv")
+modifyPathsAndWriteCsv("tests/test_data/test_manifest_checks/duplicated_sample_id_mnf.csv")
+modifyPathsAndWriteCsv("tests/test_data/test_manifest_checks/empty_sample_id_mnf.csv")
+modifyPathsAndWriteCsv("tests/test_data/test_manifest_checks/mixed_errors_mnf.csv")
 
 nextflow_pipeline {
 
     name "Test Workflow main.nf"
     script "main.nf"
+
+    test("Should fail on consecutive underscore on sample id") {
+
+        when {
+            params {
+                db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
+                test_loc="${projectDir}/tests/test_data"
+                db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
+                manifest="${params.test_loc}/test_manifest_checks/consecutive_underscore_mnf_located.csv"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.exitStatus == 1
+            assert workflow.stdout.contains('ERROR ~ Non alphanumeric sample id sample__04 [\'_\' is permitted]')
+        }
+    }
+
+    test("Should fail on duplicated sample id") {
+
+        when {
+            params {
+                db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
+                test_loc="${projectDir}/tests/test_data"
+                db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
+                manifest="${params.test_loc}/test_manifest_checks/duplicated_sample_id_mnf_located.csv"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.exitStatus == 1
+            assert workflow.stdout.contains('ERROR ~ sample01 is duplicated')
+        }
+    }
+
+    test("Should fail on empty sample id") {
+
+        when {
+            params {
+                test_loc="${projectDir}/tests/test_data"
+                db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
+                manifest="${params.test_loc}/test_manifest_checks/empty_sample_id_mnf_located.csv"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.exitStatus == 1
+            assert workflow.stdout.contains('ERROR ~ Empty sample_id detected.')
+        }
+    }
+
+    test("Should fail and report on multiple errors on the manifest sample id") {
+
+        when {
+            params {
+                run_preprocessing=false
+                test_loc="${projectDir}/tests/test_data"
+                db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
+                manifest="${params.test_loc}/test_manifest_checks/mixed_errors_mnf_located.csv"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.exitStatus == 1
+            assert workflow.stdout.contains('ERROR ~ Non alphanumeric sample id sample__04 [\'_\' is permitted]')
+            assert workflow.stdout.contains('ERROR ~ sample01 is duplicated')
+            assert workflow.stdout.contains('ERROR ~ Non alphanumeric sample id sample#03 [\'_\' is permitted]')
+            assert workflow.stdout.contains('ERROR ~ 3 critical errors in the manifest were detected. Please check README for more details.')
+
+        }
+    }
 
     test("Should run without failures") {
 
@@ -38,6 +118,7 @@ nextflow_pipeline {
             params {
                 // define parameters here. Example: 
                 // outdir = "tests/results"
+                run_preprocessing=false
                 db_path="${projectDir}/tests/test_data/test_kraken_databases/minimal"
                 manifest="${projectDir}/tests/test_data/test_manifests/test_input_manifest_located.csv"
             }

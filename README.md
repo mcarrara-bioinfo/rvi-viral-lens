@@ -2,9 +2,8 @@
 
 ![](./docs/assets/vira_pipeline_logo_placeholder.png)
 
-The **VIRAL_PIPELINE** is a Nextflow pipeline developed under the context of the [RVI project[add link]]() by [GSU[add link]]() and its main goal is to identify the presence of Flu, SARS-CoV-2 and RSV and obtain, if possible, high quality consensus sequences for those virus. For more details, check the [[ADD REFERENCE PAPER]]()
+The **VIRAL_PIPELINE** is a Nextflow pipeline developed under the context of the [RVI project](https://www.sanger.ac.uk/group/respiratory-virus-and-microbiome-initiative/) by [GSU](https://www.sanger.ac.uk/collaboration/genomic-surveillance-unit/) and its main goal is to identify the presence of Flu, SARS-CoV-2 and RSV and obtain, if possible, high quality consensus sequences for those virus.
 
-> [THE CURRENT LOGO IS A **PLACEHOLDER** AND MUST BE UPDATED TO THE FINAL ONE BEFORE OPEN SOURCE THIS]
 
 ---
 ## Contents
@@ -66,7 +65,9 @@ The **VIRAL_PIPELINE** is a Nextflow pipeline developed under the context of the
 
 ## Pipeline Summary
 
-The pipeline takes a manifest containing  **fastq pairs file** paths and a **kraken detabase** as inputs (check [Inputs section](#inputs) for more details) and outputs a **classification report**, **consensus sequences** and a **collection of intermediate files** (check [[ADD OUTPUT DOCUMENTATION LINK]]() for more details). Here is an broad overview of the pipeline logic
+The pipeline takes a manifest containing  **fastq pairs file** paths and a **kraken detabase** as inputs (check [Inputs section](#inputs) for more details) and outputs a **classification report**, **consensus sequences** and a **collection of intermediate files**. Here is an broad overview of the pipeline logic
+
+0. **Preprocessing** (Optional): An optional preprocessing workflow is provided on this pipeline. The Preprocessing pipeline remove adapters (via `trimmomatic`), tandem repeats (via `TRF`) and remove human reads (via `sra-human-scrubber`) from fastq files.
 
 1. **Sort Reads**: The initial step is sort reads using `kraken2` for each fastq pairs according to the database provided. The classified reads is used as input to `kraken2ref` which will generate one pair of fastq files per taxid found.
    - An option to split big files is provided (check [Parameter section](#parameters)).
@@ -77,6 +78,8 @@ The pipeline takes a manifest containing  **fastq pairs file** paths and a **kra
 
 
 4. **SARS-CoV-2 Subtyping**: SARS-CoV-2 subtyping can be done if present on the sample
+
+>**NOTE**: An optional preprocessing workflow is provided 
 
 ![](./docs/assets/metro_map.png)
 
@@ -100,7 +103,7 @@ Assuming [dependencies](#dependencies) are installed on the system:
 
 ```bash
 # clone the repo
-git clone https://gitlab.internal.sanger.ac.uk/malariagen1/viral/viral_pipeline.git
+git clone --recursive https://gitlab.internal.sanger.ac.uk/malariagen1/viral/viral_pipeline.git
 cd viral_pipeline/
 # build containers
 cd containers/
@@ -176,7 +179,9 @@ If not using containers, all the software needs to be available at run time. Her
 
 ### build containers
 
-Recipes for the Singularity container used on this pipeline are available on this repository at `containers/` dir. To build the containers, run the commands bellow.
+By default, the pipeline will use the containers provided at [quay.io gsu-pipeline](https://quay.io/organization/gsu-pipelines).
+
+Singularity and Docker recipes for the containers used on this pipeline are available on this repository at `containers/` dir. To build the containers, run the commands bellow.
 
 ```{bash}
 cd containers/
@@ -187,7 +192,7 @@ sudo singularity build kraken.sif krakenContainer.sing
 sudo singularity build kraken2ref.sif kraken2ref.sing
 ```
 
-> NOTE: Currently we only support running on Singularity local containers. We should add Docker container registries.
+> NOTE: To use local containers on the pipeline set the parameters `use_local_containers` to `true` and `use_registry_containers` to `false` either at the config file or at the CLI.
 
 [**(&uarr;)**](#contents)
 
@@ -205,7 +210,7 @@ python write_manifest.py ./path/to/my/fastqs_dir/ -fq1_ext my_r1_ext -fq2_ext my
 ```{bash}
 nextflow run /path/to/rvi_consensus_gen/main.nf --manifest /path/to/my/manifest.csv \
         --db_path /path/to/my/kraken_db \
-        --results_dir outputs/ \
+        --outdir outputs/ \
         --containers_dir /path/to/my/containers_dir/ \
         -profile sanger_stantard -resume -with-trace -with-report -with-timeline
 ```
@@ -215,7 +220,7 @@ Optionally is possible to start the pipeline from **GENERATE_CONSENSUS**
 ```{bash}
 nextflow run ${CHECKOUT}/main.nf --entry_point consensus_gen \
         --consensus_mnf sorted_manifest.csv
-        --results_dir $LAUNCHDIR/outputs/ \
+        --outdir $LAUNCHDIR/outputs/ \
         --containers_dir /path/to/containers_dir/ \
         -profile sanger_standard-resume -with-trace -with-report -with-timeline
 ```
@@ -426,13 +431,13 @@ The `params` block defines key user-modifiable settings for the workflow.
 
 #### Output Directory
 
-- `results_dir`: Directory where output files will be published.
+- `outdir`: Directory where output files will be published.
   - Default: `"$launchDir/output/"`.
 
 #### General
 
 - `containers_dir` [DEFAULT =  `containers/` dir of this repository] : By default, the pipeline relies on Singularity containers and __assumes__ all containers are present on this directory and were named on a specific manner
-- `results_dir` [DEFAULT = `$launchDir/output/`] : set where output files should be published. By default, it will write files to an `output/` dir (if not existent, it will be created) at pipeline launch directory.
+- `outdir` [DEFAULT = `$launchDir/output/`] : set where output files should be published. By default, it will write files to an `output/` dir (if not existent, it will be created) at pipeline launch directory.
 
 ### Containerization
 
