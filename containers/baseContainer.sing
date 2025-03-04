@@ -4,7 +4,7 @@ From: ubuntu:20.04
 %labels
 Maintainer ARD team
 Build 0.1
-Samtools 1.8
+Samtools 1.21
 BWA 0.7.17
 
 
@@ -34,7 +34,7 @@ BWA 0.7.17
 %post
     DEBIAN_FRONTEND=noninteractive
     BWA_VERSION=0.7.17
-    HTSLIB_VERSION=1.8 # for samtools
+    HTSLIB_VERSION=1.21 # for samtools
 
     apt update
     apt install -y wget autoconf gcc zlib1g zlib1g-dev libbz2-dev gfortran \
@@ -46,8 +46,8 @@ BWA 0.7.17
     mkdir /app/
     cd /app/
     # Setup HTSLib
-    wget -O "htslib.tar.gz" https://github.com/samtools/htslib/archive/${HTSLIB_VERSION}.tar.gz
-    tar -xf htslib.tar.gz
+    wget -O "htslib.tar.bz2" https://github.com/samtools/htslib/releases/download/${HTSLIB_VERSION}/htslib-${HTSLIB_VERSION}.tar.bz2
+    tar -xf htslib.tar.bz2
     cd htslib-${HTSLIB_VERSION}
     autoheader
     autoreconf -i  # Build the configure script and install files it uses
@@ -58,7 +58,7 @@ BWA 0.7.17
     # --- | SAMTOOLS | ---------------------------------------------------------------------------|
     cd /app/
     # Retrieve and compile Samtools
-    wget -O "samtools.tar.gz" https://github.com/samtools/samtools/archive/${HTSLIB_VERSION}.tar.gz
+    wget -O "samtools.tar.gz" https://github.com/samtools/samtools/releases/download/$SAMTOOLS_VER/samtools-$SAMTOOLS_VER.tar.bz2
     tar xf samtools.tar.gz
     cd samtools-${HTSLIB_VERSION}
     autoheader
