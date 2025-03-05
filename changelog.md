@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [UNRELEASED]
+
+**[improvment]**: update samtools to `1.21` for the base and ivar container
+
 ## [0.4.1]
 
 **[hotfix]**: `outdir` default value set as the same in `nextflow-commons.config`
