@@ -149,7 +149,7 @@ If not using containers, all the software needs to be available at run time. Her
 
 - **Base container**
 
-  - Samtools = `1.8`
+  - Samtools = `1.21`
   - BWA = `0.7.17`
   - biopython = `1.79`
   - pysam = `0.22.0`
@@ -157,7 +157,7 @@ If not using containers, all the software needs to be available at run time. Her
   - matplotlib = `3.3.4`
 
 - **Ivar container**
-  - samtools = `1.11`
+  - samtools = `1.21`
   - BWA = `0.7.17`
   - iVar = `1.4.3`
 

@@ -12,8 +12,8 @@ Stage: spython-base
 
 %post
     # // --- STAGING --- //
-    HTSLIB_VER="1.10.2"
-    SAMTOOLS_VER="1.9"
+    HTSLIB_VER="1.21"
+    SAMTOOLS_VER="1.21"
     IVAR_TAG="v1.4.3"
     BWA_VER="0.7.18"
     SNAKEMAKE_VER="7.32.4"
