@@ -5,20 +5,20 @@
                 "0": [
                     [
                         {
-                            "id": "test.9000000",
+                            "id": "test2.9000000",
                             "taxid": 9000000,
-                            "sample_id": "test"
+                            "sample_id": "test2"
                         },
-                        "test.9000000.qc.csv:md5,ed7eb07a9964c8e5e4a430ff9ece7c85",
-                        "test.9000000,0.42,0.00,2360,32358,test.9000000.fa,test.9000000.sorted.bam,TRUE,0,10,0\r\n"
+                        "test2.9000000.qc.csv:md5,ac970aac27fe04590637d0e9cbc0c931",
+                        "test2.9000000,0.42,99.58,2360,42182,test2.9000000.consensus.fa,test2.9000000.sorted.bam,TRUE,45225,10,15\r\n"
                     ]
                 ]
             }
         ],
         "meta": {
             "nf-test": "0.8.4",
-            "nextflow": "23.10.0"
+            "nextflow": "24.10.3"
         },
-        "timestamp": "2024-09-17T13:27:20.902697473"
+        "timestamp": "2025-03-06T11:47:42.429924"
     }
 }
