@@ -75,7 +75,7 @@ with open(source_fna_path, "r") as source_file:
 # Write output only if a matching sequence is found
 print(f"{nfound} sequences for {taxid_to_find}")
 if found:
-    ## replace open_paren with hypen and remove close_paren
+    ## replace open_paren with hyphen and remove close_paren
     ## this is to avoid those chars being an issue when
     ## loading the subsequently generated bam files into IGV
     header_to_write = header.replace("(", "-").replace(")", "")
