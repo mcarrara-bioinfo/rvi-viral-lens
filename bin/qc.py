@@ -114,10 +114,9 @@ def generate_qc_file(args: argparse.ArgumentParser.parse_args):
     # Therefore, to compute the number of unmapped reads:
     # unmapped_reads = (paired + secondary + suplementary) - mapped_reads
     ##
-    total_secondary = int(flagstat_values[2])
-    total_supplementary = int(flagstat_values[3])
-    #total_duplicates = int(flagstat_values[3])
-    total_reads = int(qc_values['total_paired_reads']) + total_supplementary + total_secondary
+
+    # First value is the sum of paired + secondary + supplementary
+    total_reads = int(flagstat_values[0])
     qc_values['total_unmapped_reads'] = total_reads - int(qc_values['total_mapped_reads'])
 
     # Add non-QC columns to QC dict
