@@ -4,7 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [UNRELEASED]
 
-**[improvement]**: update samtools to `1,21` for the qc container 
+**[fix]**: Fix unknown config attribute `CONTAINER_DIR` for tests
+**[improvement]**: update samtools to `1.21` for the qc container
 **[fix]**: unmapped reads extracted from flagstat by qc script fixed
 **[improvement]**: run nf-test on local containers support added
 **[fix]**: ivar unit test emtpy consensus fix
