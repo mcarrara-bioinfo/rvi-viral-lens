@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 **[improvement]**: run nf-test on local containers support added
 **[fix]**: ivar unit test emtpy consensus fix
 **[improvement]**: update samtools to `1.21` for the base and ivar container
+**[fix]**: Remove parens from reference fasta header to prevent propagation to BAM header
 
 ## [0.4.1]
 

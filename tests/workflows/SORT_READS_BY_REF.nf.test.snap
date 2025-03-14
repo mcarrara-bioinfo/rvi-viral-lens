@@ -28,9 +28,9 @@
                             "taxid": "9000016",
                             "id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000016",
                             "ref_files": [
-                                "9000016.fa:md5,71cde01231f0c71b5f77b8b6710c697d",
+                                "9000016.fa:md5,f5f85d01f06c78fe44ecb9dfce3652b7",
                                 "9000016.fa.amb:md5,be1cb7424ad94cdb4ce7fdfe71297425",
-                                "9000016.fa.ann:md5,f72c27e667804d28f8436b1a3527d775",
+                                "9000016.fa.ann:md5,9bafd2cce13f1dc7e69d9a9cdaa77e65",
                                 "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
                                 "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
                                 "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
@@ -66,9 +66,9 @@
                             "taxid": "9000016",
                             "id": "SARSCoV2_FluH1N1_50K_each_P1.9000016",
                             "ref_files": [
-                                "9000016.fa:md5,71cde01231f0c71b5f77b8b6710c697d",
+                                "9000016.fa:md5,f5f85d01f06c78fe44ecb9dfce3652b7",
                                 "9000016.fa.amb:md5,be1cb7424ad94cdb4ce7fdfe71297425",
-                                "9000016.fa.ann:md5,f72c27e667804d28f8436b1a3527d775",
+                                "9000016.fa.ann:md5,9bafd2cce13f1dc7e69d9a9cdaa77e65",
                                 "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
                                 "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
                                 "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
@@ -85,9 +85,9 @@
                             "taxid": "9000016",
                             "id": "Zeptometrix_Panel_2_1_Control1_P1.9000016",
                             "ref_files": [
-                                "9000016.fa:md5,71cde01231f0c71b5f77b8b6710c697d",
+                                "9000016.fa:md5,f5f85d01f06c78fe44ecb9dfce3652b7",
                                 "9000016.fa.amb:md5,be1cb7424ad94cdb4ce7fdfe71297425",
-                                "9000016.fa.ann:md5,f72c27e667804d28f8436b1a3527d775",
+                                "9000016.fa.ann:md5,9bafd2cce13f1dc7e69d9a9cdaa77e65",
                                 "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
                                 "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
                                 "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
@@ -135,9 +135,9 @@
                             "taxid": "9000016",
                             "id": "FluH1N1_SARSCoV2_hPIV1_33K_ea_P1.9000016",
                             "ref_files": [
-                                "9000016.fa:md5,71cde01231f0c71b5f77b8b6710c697d",
+                                "9000016.fa:md5,f5f85d01f06c78fe44ecb9dfce3652b7",
                                 "9000016.fa.amb:md5,be1cb7424ad94cdb4ce7fdfe71297425",
-                                "9000016.fa.ann:md5,f72c27e667804d28f8436b1a3527d775",
+                                "9000016.fa.ann:md5,9bafd2cce13f1dc7e69d9a9cdaa77e65",
                                 "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
                                 "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
                                 "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
@@ -173,9 +173,9 @@
                             "taxid": "9000016",
                             "id": "SARSCoV2_FluH1N1_50K_each_P1.9000016",
                             "ref_files": [
-                                "9000016.fa:md5,71cde01231f0c71b5f77b8b6710c697d",
+                                "9000016.fa:md5,f5f85d01f06c78fe44ecb9dfce3652b7",
                                 "9000016.fa.amb:md5,be1cb7424ad94cdb4ce7fdfe71297425",
-                                "9000016.fa.ann:md5,f72c27e667804d28f8436b1a3527d775",
+                                "9000016.fa.ann:md5,9bafd2cce13f1dc7e69d9a9cdaa77e65",
                                 "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
                                 "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
                                 "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
@@ -192,9 +192,9 @@
                             "taxid": "9000016",
                             "id": "Zeptometrix_Panel_2_1_Control1_P1.9000016",
                             "ref_files": [
-                                "9000016.fa:md5,71cde01231f0c71b5f77b8b6710c697d",
+                                "9000016.fa:md5,f5f85d01f06c78fe44ecb9dfce3652b7",
                                 "9000016.fa.amb:md5,be1cb7424ad94cdb4ce7fdfe71297425",
-                                "9000016.fa.ann:md5,f72c27e667804d28f8436b1a3527d775",
+                                "9000016.fa.ann:md5,9bafd2cce13f1dc7e69d9a9cdaa77e65",
                                 "9000016.fa.bwt:md5,39aba8c17eaf29662a62e33bdfedff1d",
                                 "9000016.fa.pac:md5,71dd7e7feda74ca74fb2eed266a0d697",
                                 "9000016.fa.sa:md5,3d2f78913cf73958df6d260ee344fd95"
@@ -209,9 +209,9 @@
             }
         ],
         "meta": {
-            "nf-test": "0.8.4",
-            "nextflow": "23.10.1"
+            "nf-test": "0.9.0",
+            "nextflow": "24.10.5"
         },
-        "timestamp": "2024-10-29T12:50:01.444004"
+        "timestamp": "2025-03-12T15:19:30.373236"
     }
 }
