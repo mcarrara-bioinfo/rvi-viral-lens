@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
 process run_kraken {
     /*
     *                 Assign Reads to Taxids

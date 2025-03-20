@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
 params.qc_minimum_depth = 10
 
 process run_qc_script {

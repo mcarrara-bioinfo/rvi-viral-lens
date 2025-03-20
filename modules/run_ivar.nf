@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
 params.ivar_min_depth = 10
 params.ivar_freq_threshold = 0.75
 

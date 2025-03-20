@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
 process get_taxid_reference_files{
     /*
     *         Fetch Fasta Sequence Files for a Given Taxid
