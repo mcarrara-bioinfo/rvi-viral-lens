@@ -1,3 +1,5 @@
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
+
 include {run_kraken} from '../modules/run_kraken.nf'
 include {get_taxid_reference_files} from '../modules/get_taxid_references.nf'
 include {run_k2r_sort_reads; run_k2r_dump_fastqs_and_pre_report; concatenate_fqs_parts} from '../modules/run_kraken2ref_and_pre_report.nf'

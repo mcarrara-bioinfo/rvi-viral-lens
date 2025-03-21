@@ -1,3 +1,5 @@
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
+
 include {run_qc_script} from '../modules/run_qc_script.nf'
 
 workflow COMPUTE_QC_METRICS {

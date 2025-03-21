@@ -1,3 +1,5 @@
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
+
 nextflow_workflow {
 
     name "Test Workflow COMPUTE_QC_METRICS"

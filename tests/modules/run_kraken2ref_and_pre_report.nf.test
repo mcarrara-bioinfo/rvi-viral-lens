@@ -1,3 +1,5 @@
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
+
 nextflow_process {
 
     name "Test Process run_kraken2ref_and_pre_report process"
