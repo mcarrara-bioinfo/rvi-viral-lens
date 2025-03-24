@@ -1,9 +1,9 @@
 [![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A523.10.1-23aa62.svg)](https://www.nextflow.io/) [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/) ![Nf-test](https://img.shields.io/badge/NFtest-%E2%89%A50.8.4-23aa62.svg?labelColor=0000)
 
-![](./docs/assets/vira_pipeline_logo_placeholder.png)
+# Viral Lens
 
-The **VIRAL_PIPELINE** is a Nextflow pipeline developed under the context of the [RVI project](https://www.sanger.ac.uk/group/respiratory-virus-and-microbiome-initiative/) by [GSU](https://www.sanger.ac.uk/collaboration/genomic-surveillance-unit/) and its main goal is to identify the presence of Flu, SARS-CoV-2 and RSV and obtain, if possible, high quality consensus sequences for those virus.
-
+The **Viral Lens** is a bioinformatic pipeline deal with short-read sequencing data generated from the bait-capture protocols for enrichment designed under the context of the [RVI project](https://www.sanger.ac.uk/group/respiratory-virus-and-microbiome-initiative/) by [GSU](https://www.sanger.ac.uk/collaboration/genomic-surveillance-unit/).
+This pipeline will generate, if possible, high quality consensus sequences for every virus identified according to a kraken database.
 
 ---
 ## Contents
@@ -69,7 +69,7 @@ The pipeline takes a manifest containing  **fastq pairs file** paths and a **kra
 
 0. **Preprocessing** (Optional): An optional preprocessing workflow is provided on this pipeline. The Preprocessing pipeline remove adapters (via `trimmomatic`), tandem repeats (via `TRF`) and remove human reads (via `sra-human-scrubber`) from fastq files.
 
-1. **Sort Reads**: The initial step is sort reads using `kraken2` for each fastq pairs according to the database provided. The classified reads is used as input to `kraken2ref` which will generate one pair of fastq files per taxid found.
+1. **Sort Reads**: The initial step is sort reads using `kraken2` for each fastq pairs according to the database provided. The classified reads is used as input to [kraken2ref](https://github.com/genomic-surveillance/kraken2ref) which will generate one pair of fastq files per taxid found.
    - An option to split big files is provided (check [Parameter section](#parameters)).
 
 2. **Generate Consensus**: After all samples been classified, all references observed for that samples batch are fetch from the `kraken database` (or an arbitrary fasta file provided by the user). The classfied reads are aligned to their respective references (via `bwa`). The alignment is used as input for `ivar` to obtain a consensus sequence.
@@ -80,8 +80,6 @@ The pipeline takes a manifest containing  **fastq pairs file** paths and a **kra
 4. **SARS-CoV-2 Subtyping**: SARS-CoV-2 subtyping can be done if present on the sample
 
 >**NOTE**: An optional preprocessing workflow is provided 
-
-![](./docs/assets/metro_map.png)
 
 ---
 
@@ -105,7 +103,7 @@ Assuming [dependencies](#dependencies) are installed on the system:
 # clone the repo
 git clone --recursive https://gitlab.internal.sanger.ac.uk/malariagen1/viral/viral_pipeline.git
 cd viral_pipeline/
-# build containers
+# (optional) build containers
 cd containers/
 sudo singularity build base_container.sif baseContainer.sing
 sudo singularity build ivar.sif ivarContainer.sing
@@ -143,7 +141,7 @@ nextflow run ${PIPELINE_CODES}/main.nf --manifest ${MANIFEST} \
 - [Nextflow](https://www.nextflow.io) (tested on `23.10.1`)
 - [Singularity](https://docs.sylabs.io/guides/latest/user-guide/) (required to use Singularity Containers, tested on ``ce version 3.11.4``)
 
-> We strongly recommend to run the pipeline using the containers recipe provided at `containers/` subdir.
+> We strongly recommend to run the pipeline using the containers provided at [quay.io gsu-pipeline](https://quay.io/organization/gsu-pipelines).
 
 If not using containers, all the software needs to be available at run time. Here is a list of all the softwares versions currently in use in the pipeline as set on each container.
 
@@ -215,16 +213,6 @@ nextflow run /path/to/rvi_consensus_gen/main.nf --manifest /path/to/my/manifest.
         -profile sanger_stantard -resume -with-trace -with-report -with-timeline
 ```
 
-Optionally is possible to start the pipeline from **GENERATE_CONSENSUS**
-
-```{bash}
-nextflow run ${CHECKOUT}/main.nf --entry_point consensus_gen \
-        --consensus_mnf sorted_manifest.csv
-        --outdir $LAUNCHDIR/outputs/ \
-        --containers_dir /path/to/containers_dir/ \
-        -profile sanger_standard-resume -with-trace -with-report -with-timeline
-```
-
 [**(&uarr;)**](#contents)
 
 ## Inputs
@@ -232,7 +220,7 @@ nextflow run ${CHECKOUT}/main.nf --entry_point consensus_gen \
 This pipeline relies on two **main inputs**:
 
 - **`manifest`** : CSV Manifest of input fastq file pairs.
-  - Must have `sample_id`,`reads_1` and `reads_2` collumns
+  - Must have `sample_id`,`reads_1` and `reads_2` columns
   - If you have your set of fastq pairs in a single dir, a script (`write_manifest.py`) is provided to facilitate this process.
 
 - **`db_path`** : Path of a valid [kraken2 database](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown#kraken-2-databases)
@@ -286,8 +274,6 @@ The pipeline only requirement assumes a valid Kraken Database.
 However, this pipeline was developed under the RVI project and the following Database were developed to be used on this pipeline
 
 **[ADD DESCRIPTION OF THE KRAKEN DATABASE SPECIFICS]**
-
-> **NOTE**: if using the `consensus_gen` entry point, the manifest must containing pair ended reads and genome reference files for each pair. must have `sample_id`, `taxid`, `ref_files`, `reads_1`, `reads_2`
 
 [**(&uarr;)**](#contents)
 
@@ -708,6 +694,6 @@ This command processes the provided files and generates a QC summary report in `
 
 ## Licence
 
-[ADD LICENSE]
+[GPL-3](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
 [**(&uarr;)**](#contents)
