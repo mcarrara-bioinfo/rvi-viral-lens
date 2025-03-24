@@ -3,9 +3,8 @@ LABEL NAME PangolinContainer
 LABEL AUTHOR Antonio Marinho
 LABEL ID ad45
 LABEL TEAM ARD/DAE
-LABEL JIRA_TICKET https://jira.sanger.ac.uk/browse/DT-1895
 LABEL LINUX_DIST Ubuntu:22.04
-LABEL REPO https://gitlab.internal.sanger.ac.uk/malariagen1/rvi/viral_pipeline
+LABEL REPO https://github.com/genomic-surveillance/rvi-viral-lens
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN mkdir /app/ &&\

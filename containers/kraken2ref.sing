@@ -8,7 +8,7 @@ Stage: spython-base
     ID ad45
     TEAM ARD/DAE
     JIRA_TICKET DT-1998
-    REPO https://gitlab.internal.sanger.ac.uk/malariagen1/viral/viral_pipeline.git
+    REPO https://github.com/genomic-surveillance/rvi-viral-lens
 
 %post
  
