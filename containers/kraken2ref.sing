@@ -49,7 +49,7 @@ pip3 install pytest==6.2.2 importlib-resources==5.1.0 flake8==7.0.0 \
                 pandas==2.1.4 cached-property==1.5.2 scipy==1.12.0
 
 # | -- install from source
-git clone https://gitlab.internal.sanger.ac.uk/malariagen1/misc_utils/kraken2ref.git --branch $KRAKEN2REF_RELEASE
+git clone https://github.com/genomic-surveillance/kraken2ref.git --branch $KRAKEN2REF_RELEASE
 cd kraken2ref/
 pip install .
 
