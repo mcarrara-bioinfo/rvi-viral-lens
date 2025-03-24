@@ -88,7 +88,7 @@ The pipeline takes a manifest containing  **fastq pairs file** paths and a **kra
 
 ## How to Cite
 
-[ADD CITATION]
+To be published.
 
 [**(&uarr;)**](#contents)
 
