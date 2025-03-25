@@ -110,6 +110,11 @@ sudo singularity build ivar.sif ivarContainer.sing
 sudo singularity build pangolin.sif pangolinContainer.sing
 sudo singularity build kraken.sif krakenContainer.sing
 sudo singularity build kraken2ref.sif kraken2ref.sing
+
+# (optional) Download database
+cd ../
+wget https://rvi_kraken2_dbs.cog.sanger.ac.uk/refseq_ncbiFlu_kfv2_20241027.tar.gz
+tar -xf  refseq_ncbiFlu_kfv2_20241027.tar.gz
 ```
 
 2. Run pipeline
@@ -271,9 +276,16 @@ python write_manifest.py "output/*/reads_by_taxon/*.extracted_{1,2}.fq" \
 ### Kraken Database
 
 The pipeline only requirement assumes a valid Kraken Database.
-However, this pipeline was developed under the RVI project and the following Database were developed to be used on this pipeline
+However, this pipeline was developed under the RVI project and the following Database were developed to be used on this pipeline.
 
 **[ADD DESCRIPTION OF THE KRAKEN DATABASE SPECIFICS]**
+
+To download the database used on the RVI project, run the `wget` command bellow or check [here](https://rvi_kraken2_dbs.cog.sanger.ac.uk/refseq_ncbiFlu_kfv2_20241027.tar.gz
+):
+
+```
+wget https://rvi_kraken2_dbs.cog.sanger.ac.uk/refseq_ncbiFlu_kfv2_20241027.tar.gz
+```
 
 [**(&uarr;)**](#contents)
 
