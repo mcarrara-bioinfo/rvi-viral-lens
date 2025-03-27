@@ -101,7 +101,7 @@ Assuming [dependencies](#dependencies) are installed on the system:
 
 ```bash
 # clone the repo
-git clone --recursive https://gitlab.internal.sanger.ac.uk/malariagen1/viral/viral_pipeline.git
+git clone --recursive https://github.com/genomic-surveillance/rvi-viral-lens
 cd viral_pipeline/
 # (optional) build containers
 cd containers/
@@ -122,7 +122,7 @@ tar -xf  refseq_ncbiFlu_kfv2_20241027.tar.gz
 You will need a manifest and a kraken database (check [Inputs section](#inputs) and [Usage section](#usage) for more details)
 
 ```bash
-PIPELINE_CODES=<path to viral pipeline>
+PIPELINE_CODES=<path to viral lens repo>
 MANIFEST=<path to my manifest>
 kraken_db_path=<path to my kraken DB>
 PIPELINE_CONTAINERS=<path to my containers dir>
@@ -275,8 +275,8 @@ python write_manifest.py "output/*/reads_by_taxon/*.extracted_{1,2}.fq" \
 
 ### Kraken Database
 
-The pipeline only requirement assumes a valid Kraken Database.
-However, this pipeline was developed under the RVI project and the following Database were developed to be used on this pipeline.
+The pipeline accepts any valid Kraken Database file provided.
+However, this pipeline was developed under the RVI project and the following Database was developed to better account the phyogenetic structure of Flu and RSV.
 
 **[ADD DESCRIPTION OF THE KRAKEN DATABASE SPECIFICS]**
 
