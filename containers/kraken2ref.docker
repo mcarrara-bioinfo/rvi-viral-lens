@@ -4,7 +4,7 @@ LABEL AUTHOR Antonio Marinho
 LABEL ID ad45
 LABEL TEAM ARD/DAE
 LABEL JIRA_TICKET DT-1998
-LABEL REPO https://gitlab.internal.sanger.ac.uk/malariagen1/viral/viral_pipeline.git
+LABEL REPO https://github.com/genomic-surveillance/rvi-viral-lens
 ENV PATH=$PATH:/app/ \
     PATH=$PATH:/app/bin/ \
     PYTEST_VER="6.2.2" \

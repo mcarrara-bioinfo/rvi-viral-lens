@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [UNRELEASED]
+## [1.0]
 
 **[fix]**: Fix unknown config attribute `CONTAINER_DIR` for tests
 **[improvement]**: update samtools to `1.21` for the qc container
