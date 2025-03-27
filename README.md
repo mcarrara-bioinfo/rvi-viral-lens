@@ -88,7 +88,7 @@ The pipeline takes a manifest containing  **fastq pairs file** paths and a **kra
 
 ## How to Cite
 
-To be published.
+This  software will be published soon. Until it is, please provide the URL to this GitHub repository when you use the software in your own work.
 
 [**(&uarr;)**](#contents)
 
@@ -275,8 +275,7 @@ python write_manifest.py "output/*/reads_by_taxon/*.extracted_{1,2}.fq" \
 
 ### Kraken Database
 
-The pipeline accepts any valid Kraken Database file provided.
-However, this pipeline was developed under the RVI project and the following Database was developed to better account the phyogenetic structure of Flu and RSV.
+This pipeline was developed under the RVI project and a modified Kraken2 database was developed to better account the phyogenetic structure of Flu and RSV.
 
 **[ADD DESCRIPTION OF THE KRAKEN DATABASE SPECIFICS]**
 
