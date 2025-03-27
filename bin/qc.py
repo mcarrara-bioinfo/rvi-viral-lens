@@ -125,7 +125,6 @@ def generate_qc_file(args: argparse.ArgumentParser.parse_args):
 
     # Add columns to header at specific indices
     column_names.insert(0, 'sample_name')
-    #column_names.insert(4, 'num_aligned_reads')
     column_names.insert(4, 'total_paired_reads')
     column_names.insert(6, 'bam')
     column_names.extend(['total_mapped_reads', 'total_unmapped_reads'])
