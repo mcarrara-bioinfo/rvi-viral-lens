@@ -14,7 +14,7 @@ include {GENERATE_CONSENSUS} from './workflows/GENERATE_CONSENSUS.nf'
 include {SCOV2_SUBTYPING} from './workflows/SCOV2_SUBTYPING.nf'
 include {COMPUTE_QC_METRICS} from './workflows/COMPUTE_QC_METRICS.nf'
 include {GENERATE_CLASSIFICATION_REPORT} from './workflows/GENERATE_CLASSIFICATION_REPORT.nf'
-include {PREPROCESSING} from './rvi-toolbox/subworkflows/PREPROCESSING.nf'
+include {PREPROCESSING} from './rvi_toolbox/subworkflows/PREPROCESSING.nf'
 
 
 /*
