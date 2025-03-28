@@ -277,7 +277,7 @@ python write_manifest.py "output/*/reads_by_taxon/*.extracted_{1,2}.fq" \
 
 This pipeline was developed under the RVI project and a modified Kraken2 database was developed to better account the phyogenetic structure of Flu and RSV.
 
-For the RVI project, this pipeline run with a custom database built using [kraken_flu](https://github.com/genomic-surveillance/krakenflu). 
+For the RVI project, this pipeline was run with a custom database built using [kraken_flu](https://github.com/genomic-surveillance/krakenflu). 
 This database is based on the NCBI viral taxonomy with the following modifications to the taxonomy structure:
 - The Influenza taxonomy is modified below the level of the species such that each segment is represented as its own distinct branch. Further, for specifically segments 4 (HA) and 6 (NA), those branches of the custom taxonomy have an additional level so that nodes representing subtypes H1, H2, H3... are directly below the segment 4 node, and similarly, nodes representing subtypes N1, N2, N3... fall directly under the segment 6 node. Essentially, the segments of the flu genome are considered as distinct sequences for the purposes of the kraken2 classification step
 - The number of Influenza sequences in the database is also expanded as compared to those found in viral RefSeq
