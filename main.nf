@@ -212,11 +212,6 @@ def check_main_params(){
         errors += __check_if_params_file_exist("consensus_mnf", params.consensus_mnf)
     }
 
-    if (params.do_preprocessing==true){
-
-    }
-    //errors += check_generate_consensus_params()
-
     if (errors > 0) {
         log.error("Parameter errors were found, the pipeline will not run.")
         exit 1
