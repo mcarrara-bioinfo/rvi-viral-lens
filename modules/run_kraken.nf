@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
 process run_kraken {
     /*
     *                 Assign Reads to Taxids
@@ -32,7 +33,7 @@ process run_kraken {
     * ---------------------------------------------------------------
     */
 
-    tag "${meta.id}[c=${task.cpus};m=${task.memory}]"
+    tag "${meta.id} - c=${task.cpus} - m=${task.memory}"
     label "kraken"
     label 'mem_2'
     label "cpu_16"

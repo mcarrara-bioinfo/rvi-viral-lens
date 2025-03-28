@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+# Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
 from Bio import SeqIO
 import csv
 import argparse
@@ -104,9 +104,20 @@ def generate_qc_file(args: argparse.ArgumentParser.parse_args):
         flagstat_values = [line.split(" ")[0] for line in flagstat_reader.readlines()]
 
     # Add columns from flagstat file to QC dict
-    qc_values['num_aligned_reads'] = flagstat_values[5]
-    qc_values['total_mapped_reads'] = flagstat_values[4]
-    qc_values['total_unmapped_reads'] = flagstat_values[10]
+    qc_values['total_paired_reads'] = flagstat_values[8]
+    qc_values['total_mapped_reads'] = flagstat_values[6]
+
+    # Compute total unmapped reads
+    # NOTE ####
+    # Total mapped reads includes supplementary + secondary aligments.
+    # total Paired reads includes only paired-end reads.
+    # Therefore, to compute the number of unmapped reads:
+    # unmapped_reads = (paired + secondary + suplementary) - mapped_reads
+    ##
+
+    # First value is the sum of paired + secondary + supplementary
+    total_reads = int(flagstat_values[0])
+    qc_values['total_unmapped_reads'] = total_reads - int(qc_values['total_mapped_reads'])
 
     # Add non-QC columns to QC dict
     qc_values['sample_name'] = args.sample
@@ -114,7 +125,7 @@ def generate_qc_file(args: argparse.ArgumentParser.parse_args):
 
     # Add columns to header at specific indices
     column_names.insert(0, 'sample_name')
-    column_names.insert(4, 'num_aligned_reads')
+    column_names.insert(4, 'total_paired_reads')
     column_names.insert(6, 'bam')
     column_names.extend(['total_mapped_reads', 'total_unmapped_reads'])
 

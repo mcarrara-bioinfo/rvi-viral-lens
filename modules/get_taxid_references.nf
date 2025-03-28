@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
 process get_taxid_reference_files{
     /*
     *         Fetch Fasta Sequence Files for a Given Taxid
@@ -75,8 +76,12 @@ with open(source_fna_path, "r") as source_file:
 # Write output only if a matching sequence is found
 print(f"{nfound} sequences for {taxid_to_find}")
 if found:
+    ## replace open_paren with hyphen and remove close_paren
+    ## this is to avoid those chars being an issue when
+    ## loading the subsequently generated bam files into IGV
+    header_to_write = header.replace("(", "-").replace(")", "")
     with open(output_file, "w") as output:
-        output.write(header + "\n" + seq + "\n")
+        output.write(header_to_write + "\n" + seq + "\n")
 
     # Run bwa index on the output file
     subprocess.run(["bwa", "index", output_file])

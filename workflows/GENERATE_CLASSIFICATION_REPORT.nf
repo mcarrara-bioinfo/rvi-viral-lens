@@ -1,3 +1,5 @@
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
+
 include {write_classification_report} from '../modules/write_classification_report.nf'
 
 workflow GENERATE_CLASSIFICATION_REPORT {

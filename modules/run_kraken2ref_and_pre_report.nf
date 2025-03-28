@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
 params.k2r_polling_mode = "max" // [kmeans or max]
 
 process run_k2r_sort_reads {

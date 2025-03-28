@@ -8,9 +8,8 @@ Stage: spython-base
     AUTHOR Antonio Marinho
     ID ad45
     TEAM ARD/DAE
-    JIRA_TICKET https://jira.sanger.ac.uk/browse/DT-1895
     LINUX_DIST Ubuntu:22.04
-    REPO https://gitlab.internal.sanger.ac.uk/malariagen1/rvi/viral_pipeline
+    REPO https://github.com/genomic-surveillance/rvi-viral-lens
 
 %post
 # //--- STAGING ---// 

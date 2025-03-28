@@ -6,10 +6,10 @@
                     [
                         {
                             "taxid": 9000000,
-                            "sample_id": "test",
-                            "bam_file": "test.9000000.sorted.bam:md5,2f6b034826ae40672acd8059e084e788",
-                            "mpileup_file": "9000000.mpileup.out:md5,80121bd05022c26e057cad566f24eb35",
-                            "id": "test.9000000",
+                            "sample_id": "test2",
+                            "bam_file": "test2.9000000.sorted.bam:md5,889f09bfe09b2d0d98c51fbbfd57dd3a",
+                            "mpileup_file": "test2.9000000.mpileup.out:md5,74081127ba0703f9e717412b0a359977",
+                            "id": "test2.9000000",
                             "ref_files": [
                                 "9000000.fa:md5,6c38e163d9237257547847cfdc3bbe1c",
                                 "9000000.fa.amb:md5,09ac005afb0d84727d981bf17390666b",
@@ -18,25 +18,25 @@
                                 "9000000.fa.pac:md5,4d688454edcfd4288c81c53ec3fd61f7",
                                 "9000000.fa.sa:md5,e28e31851f205dc7e10addb1539a37b8"
                             ],
-                            "consensus_fa": "test.9000000.fa:md5,5b9760f4b95d4de4bfb0144f6793085c",
+                            "consensus_fa": "test2.9000000.consensus.fa:md5,8fa86ad0980cad63ea403c60ac2a3fb3",
                             "percentage_of_N_bases": "0.42",
-                            "percentage_genome_coverage": "0.00",
+                            "percentage_genome_coverage": "99.58",
                             "longest_no_N_segment": "2360",
-                            "total_aligned_reads": "32358",
-                            "total_unmapped_reads": "0\r",
-                            "total_mapped_reads": "0"
+                            "total_aligned_reads": "42182",
+                            "total_unmapped_reads": "17\r",
+                            "total_mapped_reads": "45225"
                         },
-                        "test.9000000.sorted.bam:md5,2f6b034826ae40672acd8059e084e788"
+                        "test2.9000000.sorted.bam:md5,889f09bfe09b2d0d98c51fbbfd57dd3a"
                     ]
                 ],
                 "qc_Out_ch": [
                     [
                         {
                             "taxid": 9000000,
-                            "sample_id": "test",
-                            "bam_file": "test.9000000.sorted.bam:md5,2f6b034826ae40672acd8059e084e788",
-                            "mpileup_file": "9000000.mpileup.out:md5,80121bd05022c26e057cad566f24eb35",
-                            "id": "test.9000000",
+                            "sample_id": "test2",
+                            "bam_file": "test2.9000000.sorted.bam:md5,889f09bfe09b2d0d98c51fbbfd57dd3a",
+                            "mpileup_file": "test2.9000000.mpileup.out:md5,74081127ba0703f9e717412b0a359977",
+                            "id": "test2.9000000",
                             "ref_files": [
                                 "9000000.fa:md5,6c38e163d9237257547847cfdc3bbe1c",
                                 "9000000.fa.amb:md5,09ac005afb0d84727d981bf17390666b",
@@ -45,23 +45,23 @@
                                 "9000000.fa.pac:md5,4d688454edcfd4288c81c53ec3fd61f7",
                                 "9000000.fa.sa:md5,e28e31851f205dc7e10addb1539a37b8"
                             ],
-                            "consensus_fa": "test.9000000.fa:md5,5b9760f4b95d4de4bfb0144f6793085c",
+                            "consensus_fa": "test2.9000000.consensus.fa:md5,8fa86ad0980cad63ea403c60ac2a3fb3",
                             "percentage_of_N_bases": "0.42",
-                            "percentage_genome_coverage": "0.00",
+                            "percentage_genome_coverage": "99.58",
                             "longest_no_N_segment": "2360",
-                            "total_aligned_reads": "32358",
-                            "total_unmapped_reads": "0\r",
-                            "total_mapped_reads": "0"
+                            "total_aligned_reads": "42182",
+                            "total_unmapped_reads": "17\r",
+                            "total_mapped_reads": "45225"
                         },
-                        "test.9000000.sorted.bam:md5,2f6b034826ae40672acd8059e084e788"
+                        "test2.9000000.sorted.bam:md5,889f09bfe09b2d0d98c51fbbfd57dd3a"
                     ]
                 ]
             }
         ],
         "meta": {
             "nf-test": "0.8.4",
-            "nextflow": "23.10.0"
+            "nextflow": "24.10.3"
         },
-        "timestamp": "2024-09-17T15:09:40.901597924"
+        "timestamp": "2025-03-13T11:45:20.221279"
     }
 }

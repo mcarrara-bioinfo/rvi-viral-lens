@@ -1,3 +1,5 @@
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
+
 include {run_pangolin} from '../modules/run_pangolin.nf'
 
 workflow SCOV2_SUBTYPING {

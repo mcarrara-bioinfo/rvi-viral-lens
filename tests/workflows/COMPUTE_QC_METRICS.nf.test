@@ -1,3 +1,5 @@
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
+
 nextflow_workflow {
 
     name "Test Workflow COMPUTE_QC_METRICS"
@@ -9,10 +11,10 @@ nextflow_workflow {
         when {
             params {
                 meta = [
-                    id:"test.9000000",
-                    sample_id:"test",
+                    id:"test2.9000000",
+                    sample_id:"test2",
                     taxid:9000000,
-                    bam_file:"${projectDir}/tests/test_data/test_alignments/test.9000000.sorted.bam",
+                    bam_file:"${projectDir}/tests/test_data/test_alignments/test2.9000000.sorted.bam",
                     ref_files:[
                         "${projectDir}/tests/test_data/test_references/9000000.fa",
                         "${projectDir}/tests/test_data/test_references/9000000.fa.amb",
@@ -21,9 +23,9 @@ nextflow_workflow {
                         "${projectDir}/tests/test_data/test_references/9000000.fa.pac",
                         "${projectDir}/tests/test_data/test_references/9000000.fa.sa"
                     ],
-                    mpileup_file:"${projectDir}/tests/test_data/test_mpileup_out/9000000.mpileup.out"
+                    mpileup_file:"${projectDir}/tests/test_data/test_mpileup_out/test2.9000000.mpileup.out"
                 ]
-                fasta_file ="${projectDir}/tests/test_data/test_consensuses/test.9000000.fa"
+                fasta_file ="${projectDir}/tests/test_data/test_consensuses/test2.9000000.consensus.fa"
             }
             workflow {
                 """

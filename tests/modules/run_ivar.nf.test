@@ -1,3 +1,5 @@
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
+
 nextflow_process {
 
     name "Test Process run_ivar"
@@ -9,8 +11,8 @@ nextflow_process {
         when {
             params {
                 meta = [
-                    id:"test.9000000",
-                    sample_id:"test",
+                    id:"test2.9000000",
+                    sample_id:"test2",
                     taxid:9000000
                 ]
                 test_loc="${projectDir}/tests/test_data"
@@ -20,8 +22,7 @@ nextflow_process {
                 // define inputs of the process here. Example:
                 input[0]=tuple(
                     params.meta,
-                    file("${params.test_loc}/test_alignments/*"),
-                    file("${params.test_loc}/test_references/*")
+                    file("${params.test_loc}/test_alignments/test*"),
                 )
                 """
             }

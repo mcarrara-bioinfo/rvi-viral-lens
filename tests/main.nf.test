@@ -1,3 +1,5 @@
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
+
 def modifyPathsAndWriteCsv(String inputFile) {
     def projectDir = System.getProperty("user.dir") + "/tests/test_data" // Current working directory
 

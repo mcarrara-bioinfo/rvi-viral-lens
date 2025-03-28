@@ -1,3 +1,4 @@
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
 nextflow_process {
 
     name "Test Process get_taxid_reference_files"

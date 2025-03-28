@@ -1,4 +1,5 @@
 #!/usr/bin/env nextflow
+// Copyright (C) 2023 Genome Surveillance Unit/Genome Research Ltd.
 
 // enable dsl2
 nextflow.enable.dsl = 2
@@ -26,7 +27,7 @@ ANSI_BOLD = "\033[1m"
 
 log.info """${ANSI_RESET}
   ===========================================
-  Viral Pipeline [v0.4.1]
+  Viral Lens [v1.0]
   Used parameters:
   -------------------------------------------
   --> general pipeline parameters:
@@ -210,11 +211,6 @@ def check_main_params(){
         // check if manifest was provided
         errors += __check_if_params_file_exist("consensus_mnf", params.consensus_mnf)
     }
-
-    if (params.do_preprocessing==true){
-
-    }
-    //errors += check_generate_consensus_params()
 
     if (errors > 0) {
         log.error("Parameter errors were found, the pipeline will not run.")

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://gitlab.internal.sanger.ac.uk/malariagen1/viral/viral_pipeline",
-  "title": "Viral Pipeline pipeline parameters",
+  "$id": "https://github.com/genomic-surveillance/rvi-viral-lens",
+  "title": "Viral Lens pipeline parameters",
   "description": "identify the presence of Flu, SARS-CoV-2 and RSV and obtain, if possible, high quality consensus sequences for those virus.",
   "type": "object",
   "properties": {
