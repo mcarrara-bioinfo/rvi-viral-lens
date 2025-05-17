@@ -35,7 +35,9 @@ workflow GENERATE_CLASSIFICATION_REPORT {
         without ambiguous bases ('N').
         - `percentage_of_N_bases`: Proportion of ambiguous bases
         in the consensus sequence.
-
+    - **Minimum total aligned reads**: A variable containing the
+    minimum threshold of aligned reads to include a single
+    assignment to the report
     -----------------------------------------------------------------
     # Key Processes:
         - **Report Line Generation**: Each sample's metadata is
@@ -53,6 +55,7 @@ workflow GENERATE_CLASSIFICATION_REPORT {
 
     take:
         meta_ch // meta
+        min_aligned_reads
 
     main:
     
@@ -77,7 +80,7 @@ workflow GENERATE_CLASSIFICATION_REPORT {
         }.collect()
 
         // Write all of the per-sample report lines to a report file
-        write_classification_report(report_lines_ch)
+        write_classification_report(report_lines_ch, min_aligned_reads)
 
     emit:
         write_classification_report.out // report file

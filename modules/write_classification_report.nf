@@ -16,7 +16,8 @@ process write_classification_report {
         - A list of lines that contain data to be written into the
         classification report. Each line corresponds to a data entry
         related to the classification results of samples.
-
+        - A minimum threshold of Total_Mapped_Reads to include the
+        classification line in the report (Default: 100)
     * Output
         - Outputs the path to the generated classification report file
         (`classification_report.csv`).
@@ -28,6 +29,7 @@ process write_classification_report {
 
     input:
         val(list_of_report_lines)
+        val(min_total_mapped_reads)
 
     output:
         path(output_report_file)
@@ -42,7 +44,11 @@ process write_classification_report {
 
         # Write data lines to report file
         echo "${report_lines}" >> ${output_report_file}_pre
-        sed -e "s/\r//g" ${output_report_file}_pre > ${output_report_file}
+        sed -e "s/\r//g" ${output_report_file}_pre | \
+            awk -v min="$min_total_mapped_reads" -F ',' ' \
+                NR==1 { print; next } \    # Always print the header
+                \$11 >= min { print } \    # Print report line only if column 11 >= min
+            ' > ${output_report_file}
         # NOTE: the sed expression is there to remove "^M" added characteres
         """
 /*
@@ -79,13 +85,28 @@ The output report file is named classification_report.csv.
 
     - Command: 
     ```
-    sed -e "s/\r//g" ${output_report_file}_pre > ${output_report_file}`
+    sed -e "s/\r//g" ${output_report_file}_pre | \
     ```
     - This command uses sed to remove any carriage return (\r) characters
     that may be present in the file. These characters can be introduced 
     when handling files across different operating systems (e.g., 
     Windows vs. Unix-based systems), and their removal ensures 
     consistent file formatting.
+    The output is directly piped to the next command.
+
+6. **Filter out any report line with Total_Mapped_Reads less than `min_total_mapped_reads`**
+
+    - Command:
+    ```
+    awk -v min="$min_total_mapped_reads" -F ',' ' \
+        NR==1 { print; next } \    # Always print the header
+        \$11 >= min { print } \    # Print report line only if column 11 >= min
+    ' > ${output_report_file}
+
+    - This command uses awk to remove any report line where the value of the
+    column `Total_Mapped_Reads` is less than the provided `min_total_mapped_reads`
+    threshold. The code ensures that the header is always included in the output.
+    The input is a direct pipe from the sed command at point 5.
 
 */
 }

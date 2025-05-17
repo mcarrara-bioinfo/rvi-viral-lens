@@ -59,6 +59,9 @@ log.info """${ANSI_RESET}
   --> viral subtyping branching parameters:
     --scv2_keyword             : ${params.scv2_keyword}
 
+  --> GENERATE_CLASSIFICATION_REPORT workflow parameters:
+    --min_aligned_reads        : ${params.min_aligned_reads}
+
   --> resource management:
     --default_error_strategy   : ${params.default_error_strategy}
     --mem_k2r_b0_offset        : ${params.mem_k2r_b0_offset}
@@ -170,7 +173,7 @@ workflow {
   qc_metrics_out_ch.no_subtyping_ch.concat(scov2_subtyped_ch)
     .set{report_in_ch}
 
-  GENERATE_CLASSIFICATION_REPORT(report_in_ch)
+  GENERATE_CLASSIFICATION_REPORT(report_in_ch, params.min_aligned_reads)
 
 }
 
